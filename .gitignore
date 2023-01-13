@@ -4,3 +4,6 @@
 
 /OpenAI.SDK/packages/Microsoft.Windows.CppWinRT.2.0.220531.1
 /OpenAI.SDK/.vs
+/OpenAI.SDK/OpenAI.SDK/Generated Files
+/OpenAI.SDK/OpenAI.SDK/x64/Debug
+/OpenAI.SDK/x64/Debug/OpenAI.SDK
