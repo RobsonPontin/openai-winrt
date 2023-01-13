@@ -5,5 +5,10 @@ namespace OpenAI_SDK
 	runtimeclass OpenAiService
 	{
 		OpenAiService();
+
+		Boolean IsRunning{ get; };
+
+		void SetOpenAiSecretKey(String key);
+		Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IBuffer> GenerateDalleVariantAsync(Windows.Storage.StorageFile file);
 	}
 }

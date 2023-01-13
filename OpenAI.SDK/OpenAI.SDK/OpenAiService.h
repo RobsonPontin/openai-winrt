@@ -25,10 +25,6 @@ namespace winrt::OpenAI_SDK::implementation
 
         WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleVariantAsync(WS::StorageFile const& file);
 
-        // Utils
-        WF::IAsyncOperation<WS::StorageFile> CreateFileFromImageAsync(WS::Streams::IBuffer buffer, bool saveToTempFolder);
-
-
         void SetOpenAiSecretKey(winrt::hstring key)
         {
             m_openAiSecretKey = key;

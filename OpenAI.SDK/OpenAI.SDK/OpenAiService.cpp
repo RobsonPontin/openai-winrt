@@ -137,7 +137,14 @@ namespace winrt::OpenAI_SDK::implementation
     {
         try
         {
-            auto imgBuffer = co_await FileToPngBufferAsync(file);
+            if (file == nullptr)
+            {
+                co_return nullptr;
+            }
+
+            auto localFile = file;
+
+            auto imgBuffer = co_await FileToPngBufferAsync(localFile);
             if (imgBuffer == nullptr)
             {
                 co_return nullptr;
@@ -156,7 +163,9 @@ namespace winrt::OpenAI_SDK::implementation
             bContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
 
             WWH::HttpMultipartFormDataContent multipartContent{};
-            multipartContent.Add(bContent, L"image", file.Name());
+
+            auto fileName = localFile.Name() == L"" ? L"ai_image" : localFile.Name();
+            multipartContent.Add(bContent, L"image", fileName);
 
             winrt::hstring boundary = L"my_boundary_string_rpp"; // TODO: need to generate unique id
             multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
@@ -196,32 +205,5 @@ namespace winrt::OpenAI_SDK::implementation
         }
 
         co_return nullptr;
-    }
-
-    WF::IAsyncOperation<WS::StorageFile> OpenAiService::CreateFileFromImageAsync(WS::Streams::IBuffer buffer, bool saveToTempFolder)
-    {
-        WS::StorageFile file{ nullptr };
-        if (!saveToTempFolder)
-        {
-            auto savePicker = WS::Pickers::FileSavePicker();
-            savePicker.SuggestedStartLocation(WS::Pickers::PickerLocationId::PicturesLibrary);
-            savePicker.FileTypeChoices().Insert(L"PNG", winrt::single_threaded_vector<winrt::hstring>({ L".png" }));
-            // Default file name if the user does not type one in or select a file to replace
-            savePicker.SuggestedFileName(L"AI image");
-
-            file = co_await savePicker.PickSaveFileAsync();
-        }
-        else
-        {
-            auto tempFolder = WS::ApplicationData::Current().TemporaryFolder();
-            file = co_await tempFolder.CreateFileAsync(L"ai_image", WS::CreationCollisionOption::GenerateUniqueName);
-        }
-
-        if (file != nullptr)
-        {
-            co_await WS::FileIO::WriteBufferAsync(file, buffer);
-        }
-
-        co_return file;
     }
 }
