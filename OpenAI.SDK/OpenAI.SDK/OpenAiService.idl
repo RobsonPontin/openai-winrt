@@ -1,0 +1,9 @@
+
+namespace OpenAI_SDK
+{
+	[default_interface]
+	runtimeclass OpenAiService
+	{
+		OpenAiService();
+	}
+}

@@ -1,5 +1,9 @@
 #include "pch.h"
-#include <OpenAiService.h>
+
+#include "OpenAiService.h"
+#if __has_include("OpenAiService.g.cpp")
+#include "OpenAiService.g.cpp"
+#endif
 
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -13,7 +17,7 @@
 #include <winrt/Windows.Networking.BackgroundTransfer.h>
 
 
-namespace OpenAI_SDK
+namespace winrt::OpenAI_SDK::implementation
 {
     /// <summary>
     /// Generates an images based off keywords

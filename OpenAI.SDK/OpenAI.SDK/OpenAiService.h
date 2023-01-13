@@ -1,10 +1,12 @@
 #pragma once
 
+#include "OpenAiService.g.h"
+
 #include <winrt/Windows.Storage.Streams.h>
 
-namespace OpenAI_SDK
+namespace winrt::OpenAI_SDK::implementation
 {
-    struct OpenAiService
+    struct OpenAiService : OpenAiServiceT<OpenAiService>
     {
     public:
 
@@ -43,5 +45,12 @@ namespace OpenAI_SDK
 
             bool m_isServiceRunning{ false };
             winrt::hstring m_openAiSecretKey{ L"" };
+    };
+}
+
+namespace winrt::OpenAI_SDK::factory_implementation
+{
+    struct OpenAiService : OpenAiServiceT<OpenAiService, implementation::OpenAiService>
+    {
     };
 }

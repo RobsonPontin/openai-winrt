@@ -25,6 +25,7 @@
   <ItemGroup>
     <None Include="OpenAI_SDK.def" />
     <None Include="PropertySheet.props" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
@@ -33,5 +34,10 @@
     <Filter Include="src">
       <UniqueIdentifier>{e2cfc462-ac32-4829-915f-fedf1bcfa1cc}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="OpenAiService.idl">
+      <Filter>src</Filter>
+    </Midl>
   </ItemGroup>
 </Project>
