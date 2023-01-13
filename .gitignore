@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/OpenAI.SDK/packages/Microsoft.Windows.CppWinRT.2.0.220531.1
+/OpenAI.SDK/.vs
