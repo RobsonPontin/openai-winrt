@@ -8,21 +8,33 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::SampleApp::implementation
 {
+    enum ImageActionType
+    {
+        Create,
+        Variant,
+        Edit
+    };
+
     struct MainPage : MainPageT<MainPage>
     {
         MainPage()
         {
-            // Xaml objects should not call InitializeComponent during construction.
-            // See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
         }
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
 
-        IAsyncAction btnImageCreate_click(IInspectable const& sender, RoutedEventArgs const& args);
+    public:
+        IAsyncAction btnProcessImage_Click(IInspectable const& sender, RoutedEventArgs const& e);
+        void MenuFlyoutItem_Click(IInspectable const& sender, RoutedEventArgs const& e);
+        IAsyncAction btnSaveImage_Click(IInspectable const& sender, RoutedEventArgs const& e);
 
     private:
         OpenAI_SDK::OpenAiService m_openAiService;
+        ImageActionType m_actionSelected{ ImageActionType::Create };
+
+        IAsyncAction ProcessImageCreationAsync(winrt::hstring prompt);
+        IAsyncAction ProcessImageVariantAsync();
     };
 }
 

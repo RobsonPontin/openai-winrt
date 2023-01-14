@@ -6,9 +6,13 @@
 #include "winrt/Windows.Storage.Streams.h"
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
 
+#include "StorageUtils.h"
+
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::UI::Xaml::Controls;
+
 
 namespace winrt::SampleApp::implementation
 {
@@ -22,21 +26,67 @@ namespace winrt::SampleApp::implementation
         throw hresult_not_implemented();
     }
 
-	IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> ToStreamAsync(Windows::Storage::Streams::IBuffer ibuffer)
+	void MainPage::MenuFlyoutItem_Click(IInspectable const& sender, RoutedEventArgs const&)
 	{
-		auto stream = InMemoryRandomAccessStream();
-		auto outputStream = stream.GetOutputStreamAt(0);
-		auto datawriter = DataWriter(outputStream);
-		datawriter.WriteBuffer(ibuffer);
-		co_await datawriter.StoreAsync();
-		co_await outputStream.FlushAsync();
-		co_return stream;
+		auto flyoutItem = sender.try_as<MenuFlyoutItem>();
+		if (flyoutItem)
+		{
+			auto tag = winrt::unbox_value_or<hstring>(flyoutItem.Tag(), L"");
+			if (tag == L"Variant")
+			{
+				tbImagePromt().IsEnabled(false);
+				m_actionSelected = ImageActionType::Variant;
+			}
+			else if (tag == L"Create")
+			{
+				tbImagePromt().IsEnabled(true);
+				m_actionSelected = ImageActionType::Create;
+			}
+			else if (tag == L"Edit")
+			{
+				tbImagePromt().IsEnabled(true);
+				m_actionSelected = ImageActionType::Edit;
+			}
+		}
 	}
 
-    IAsyncAction MainPage::btnImageCreate_click(IInspectable const&, RoutedEventArgs const&)
-    {
-		m_openAiService.SetOpenAiSecretKey(L"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");
+	IAsyncAction MainPage::btnProcessImage_Click(IInspectable const& sender, RoutedEventArgs const& e)
+	{
+		if (tbOpenAiKey().Text() != L"")
+		{
+			m_openAiService.SetOpenAiSecretKey(tbOpenAiKey().Text());
+		}
+		else
+		{
+			return;
+		}
 
+		switch (m_actionSelected)
+		{
+		case ImageActionType::Create:
+
+			if (tbImagePromt().Text() != L"")
+			{
+				co_await ProcessImageCreationAsync(tbImagePromt().Text());
+			}
+			break;
+
+		case ImageActionType::Edit:
+			break;
+
+		case ImageActionType::Variant:
+			co_await ProcessImageVariantAsync();
+			break;
+		}
+	}
+
+	IAsyncAction MainPage::btnSaveImage_Click(IInspectable const& sender, RoutedEventArgs const& e)
+	{
+		co_await ::SampleApp::Utils::StorageUtils::CreateFileFromImageAsync(image(), false);
+	}
+
+	IAsyncAction MainPage::ProcessImageVariantAsync()
+	{
 		if (!m_openAiService.IsRunning())
 		{
 			auto openPicker = Pickers::FileOpenPicker();
@@ -52,7 +102,7 @@ namespace winrt::SampleApp::implementation
 
 				if (buffer != nullptr)
 				{
-					auto stream = co_await ToStreamAsync(buffer);
+					auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(buffer);
 
 					if (stream != nullptr)
 					{
@@ -63,9 +113,26 @@ namespace winrt::SampleApp::implementation
 				}
 			}
 		}
+	}
 
-		co_return;
+	IAsyncAction MainPage::ProcessImageCreationAsync(winrt::hstring prompt)
+	{
+		if (!m_openAiService.IsRunning())
+		{
+			auto buffer = co_await m_openAiService.GenerateDalleImageAsync(prompt);
 
+			if (buffer != nullptr)
+			{
+				auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(buffer);
 
-    }
+				if (stream != nullptr)
+				{
+					auto img = BitmapImage{};
+					img.SetSource(stream);
+					image().Source(img);
+				}
+			}
+		}
+	}
 }
+

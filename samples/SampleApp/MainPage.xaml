@@ -17,27 +17,49 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="tbOpenAiKey"/>
+        <TextBox x:Name="tbOpenAiKey"
+                 Header="OpenAI Key:"/>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1">
 
-            <DropDownButton Content="Action">
+            <DropDownButton x:Name="ddbAction" Content="Action"
+                            Margin="5 0 0 0">
                 <DropDownButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Text="Create Image"/>
-                        <MenuFlyoutItem Text="Create Variations"/>
-                        <MenuFlyoutItem Text="Edit Image"/>
+                        <MenuFlyoutItem Text="Create Image"
+                                        Tag="Create"
+                                        Click="MenuFlyoutItem_Click"/>
+                        
+                        <MenuFlyoutItem Text="Create Variations"
+                                        Tag="Variant"
+                                        Click="MenuFlyoutItem_Click"/>
+                        
+                        <MenuFlyoutItem Text="Edit Image"
+                                        Tag="Edit"
+                                        Click="MenuFlyoutItem_Click"/>
                     </MenuFlyout>
                 </DropDownButton.Flyout>
             </DropDownButton>
 
-            <TextBlock Name="tbImagePromt"
-                           Height="50"
-                           Width="250"/>
+            <TextBox Name="tbImagePromt"                       
+                     Margin="5 0 0 0"
+                     Height="50"
+                     Width="250"/>
+
+            <Button x:Name="btnProcessImage"
+                    Margin="5 0 0 0"
+                    Content="Generate"
+                    Click="btnProcessImage_Click"/>
+
+            <Button x:Name="btnSaveImage"
+                    Margin="5 0 0 0"
+                    Content="Save Image"
+                    Click="btnSaveImage_Click"/>
         </StackPanel>
 
         <Image x:Name="image"
-               Grid.Row="1"/>
+               Grid.Row="1"
+               Grid.ColumnSpan="2"/>
     </Grid>
    
 </Page>
