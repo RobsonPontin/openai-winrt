@@ -3,29 +3,29 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="OpenAiOptions.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenAiService.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="ImageRequest.cpp">
       <Filter>src\Requests</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenAiOptions.cpp">
+      <Filter>src\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenAiService.cpp">
+      <Filter>src\Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="OpenAiOptions.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenAiService.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="ImageRequest.h">
       <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenAiOptions.h">
+      <Filter>src\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenAiService.h">
+      <Filter>src\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -43,10 +43,16 @@
     <Filter Include="src\Requests">
       <UniqueIdentifier>{65b8217f-4155-4820-b582-03dc309f5b4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Service">
+      <UniqueIdentifier>{8a3d08be-d114-4c71-901f-a3494799f632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{68432bc8-cb09-4bfa-a785-a4eaea836db5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="OpenAiService.idl">
-      <Filter>src</Filter>
+      <Filter>src\Service</Filter>
     </Midl>
   </ItemGroup>
 </Project>
