@@ -30,7 +30,7 @@ namespace winrt::SampleApp::implementation
         IAsyncAction btnSaveImage_Click(IInspectable const& sender, RoutedEventArgs const& e);
 
     private:
-        OpenAI_SDK::OpenAiService m_openAiService;
+        OpenAI::OpenAiService m_openAiService;
         ImageActionType m_actionSelected{ ImageActionType::Create };
 
         IAsyncAction ProcessImageCreationAsync(winrt::hstring prompt);
