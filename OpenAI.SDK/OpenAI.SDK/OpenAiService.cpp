@@ -19,12 +19,6 @@
 
 namespace winrt::OpenAI_SDK::implementation
 {
-    /// <summary>
-    /// Generates an images based off keywords
-    /// </summary>
-    /// <param name="keywords">A range of keywords</param>
-    /// <param name="openAiKey">The OpenAI secret key</param>
-    /// <returns></returns>
     WF::IAsyncOperation<WS::Streams::IBuffer> OpenAiService::GenerateDalleImageAsync(winrt::hstring const& keywords)
     {
         if (keywords == L"" || m_openAiSecretKey == L"")
@@ -132,7 +126,7 @@ namespace winrt::OpenAI_SDK::implementation
 
         try
         {
-            auto localFile = file;
+            auto localFile = file; // Create a local copy
 
             auto imgBuffer = co_await FileToPngBufferAsync(localFile);
             if (imgBuffer == nullptr)
@@ -154,10 +148,10 @@ namespace winrt::OpenAI_SDK::implementation
 
             WWH::HttpMultipartFormDataContent multipartContent{};
 
-            auto fileName = localFile.Name() == L"" ? L"ai_image" : localFile.Name();
+            auto fileName = localFile.Name() == L"" ? L"untitled" : localFile.Name();
             multipartContent.Add(bContent, L"image", fileName);
 
-            winrt::hstring boundary = L"my_boundary_string_rpp"; // TODO: need to generate unique id
+            winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID
             multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
 
             request.Content(multipartContent);
