@@ -26,8 +26,6 @@ namespace winrt::OpenAI::implementation
         /// <returns></returns>
         WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleImageAsync(winrt::hstring const& keywords);
 
-        WF::IAsyncOperation<WS::Streams::IBuffer> FileToPngBufferAsync(WS::StorageFile const& file);
-
         WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleVariantAsync(WS::StorageFile const& file);
 
         void SetOpenAiSecretKey(winrt::hstring key)

@@ -118,6 +118,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
+    <ClInclude Include="ImageUtils.h" />
     <ClInclude Include="OpenAiOptions.h" />
     <ClInclude Include="OpenAiService.h" />
     <ClInclude Include="pch.h" />
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
+    <ClCompile Include="ImageUtils.cpp" />
     <ClCompile Include="OpenAiOptions.cpp" />
     <ClCompile Include="OpenAiService.cpp" />
     <ClCompile Include="pch.cpp">

@@ -73,6 +73,8 @@ namespace winrt::OpenAI::Image::implementation
 	{
 		ImageVariationRequest() {}
 
+		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile file);
+
 		bool IsValid()
 		{
 			if (Prompt() != L"")
@@ -82,12 +84,17 @@ namespace winrt::OpenAI::Image::implementation
 
 			return false;
 		}
+
+	private:
+		WS::Streams::IBuffer m_imageBuffer{ nullptr };
 	};
 
 	struct ImageEditRequest : ImageEditRequestT<ImageEditRequest, ImageRequest>
 	{
 		ImageEditRequest() {}
 
+		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile file);
+
 		bool IsValid()
 		{
 			if (Prompt() != L"")
@@ -97,6 +104,9 @@ namespace winrt::OpenAI::Image::implementation
 
 			return false;
 		}
+
+	private:
+		WS::Streams::IBuffer m_imageBuffer{ nullptr };
 	};
 }
 

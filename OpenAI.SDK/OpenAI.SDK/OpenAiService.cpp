@@ -16,6 +16,7 @@
 #include <winrt/Windows.Storage.Pickers.h>
 #include <winrt/Windows.Networking.BackgroundTransfer.h>
 
+#include "ImageUtils.h"
 
 namespace winrt::OpenAI::implementation
 {
@@ -88,41 +89,6 @@ namespace winrt::OpenAI::implementation
         co_return nullptr;
     }
 
-    WF::IAsyncOperation<WS::Streams::IBuffer> OpenAiService::FileToPngBufferAsync(WS::StorageFile const& file)
-    {
-        try
-        {
-            // Open and decode
-            auto stream = co_await file.OpenReadAsync();
-            auto decoder = co_await WGI::BitmapDecoder::CreateAsync(stream);
-            auto pixels = co_await decoder.GetPixelDataAsync();
-            auto imageBytes = pixels.DetachPixelData();
-            auto dpiX = decoder.DpiX();
-            auto dpiY = decoder.DpiY();
-            auto pixelHeight = static_cast<uint32_t>(decoder.PixelHeight());
-            auto pixelWidth = static_cast<uint32_t>(decoder.PixelWidth());
-
-            // encode
-            WS::Streams::InMemoryRandomAccessStream encoded{};
-            auto encoder = co_await WGI::BitmapEncoder::CreateAsync(WGI::BitmapEncoder::PngEncoderId(), encoded);
-            encoder.SetPixelData(WGI::BitmapPixelFormat::Bgra8, WGI::BitmapAlphaMode::Straight, pixelWidth, pixelHeight, dpiX, dpiY, imageBytes);
-            co_await encoder.FlushAsync();
-            encoded.Seek(0);
-
-            auto size = static_cast<uint32_t>(encoded.Size());
-            WS::Streams::Buffer buffer{ size };
-            co_await encoded.ReadAsync(buffer, size, WS::Streams::InputStreamOptions::None);
-
-            co_return buffer;
-        }
-        catch (...)
-        {
-            // Sigh...
-        }
-
-        co_return nullptr;
-    }
-
     WF::IAsyncOperation<WS::Streams::IBuffer> OpenAiService::GenerateDalleVariantAsync(WS::StorageFile const& file)
     {
         if (file == nullptr || m_openAiSecretKey == L"")
@@ -134,7 +100,7 @@ namespace winrt::OpenAI::implementation
         {
             auto localFile = file; // Create a local copy
 
-            auto imgBuffer = co_await FileToPngBufferAsync(localFile);
+            auto imgBuffer = co_await ::OpenAI::Utils::Convert::FileToPngBufferAsync(localFile);
             if (imgBuffer == nullptr)
             {
                 co_return nullptr;

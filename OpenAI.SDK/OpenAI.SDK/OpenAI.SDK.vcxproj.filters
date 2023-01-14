@@ -12,6 +12,12 @@
     <ClCompile Include="OpenAiService.cpp">
       <Filter>src\Service</Filter>
     </ClCompile>
+    <ClCompile Include="ImageResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUtils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -25,6 +31,12 @@
       <Filter>src\Service</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageResponse.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageUtils.h">
       <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
@@ -48,6 +60,9 @@
     </Filter>
     <Filter Include="src\Utils">
       <UniqueIdentifier>{68432bc8-cb09-4bfa-a785-a4eaea836db5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Response">
+      <UniqueIdentifier>{a237ea21-e82d-4e7b-b37e-a0c9205b6236}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
