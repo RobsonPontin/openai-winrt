@@ -19,6 +19,12 @@
 
 namespace winrt::OpenAI::implementation
 {
+    WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest)
+    {
+        // TODO: build and return response result
+        co_return winrt::make<OpenAI::Image::implementation::ImageResponse>();
+    }
+
     WF::IAsyncOperation<WS::Streams::IBuffer> OpenAiService::GenerateDalleImageAsync(winrt::hstring const& keywords)
     {
         if (keywords == L"" || m_openAiSecretKey == L"")

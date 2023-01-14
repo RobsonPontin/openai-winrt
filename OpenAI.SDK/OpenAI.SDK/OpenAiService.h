@@ -3,6 +3,9 @@
 #include "OpenAiService.g.h"
 
 #include <winrt/Windows.Storage.Streams.h>
+#include <ImageRequest.h>
+#include <ImageResponse.h>
+
 
 namespace winrt::OpenAI::implementation
 {
@@ -12,6 +15,8 @@ namespace winrt::OpenAI::implementation
 
         OpenAiService()
         {}
+
+        WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
 
         /// <summary>
         /// Generates an images based off keywords
