@@ -17,7 +17,7 @@
 #include <winrt/Windows.Networking.BackgroundTransfer.h>
 
 
-namespace winrt::OpenAI_SDK::implementation
+namespace winrt::OpenAI::implementation
 {
     WF::IAsyncOperation<WS::Streams::IBuffer> OpenAiService::GenerateDalleImageAsync(winrt::hstring const& keywords)
     {

@@ -4,7 +4,7 @@
 
 #include <winrt/Windows.Storage.Streams.h>
 
-namespace winrt::OpenAI_SDK::implementation
+namespace winrt::OpenAI::implementation
 {
     struct OpenAiService : OpenAiServiceT<OpenAiService>
     {
@@ -44,7 +44,7 @@ namespace winrt::OpenAI_SDK::implementation
     };
 }
 
-namespace winrt::OpenAI_SDK::factory_implementation
+namespace winrt::OpenAI::factory_implementation
 {
     struct OpenAiService : OpenAiServiceT<OpenAiService, implementation::OpenAiService>
     {

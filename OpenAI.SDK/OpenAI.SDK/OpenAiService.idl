@@ -1,6 +1,48 @@
 
-namespace OpenAI_SDK
+namespace OpenAI
 {
+	namespace Image
+	{
+		enum SizeType
+		{
+			Size1024
+		};
+
+		unsealed runtimeclass ImageRequest
+		{
+			String Prompt{ get; set; };
+			Int32 CreationNumber{ get; set; };
+			String ImageName{ get; set; };
+			SizeType Size{ get; set; };
+			Boolean IsValid{ get; };
+		};
+
+		[default_interface]
+		runtimeclass ImageCreateRequest : ImageRequest
+		{
+			ImageCreateRequest();
+		};
+
+		[default_interface]
+		runtimeclass ImageVariationRequest : ImageRequest
+		{
+			ImageVariationRequest();
+		};
+
+		[default_interface]
+		runtimeclass ImageEditRequest : ImageRequest
+		{
+			ImageEditRequest();
+		};
+	}
+
+
+	[default_interface]
+	runtimeclass OpenAiOptions
+	{
+		OpenAiOptions();
+	};
+
 	[default_interface]
 	runtimeclass OpenAiService
 	{

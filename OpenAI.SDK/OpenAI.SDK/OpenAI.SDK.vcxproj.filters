@@ -9,6 +9,9 @@
     <ClCompile Include="OpenAiService.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="ImageRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -20,6 +23,9 @@
     </ClInclude>
     <ClInclude Include="common.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageRequest.h">
+      <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +39,9 @@
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{e2cfc462-ac32-4829-915f-fedf1bcfa1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Requests">
+      <UniqueIdentifier>{65b8217f-4155-4820-b582-03dc309f5b4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

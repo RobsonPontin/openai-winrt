@@ -8,7 +8,7 @@
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{f3fe20df-da9b-4190-8d69-c9666c647e9c}</ProjectGuid>
     <ProjectName>OpenAI.SDK</ProjectName>
-    <RootNamespace>OpenAI_SDK</RootNamespace>
+    <RootNamespace>OpenAI</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -116,11 +116,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
+    <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="OpenAiOptions.h" />
     <ClInclude Include="OpenAiService.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="OpenAiOptions.cpp" />
     <ClCompile Include="OpenAiService.cpp" />
     <ClCompile Include="pch.cpp">
