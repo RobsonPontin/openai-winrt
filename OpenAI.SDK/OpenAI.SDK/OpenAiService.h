@@ -19,7 +19,7 @@ namespace winrt::OpenAI_SDK::implementation
         /// <param name="keywords">A range of keywords</param>
         /// <param name="openAiKey">The OpenAI secret key</param>
         /// <returns></returns>
-        WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleImageAsync(std::vector<winrt::hstring> keywords);
+        WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleImageAsync(winrt::hstring const& keywords);
 
         WF::IAsyncOperation<WS::Streams::IBuffer> FileToPngBufferAsync(WS::StorageFile const& file);
 

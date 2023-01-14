@@ -9,6 +9,7 @@ namespace OpenAI_SDK
 		Boolean IsRunning{ get; };
 
 		void SetOpenAiSecretKey(String key);
+		Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IBuffer> GenerateDalleImageAsync(String keywords);
 		Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IBuffer> GenerateDalleVariantAsync(Windows.Storage.StorageFile file);
 	}
 }
