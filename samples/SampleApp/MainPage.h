@@ -35,6 +35,7 @@ namespace winrt::SampleApp::implementation
 
         IAsyncAction ProcessImageCreationAsync(winrt::hstring prompt);
         IAsyncAction ProcessImageVariantAsync();
+        IAsyncAction ProcessImageEditAsync(winrt::hstring prompt);
     };
 }
 

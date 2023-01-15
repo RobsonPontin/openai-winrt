@@ -72,6 +72,10 @@ namespace winrt::SampleApp::implementation
 			break;
 
 		case ImageActionType::Edit:
+			if (tbImagePromt().Text() != L"")
+			{
+				co_await ProcessImageEditAsync(tbImagePromt().Text());
+			}
 			break;
 
 		case ImageActionType::Variant:
@@ -141,6 +145,46 @@ namespace winrt::SampleApp::implementation
 					auto img = BitmapImage{};
 					img.SetSource(stream);
 					image().Source(img);
+				}
+			}
+		}
+
+		co_return;
+	}
+
+	IAsyncAction MainPage::ProcessImageEditAsync(winrt::hstring prompt)
+	{
+		if (!m_openAiService.IsRunning())
+		{
+			auto openPicker = Pickers::FileOpenPicker();
+			openPicker.ViewMode(Pickers::PickerViewMode::Thumbnail);
+			openPicker.SuggestedStartLocation(Pickers::PickerLocationId::PicturesLibrary);
+			openPicker.FileTypeFilter().Append(L".png");
+
+			auto file = co_await openPicker.PickSingleFileAsync();
+
+			if (file != nullptr)
+			{
+				auto imageReq = OpenAI::Image::ImageEditRequest{};
+				imageReq.ImageName(file.Name());
+				imageReq.Prompt(prompt);
+				co_await imageReq.SetImageAsync(file);
+
+				auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+				if (response.IsResponseSuccess())
+				{
+					auto imgBuffer = response.Images().GetAt(0);
+					if (imgBuffer != nullptr)
+					{
+						auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(imgBuffer);
+
+						if (stream != nullptr)
+						{
+							auto img = BitmapImage{};
+							img.SetSource(stream);
+							image().Source(img);
+						}
+					}
 				}
 			}
 		}

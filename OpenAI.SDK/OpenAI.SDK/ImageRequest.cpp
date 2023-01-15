@@ -30,7 +30,7 @@ namespace winrt::OpenAI::Image::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/images/generations"));
 
-		winrt::hstring response_format = L"url"; // Either "url" or "b64_json"
+		winrt::hstring response_format = L"url"; // TODO: move it to prop. // Either "url" or "b64_json"
 
 		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":1, \"size\":\"1024x1024\", \"response_format\": \"" + response_format + L"\"}";
 		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
@@ -89,5 +89,35 @@ namespace winrt::OpenAI::Image::implementation
 		}
 
 		co_return false;
+	}
+
+	WWH::HttpRequestMessage ImageEditRequest::BuildHttpRequest()
+	{
+		// Build Image Buffer Content
+		WWH::HttpBufferContent imgContent{ m_imageBuffer };
+		imgContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
+
+		// TODO: Build Mask/Image Buffer Content
+		if (m_imageMask != nullptr)
+		{
+		}
+
+		WWH::HttpMultipartFormDataContent multipartContent{};
+
+		auto fileName = ImageName() == L"" ? L"untitled" : ImageName();
+		multipartContent.Add(imgContent, L"image", fileName);
+		multipartContent.Add(WWH::HttpStringContent{ Prompt()}, L"prompt");
+
+		winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID
+		multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
+
+		// Set up the API endpoint and parameters            
+		WWH::HttpRequestMessage request(
+			WWH::HttpMethod::Post(),
+			WF::Uri(L"https://api.openai.com/v1/images/edits"));
+
+		request.Content(multipartContent);
+
+		return request;
 	}
 }

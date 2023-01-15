@@ -98,7 +98,8 @@ namespace winrt::OpenAI::Image::implementation
 
 		bool IsValid()
 		{
-			if (m_imageBuffer != nullptr)
+			if (m_imageBuffer != nullptr 
+				&& Prompt() != L"")
 			{
 				return true;
 			}
@@ -128,10 +129,11 @@ namespace winrt::OpenAI::Image::implementation
 			return false;
 		}
 
-		//WWH::HttpRequestMessage BuildHttpRequest();
+		WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
 		WS::Streams::IBuffer m_imageBuffer{ nullptr };
+		WS::Streams::IBuffer m_imageMask{ nullptr };
 	};
 }
 
