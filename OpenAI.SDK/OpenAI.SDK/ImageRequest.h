@@ -5,6 +5,9 @@
 #include "Image.ImageVariationRequest.g.h"
 #include "Image.ImageEditRequest.g.h"
 
+#include "winrt/Windows.Web.Http.h"
+
+
 namespace winrt::OpenAI::Image::implementation
 {
 	struct ImageRequest : ImageRequestT<ImageRequest>
@@ -45,19 +48,35 @@ namespace winrt::OpenAI::Image::implementation
 			m_size = val;
 		}
 
-		bool IsValid() { return false; }
+		void ResponseFormat(ResponseFormatType val)
+		{
+			m_responseFormat = val;
+		}
+		ResponseFormatType ResponseFormat()
+		{
+			return m_responseFormat;
+		}
+
+		virtual bool IsValid()
+		{
+			return false; 
+		}
+
+		virtual WWH::HttpRequestMessage BuildHttpRequest() { return nullptr; }
 
 	private:
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_imageName{ L"" };
 		int m_generationNumber{ 1 };
 		SizeType m_size{ SizeType::Size1024 };
+		ResponseFormatType m_responseFormat{ ResponseFormatType::Url };
+
 	};
 
 	struct ImageCreateRequest : ImageCreateRequestT<ImageCreateRequest, ImageRequest>
 	{
 		ImageCreateRequest() {}
-
+		
 		bool IsValid()
 		{
 			if(Prompt() != L"")
@@ -67,23 +86,27 @@ namespace winrt::OpenAI::Image::implementation
 
 			return false;
 		}
+
+		WWH::HttpRequestMessage BuildHttpRequest();
 	};
 
 	struct ImageVariationRequest : ImageVariationRequestT<ImageVariationRequest, ImageRequest>
 	{
 		ImageVariationRequest() {}
-
+		
 		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile file);
 
 		bool IsValid()
 		{
-			if (Prompt() != L"")
+			if (m_imageBuffer != nullptr)
 			{
 				return true;
 			}
 
 			return false;
 		}
+
+		WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
 		WS::Streams::IBuffer m_imageBuffer{ nullptr };
@@ -104,6 +127,8 @@ namespace winrt::OpenAI::Image::implementation
 
 			return false;
 		}
+
+		//WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
 		WS::Streams::IBuffer m_imageBuffer{ nullptr };

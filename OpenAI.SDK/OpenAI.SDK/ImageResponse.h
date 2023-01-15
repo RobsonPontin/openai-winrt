@@ -7,10 +7,16 @@ namespace winrt::OpenAI::Image::implementation
 	struct ImageResponse : ImageResponseT<ImageResponse>
 	{
 		ImageResponse() {}
+		ImageResponse(std::vector<WS::Streams::IBuffer> images);
 
 		bool IsResponseSuccess()
 		{
-			return m_isResponseSuccess;
+			if (Images().Size() > 0)
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		WF::Collections::IVector<WS::Streams::IBuffer> Images()

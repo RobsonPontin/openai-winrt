@@ -7,5 +7,8 @@
 
 namespace winrt::OpenAI::Image::implementation
 {
-
+	ImageResponse::ImageResponse(std::vector<WS::Streams::IBuffer> images)
+	{
+		m_images = images;
+	}
 }

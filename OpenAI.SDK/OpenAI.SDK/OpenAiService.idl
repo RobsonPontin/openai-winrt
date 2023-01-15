@@ -1,10 +1,20 @@
 
 namespace OpenAI
 {
+	enum ModelType
+	{
+		ImageAlpha_001
+	};
+
 	[default_interface]
 	runtimeclass OpenAiOptions
 	{
 		OpenAiOptions();
+
+		OpenAI.ModelType Model{ get; };
+		String OpenAiKey{ get; };
+
+		void SetOpenAikey(String key);
 	};
 
 	[default_interface]
@@ -14,11 +24,8 @@ namespace OpenAI
 
 		Boolean IsRunning{ get; };
 
-		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
-
 		void SetOpenAiSecretKey(String key);
-		Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IBuffer> GenerateDalleImageAsync(String keywords);
-		Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IBuffer> GenerateDalleVariantAsync(Windows.Storage.StorageFile file);
+		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 	}
 }
 
@@ -30,12 +37,19 @@ namespace OpenAI.Image
 		Size1024
 	};
 
+	enum ResponseFormatType
+	{
+		Url,
+		B64_Json
+	};
+
 	unsealed runtimeclass ImageRequest
 	{
 		String Prompt{ get; set; };
 		Int32 CreationNumber{ get; set; };
 		String ImageName{ get; set; };
 		SizeType Size{ get; set; };
+		ResponseFormatType ResponseFormat{ get; set; };
 		Boolean IsValid{ get; };
 	};
 

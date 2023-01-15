@@ -16,6 +16,11 @@ namespace winrt::OpenAI::implementation
         OpenAiService()
         {}
 
+        OpenAiService(OpenAI::OpenAiOptions const& options)
+        {
+            m_openAiOptions = options;
+        }
+
         WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
 
         /// <summary>
@@ -30,7 +35,10 @@ namespace winrt::OpenAI::implementation
 
         void SetOpenAiSecretKey(winrt::hstring key)
         {
-            m_openAiSecretKey = key;
+            if (m_openAiOptions != nullptr)
+            {
+                m_openAiOptions.SetOpenAikey(key);
+            }
         }
 
         bool IsRunning()
@@ -43,7 +51,9 @@ namespace winrt::OpenAI::implementation
             WS::StorageFile m_imageVariant{ nullptr };
 
             bool m_isServiceRunning{ false };
-            winrt::hstring m_openAiSecretKey{ L"" };
+            OpenAI::OpenAiOptions m_openAiOptions;
+
+            const winrt::hstring OPEN_AI_API_URL = L"https://api.openai.com";
     };
 }
 
