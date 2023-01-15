@@ -98,8 +98,7 @@ namespace winrt::OpenAI::Image::implementation
 
 		bool IsValid()
 		{
-			if (m_imageBuffer != nullptr 
-				&& Prompt() != L"")
+			if (m_imageBuffer != nullptr)
 			{
 				return true;
 			}
@@ -121,7 +120,8 @@ namespace winrt::OpenAI::Image::implementation
 
 		bool IsValid()
 		{
-			if (Prompt() != L"")
+			if (m_imageBuffer != nullptr
+				&& Prompt() != L"")
 			{
 				return true;
 			}
