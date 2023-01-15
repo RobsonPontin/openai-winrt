@@ -23,15 +23,14 @@ namespace winrt::OpenAI::implementation
 
         WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
 
-        /// <summary>
-        /// Generates an images based off keywords
-        /// </summary>
-        /// <param name="keywords">A range of keywords</param>
-        /// <param name="openAiKey">The OpenAI secret key</param>
-        /// <returns></returns>
-        WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleImageAsync(winrt::hstring const& keywords);
-
-        WF::IAsyncOperation<WS::Streams::IBuffer> GenerateDalleVariantAsync(WS::StorageFile const& file);
+        void Options(OpenAI::OpenAiOptions val)
+        {
+            m_openAiOptions = val;
+        }
+        OpenAI::OpenAiOptions Options()
+        {
+            return m_openAiOptions;
+        }
 
         void SetOpenAiSecretKey(winrt::hstring key)
         {
