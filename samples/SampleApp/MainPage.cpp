@@ -98,17 +98,24 @@ namespace winrt::SampleApp::implementation
 
 			if (file != nullptr)
 			{
-				auto buffer = co_await m_openAiService.GenerateDalleVariantAsync(file);
+				auto imageReq = OpenAI::Image::ImageVariationRequest{};
+				imageReq.ImageName(file.Name());
+				co_await imageReq.SetImageAsync(file);
 
-				if (buffer != nullptr)
+				auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+				if (response.IsResponseSuccess())
 				{
-					auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(buffer);
-
-					if (stream != nullptr)
+					auto imgBuffer = response.Images().GetAt(0);
+					if (imgBuffer != nullptr)
 					{
-						auto img = BitmapImage{};
-						img.SetSource(stream);
-						image().Source(img);
+						auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(imgBuffer);
+
+						if (stream != nullptr)
+						{
+							auto img = BitmapImage{};
+							img.SetSource(stream);
+							image().Source(img);
+						}
 					}
 				}
 			}
@@ -119,10 +126,14 @@ namespace winrt::SampleApp::implementation
 	{
 		if (!m_openAiService.IsRunning())
 		{
-			auto buffer = co_await m_openAiService.GenerateDalleImageAsync(prompt);
+			auto imageReq = OpenAI::Image::ImageCreateRequest{};
+			imageReq.ImageName(L"ai image");
+			imageReq.Prompt(prompt);
 
-			if (buffer != nullptr)
+			auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+			if (response.IsResponseSuccess())
 			{
+				auto buffer = response.Images().GetAt(0);
 				auto stream = co_await ::SampleApp::Utils::StorageUtils::ToStreamAsync(buffer);
 
 				if (stream != nullptr)
@@ -133,6 +144,8 @@ namespace winrt::SampleApp::implementation
 				}
 			}
 		}
+
+		co_return;
 	}
 }
 

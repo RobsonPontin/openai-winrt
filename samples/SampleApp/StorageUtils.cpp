@@ -31,7 +31,7 @@ namespace SampleApp::Utils
     {
         auto display = DisplayInformation::GetForCurrentView();
         auto renderTargetBitmap = RenderTargetBitmap();
-        co_await renderTargetBitmap.RenderAsync(image, (int)image.Width(), (int)image.Height());
+        co_await renderTargetBitmap.RenderAsync(image);
 
         IBuffer pixels = co_await renderTargetBitmap.GetPixelsAsync();
 
@@ -47,7 +47,7 @@ namespace SampleApp::Utils
         {
             auto savePicker = Pickers::FileSavePicker();
             savePicker.SuggestedStartLocation(Pickers::PickerLocationId::PicturesLibrary);
-            savePicker.FileTypeChoices().Insert(L"PNG", winrt::single_threaded_vector<winrt::hstring>({ L".png" }));
+            savePicker.FileTypeChoices().Insert(L"JPG", winrt::single_threaded_vector<winrt::hstring>({ L".jpg" }));
             // Default file name if the user does not type one in or select a file to replace
             savePicker.SuggestedFileName(L"AI image");
 
@@ -64,12 +64,12 @@ namespace SampleApp::Utils
         if (file != nullptr)
         {
             auto stream = co_await file.OpenAsync(FileAccessMode::ReadWrite);
-            auto encoder = co_await BitmapEncoder::CreateAsync(BitmapEncoder::PngEncoderId(), stream);
+            auto encoder = co_await BitmapEncoder::CreateAsync(BitmapEncoder::JpegEncoderId(), stream);
             encoder.SetPixelData(
                 BitmapPixelFormat::Bgra8, 
                 BitmapAlphaMode::Ignore,
-                static_cast<uint32_t>(image.ActualWidth()),
-                static_cast<uint32_t>(image.ActualHeight()),
+                static_cast<uint32_t>(renderTargetBitmap.PixelWidth()),
+                static_cast<uint32_t>(renderTargetBitmap.PixelHeight()),
                 display.LogicalDpi(),
                 display.LogicalDpi(),
                 data);

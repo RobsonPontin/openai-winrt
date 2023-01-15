@@ -15,3 +15,4 @@
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 
 #include "winrt/OpenAI.h"
+#include "winrt/OpenAI.Image.h"
