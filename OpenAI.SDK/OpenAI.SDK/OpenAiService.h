@@ -46,9 +46,6 @@ namespace winrt::OpenAI::implementation
         }
 
         private:
-            WS::StorageFile m_imageCreated{ nullptr };
-            WS::StorageFile m_imageVariant{ nullptr };
-
             bool m_isServiceRunning{ false };
             OpenAI::OpenAiOptions m_openAiOptions;
 
