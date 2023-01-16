@@ -36,17 +36,25 @@ namespace winrt::SampleApp::implementation
 			{
 				tbImagePromt().IsEnabled(false);
 				m_actionSelected = ImageActionType::Variant;
+
+				btnProcessImage().Content(winrt::box_value(L"Browse and Generate Image"));
 			}
 			else if (tag == L"Create")
 			{
 				tbImagePromt().IsEnabled(true);
 				m_actionSelected = ImageActionType::Create;
+
+				btnProcessImage().Content(winrt::box_value(L"Generate Image"));
 			}
 			else if (tag == L"Edit")
 			{
 				tbImagePromt().IsEnabled(true);
 				m_actionSelected = ImageActionType::Edit;
+
+				btnProcessImage().Content(winrt::box_value(L"Browse and Edit Image"));
 			}
+
+			ddbAction().Content(winrt::box_value(flyoutItem.Text()));
 		}
 	}
 

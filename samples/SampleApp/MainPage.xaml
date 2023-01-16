@@ -12,54 +12,59 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="tbOpenAiKey"
-                 Header="OpenAI Key:"/>
+        <StackPanel>
+            <TextBox x:Name="tbOpenAiKey"
+                     Width="250"
+                     HorizontalAlignment="Left"
+                     Header="OpenAI Key:"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <StackPanel Orientation="Horizontal"
+                        Height="50"
+                        Margin="0 5 0 0">
 
-            <DropDownButton x:Name="ddbAction" Content="Action"
-                            Margin="5 0 0 0">
-                <DropDownButton.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Create Image"
+                <DropDownButton x:Name="ddbAction" 
+                                Content="Create Image"
+                                Margin="5 0 0 0">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Create Image"
                                         Tag="Create"
                                         Click="MenuFlyoutItem_Click"/>
-                        
-                        <MenuFlyoutItem Text="Create Variations"
+
+                            <MenuFlyoutItem Text="Create Variations"
                                         Tag="Variant"
                                         Click="MenuFlyoutItem_Click"/>
-                        
-                        <MenuFlyoutItem Text="Edit Image"
+
+                            <MenuFlyoutItem Text="Edit Image"
                                         Tag="Edit"
                                         Click="MenuFlyoutItem_Click"/>
-                    </MenuFlyout>
-                </DropDownButton.Flyout>
-            </DropDownButton>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
 
-            <TextBox Name="tbImagePromt"                       
-                     Margin="5 0 0 0"
-                     Height="50"
-                     Width="250"/>
+                <TextBox Name="tbImagePromt"                       
+                         Margin="5 0 0 0"
+                         Height="40"
+                         Width="250"/>
 
-            <Button x:Name="btnProcessImage"
+                <Button x:Name="btnProcessImage"
                     Margin="5 0 0 0"
-                    Content="Generate"
+                    Content="Generate Image"
                     Click="btnProcessImage_Click"/>
 
-            <Button x:Name="btnSaveImage"
+                <Button x:Name="btnSaveImage"
                     Margin="5 0 0 0"
                     Content="Save Image"
                     Click="btnSaveImage_Click"/>
+            </StackPanel>
         </StackPanel>
 
+
+
+
         <Image x:Name="image"
-               Grid.Row="1"
-               Grid.ColumnSpan="2"/>
+               Grid.Row="1"/>
     </Grid>
    
 </Page>
