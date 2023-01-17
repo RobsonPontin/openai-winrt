@@ -29,9 +29,9 @@ imageReq.Prompt(prompt);
 auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 ```
 
-### Image Variant
+### Image Variation
 
-Create image variants from a source image file.
+Create image variations from a source image file.
 
 ```cpp
 Windows::Storage::StorageFile file = GetFileFromPicker();
