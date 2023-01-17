@@ -2,7 +2,16 @@
 
 A WinRT SDK that can be used with UWP (Universal Windows Platform) apps.
 
-Visit https://openai.com/ to get your API key. Also documentation with more detail is avaliable there.
+For more information visit https://openai.com/.
+
+## OpenAI Service
+
+It is necessary to initialize the service with a API Key, which can be obtained at https://openai.com/.
+
+```cpp
+OpenAI::OpenAiService m_openAiService{};
+m_openAiService.SetOpenAiSecretKey(L"SECRET API KEY");
+```
 
 ## DALL·E Sample
 
