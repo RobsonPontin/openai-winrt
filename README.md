@@ -42,3 +42,18 @@ co_await imageReq.SetImageAsync(file);
 
 auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 ```
+
+### Image Editing
+
+```cpp
+Windows::Storage::StorageFile file = GetFileFromPicker();
+
+winrt::hstring prompt = L"remove the background from the image";
+
+auto imageReq = OpenAI::Image::ImageEditRequest{};
+imageReq.ImageName(file.Name());
+imageReq.Prompt(prompt);
+co_await imageReq.SetImageAsync(file);
+
+auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+```
