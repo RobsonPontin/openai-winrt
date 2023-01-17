@@ -22,7 +22,35 @@
 
 namespace winrt::OpenAI::Image::implementation
 {
+	// Helpers
+	winrt::hstring ResponseFormatToString(ResponseFormatType format)
+	{
+		switch (format)
+		{
+		case ResponseFormatType::Url:
+			return L"url";
+			break;
+
+		case ResponseFormatType::b64_json:
+			return L"b64_json";
+			break;
+		}
+	}
+
+	winrt::hstring SizeToString(SizeType size)
+	{
+		switch (size)
+		{
+		case SizeType::Size1024:
+			return L"1024x1024";
+			break;
+		}
+
+	}
+
 	// Image Generation
+
+	// TODO: consider changing HttpStringContent to HttpMultipartFormDataContent
 	WWH::HttpRequestMessage ImageCreateRequest::BuildHttpRequest()
 	{
 		// Set up the API endpoint and parameters
@@ -30,9 +58,11 @@ namespace winrt::OpenAI::Image::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/images/generations"));
 
-		winrt::hstring response_format = L"url"; // TODO: move it to prop. // Either "url" or "b64_json"
+		winrt::hstring response_format = ResponseFormatToString(ResponseFormat());
+		winrt::hstring size = SizeToString(Size());
+		winrt::hstring number = winrt::to_hstring(CreationNumber());
 
-		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":1, \"size\":\"1024x1024\", \"response_format\": \"" + response_format + L"\"}";
+		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + size + L"\", \"response_format\": \"" + response_format + L"\"}";
 		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
@@ -40,7 +70,7 @@ namespace winrt::OpenAI::Image::implementation
 		return request;
 	}
 
-	// Image Variant
+	// Image Variation
 	WF::IAsyncOperation<bool> ImageVariationRequest::SetImageAsync(WS::StorageFile file)
 	{
 		auto imgBuffer = co_await ::OpenAI::Utils::Convert::FileToPngBufferAsync(file);
@@ -96,16 +126,14 @@ namespace winrt::OpenAI::Image::implementation
 		// Build Image Buffer Content
 		WWH::HttpBufferContent imgContent{ m_imageBuffer };
 		imgContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
-
-		// TODO: Build Mask/Image Buffer Content
-		if (m_imageMask != nullptr)
-		{
-		}
+		WWH::HttpBufferContent maskContent{ m_imageMask };
+		maskContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
 
 		WWH::HttpMultipartFormDataContent multipartContent{};
 
 		auto fileName = ImageName() == L"" ? L"untitled" : ImageName();
 		multipartContent.Add(imgContent, L"image", fileName);
+		multipartContent.Add(maskContent, L"image", fileName);
 		multipartContent.Add(WWH::HttpStringContent{ Prompt()}, L"prompt");
 
 		winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID

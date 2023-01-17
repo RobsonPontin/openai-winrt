@@ -40,7 +40,7 @@ namespace OpenAI.Image
 	enum ResponseFormatType
 	{
 		Url,
-		B64_Json
+		b64_json
 	};
 
 	unsealed runtimeclass ImageRequest
