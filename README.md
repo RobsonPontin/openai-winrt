@@ -45,6 +45,8 @@ auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 
 ### Image Editing
 
+Create a new image from a source image file considering the prompt editing commands. 
+
 ```cpp
 Windows::Storage::StorageFile file = GetFileFromPicker();
 
