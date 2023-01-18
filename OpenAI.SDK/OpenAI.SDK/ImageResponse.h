@@ -35,7 +35,6 @@ namespace winrt::OpenAI::Image::implementation
 		}
 
 	private:
-		bool m_isResponseSuccess{ false };
 		std::vector<WS::Streams::IBuffer> m_images;
 	};
 }

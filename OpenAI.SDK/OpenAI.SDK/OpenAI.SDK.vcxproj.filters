@@ -18,6 +18,12 @@
     <ClCompile Include="ImageUtils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CompletionRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
+    <ClCompile Include="CompletionResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -38,6 +44,12 @@
     </ClInclude>
     <ClInclude Include="ImageUtils.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CompletionRequest.h">
+      <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="CompletionResponse.h">
+      <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

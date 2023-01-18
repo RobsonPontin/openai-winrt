@@ -25,7 +25,7 @@ namespace winrt::OpenAI::implementation
 
 	private:
 		hstring m_openAiKey{ L"" };
-		OpenAI::ModelType m_modelType{ ModelType::ImageAlpha_001 };
+		OpenAI::ModelType m_modelType{ ModelType::image_alpha_001 };
 	};
 }
 

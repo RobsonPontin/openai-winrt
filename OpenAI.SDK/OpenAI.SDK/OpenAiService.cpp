@@ -21,6 +21,8 @@
 
 namespace winrt::OpenAI::implementation
 {
+    // TODO: all request Image, Completion, etc... should derive from an interface for IsValid, BuildHttp, Prompt, Model, etc...
+
     WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest)
     {
         if (m_openAiOptions != nullptr && imageRequest.IsValid())
@@ -66,5 +68,46 @@ namespace winrt::OpenAI::implementation
 
         // TODO: Handle error and response result
         co_return winrt::make<OpenAI::Image::implementation::ImageResponse>();
+    }
+
+    WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest)
+    {
+        if (m_openAiOptions != nullptr && completionRequest.IsValid())
+        {
+            auto options_impl = winrt::get_self<implementation::OpenAiOptions>(m_openAiOptions);
+            auto openAiKey = options_impl->OpenAiKey();
+
+            auto request_impl = winrt::get_self<OpenAI::Completion::implementation::CompletionRequest>(completionRequest);
+            auto httpRequest = request_impl->BuildHttpRequest();
+
+            // Create an HTTP client to make the API request
+            WWH::HttpClient httpClient;
+            httpClient.DefaultRequestHeaders().Authorization(
+                WWH::Headers::HttpCredentialsHeaderValue(L"Bearer", openAiKey));
+
+            // Send the request and retrieve the response           
+            WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
+            auto stringResult = co_await response.Content().ReadAsStringAsync();
+            if (response.IsSuccessStatusCode())
+            {
+                // TODO: parse the result properly. Example:
+                /*
+                     { "id":"cmpl-6Zx709yAFD1tRUubVOm3t4QXRAIqM",
+                       "object":"text_completion",
+                       "created":1674026726,
+                       "model":"text-davinci-003",
+                       "choices":[
+                       {
+                          "text":"\n\nQ: Did you hear about the restaurant on the moon?\nA",
+                          "index":0,
+                          "logprobs":null,
+                          "finish_reason":"length"
+                       }],"usage":{"prompt_tokens":6,"completion_tokens":16,"total_tokens":22}}
+                */
+                co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(stringResult);
+            }
+
+            co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>();
+        }
     }
 }

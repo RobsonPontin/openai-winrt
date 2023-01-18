@@ -5,6 +5,8 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <ImageRequest.h>
 #include <ImageResponse.h>
+#include <CompletionRequest.h>
+#include <CompletionResponse.h>
 
 
 namespace winrt::OpenAI::implementation
@@ -22,6 +24,8 @@ namespace winrt::OpenAI::implementation
         }
 
         WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
+
+        WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {

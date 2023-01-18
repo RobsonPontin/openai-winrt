@@ -29,12 +29,12 @@ namespace winrt::OpenAI::Image::implementation
 		{
 		case ResponseFormatType::Url:
 			return L"url";
-			break;
 
 		case ResponseFormatType::b64_json:
 			return L"b64_json";
-			break;
 		}
+
+		return L"";
 	}
 
 	winrt::hstring SizeToString(SizeType size)
@@ -43,9 +43,9 @@ namespace winrt::OpenAI::Image::implementation
 		{
 		case SizeType::Size1024:
 			return L"1024x1024";
-			break;
 		}
 
+		return L"";
 	}
 
 	// Image Generation

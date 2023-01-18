@@ -116,14 +116,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
+    <ClInclude Include="CompletionResponse.h" />
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
     <ClInclude Include="ImageUtils.h" />
     <ClInclude Include="OpenAiOptions.h" />
     <ClInclude Include="OpenAiService.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CompletionRequest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CompletionResponse.cpp" />
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
@@ -133,6 +136,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="CompletionRequest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenAI_SDK.def" />

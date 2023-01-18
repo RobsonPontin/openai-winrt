@@ -3,7 +3,9 @@ namespace OpenAI
 {
 	enum ModelType
 	{
-		ImageAlpha_001
+		image_alpha_001,
+		text_embedding_ada_002,
+		text_davinci_003,
 	};
 
 	[default_interface]
@@ -25,6 +27,9 @@ namespace OpenAI
 		Boolean IsRunning{ get; };
 
 		void SetOpenAiSecretKey(String key);
+
+		[default_overload]
+		Windows.Foundation.IAsyncOperation<OpenAI.Completion.CompletionResponse> RunRequestAsync(OpenAI.Completion.CompletionRequest completionRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 	}
 }
@@ -81,5 +86,26 @@ namespace OpenAI.Image
 
 		Boolean IsResponseSuccess{ get; };
 		Windows.Foundation.Collections.IVector<Windows.Storage.Streams.IBuffer> Images{ get; };
+	};
+}
+
+// OpenAI Completion
+namespace OpenAI.Completion
+{
+	[default_interface]
+	runtimeclass CompletionRequest
+	{
+		CompletionRequest();
+
+		String Prompt{ get; set; };
+		Boolean IsValid{ get; };
+	};
+
+	unsealed runtimeclass CompletionResponse
+	{
+		protected CompletionResponse();
+
+		Boolean IsResponseSuccess{ get; };
+		String ResponseText{ get; };
 	};
 }
