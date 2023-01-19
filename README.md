@@ -13,7 +13,23 @@ OpenAI::OpenAiService m_openAiService{};
 m_openAiService.SetOpenAiSecretKey(L"SECRET API KEY");
 ```
 
-## DALL·E Sample
+## GPT3 APIs
+
+### Text Completion
+
+With text compoetion you can input some text as a prompt, and the model will generate a text completion that attempts to match whatever context or pattern you gave it.
+
+```cpp
+winrt::hstring prompt = L"tell me a very nice joke";
+
+auto completionReq = OpenAI::Completion::CompletionRequest{};
+completionReq.Prompt(prompt);
+completionReq.Model(ModelType::text_davinci_003);
+
+auto response = co_await m_openAiService.RunRequestAsync(completionReq);
+```
+
+## DALL·E
 
 ### Image Generation
 
