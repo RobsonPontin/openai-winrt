@@ -109,3 +109,21 @@ namespace OpenAI.Completion
 		String ResponseText{ get; };
 	};
 }
+
+// OpenAI Embedding
+namespace OpenAI.Embedding
+{
+	[default_interface]
+	runtimeclass EmbeddingRequest
+	{
+		EmbeddingRequest();
+
+		String Prompt{ get; set; };
+		Boolean IsValid{ get; };
+	};
+
+	unsealed runtimeclass EmbeddingResponse
+	{
+		protected EmbeddingResponse();
+	};
+}

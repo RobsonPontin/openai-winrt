@@ -24,6 +24,12 @@
     <ClCompile Include="CompletionResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="EmbeddingRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
+    <ClCompile Include="EmbeddingResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -49,6 +55,12 @@
       <Filter>src\Requests</Filter>
     </ClInclude>
     <ClInclude Include="CompletionResponse.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="EmbeddingRequest.h">
+      <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="EmbeddingResponse.h">
       <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>

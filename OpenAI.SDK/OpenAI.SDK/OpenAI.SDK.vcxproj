@@ -117,6 +117,8 @@
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="CompletionResponse.h" />
+    <ClInclude Include="EmbeddingRequest.h" />
+    <ClInclude Include="EmbeddingResponse.h" />
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
     <ClInclude Include="ImageUtils.h" />
@@ -127,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CompletionResponse.cpp" />
+    <ClCompile Include="EmbeddingRequest.cpp" />
+    <ClCompile Include="EmbeddingResponse.cpp" />
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
