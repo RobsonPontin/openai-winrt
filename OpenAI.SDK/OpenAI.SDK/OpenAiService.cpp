@@ -90,7 +90,20 @@ namespace winrt::OpenAI::implementation
             auto stringResult = co_await response.Content().ReadAsStringAsync();
             if (response.IsSuccessStatusCode())
             {
-                // TODO: parse the result properly. Example:
+                auto json = WDJ::JsonObject::Parse(stringResult);
+
+                // Extract the text completion data from the JSON response
+                auto id = json.GetNamedString(L"id");
+                auto object = json.GetNamedString(L"object");
+                auto created = json.GetNamedNumber(L"created");
+                auto model = json.GetNamedString(L"model");
+
+                // Get choices vector
+                auto choices = json.GetNamedValue(L"choices");
+                auto firstChoice = choices.GetArray().GetAt(0).GetObject();
+                auto text = firstChoice.GetNamedString(L"text");
+
+                // TODO: Example of response to be parsed:
                 /*
                      { "id":"cmpl-6Zx709yAFD1tRUubVOm3t4QXRAIqM",
                        "object":"text_completion",
@@ -104,7 +117,7 @@ namespace winrt::OpenAI::implementation
                           "finish_reason":"length"
                        }],"usage":{"prompt_tokens":6,"completion_tokens":16,"total_tokens":22}}
                 */
-                co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(stringResult);
+                co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(text);
             }
 
             co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>();

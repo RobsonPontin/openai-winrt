@@ -8,11 +8,12 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::SampleApp::implementation
 {
-    enum ImageActionType
+    enum ActionType
     {
-        Create,
-        Variant,
-        Edit
+        ImageCreate,
+        ImageVariation,
+        ImageEdit,
+        TextCompletion
     };
 
     struct MainPage : MainPageT<MainPage>
@@ -31,11 +32,16 @@ namespace winrt::SampleApp::implementation
 
     private:
         OpenAI::OpenAiService m_openAiService;
-        ImageActionType m_actionSelected{ ImageActionType::Create };
+        ActionType m_actionSelected{ ActionType::ImageCreate };
 
         IAsyncAction ProcessImageCreationAsync(winrt::hstring prompt);
         IAsyncAction ProcessImageVariantAsync();
         IAsyncAction ProcessImageEditAsync(winrt::hstring prompt);
+
+        IAsyncAction ProcessTextCompletionAsync(winrt::hstring prompt);
+
+        void ShowTextResult();
+        void ShowImageResult();
     };
 }
 

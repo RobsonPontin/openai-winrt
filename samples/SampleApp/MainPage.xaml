@@ -39,6 +39,10 @@
                             <MenuFlyoutItem Text="Edit Image"
                                         Tag="Edit"
                                         Click="MenuFlyoutItem_Click"/>
+
+                            <MenuFlyoutItem Text="Text Completion"
+                                        Tag="TextCompletion"
+                                        Click="MenuFlyoutItem_Click"/>
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>
@@ -60,11 +64,14 @@
             </StackPanel>
         </StackPanel>
 
-
-
-
         <Image x:Name="image"
                Grid.Row="1"/>
+
+        <TextBlock x:Name="textBlock"
+                   Grid.Row="1"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
     </Grid>
    
 </Page>

@@ -35,23 +35,30 @@ namespace winrt::SampleApp::implementation
 			if (tag == L"Variant")
 			{
 				tbImagePromt().IsEnabled(false);
-				m_actionSelected = ImageActionType::Variant;
+				m_actionSelected = ActionType::ImageVariation;
 
 				btnProcessImage().Content(winrt::box_value(L"Browse and Generate Image"));
 			}
 			else if (tag == L"Create")
 			{
 				tbImagePromt().IsEnabled(true);
-				m_actionSelected = ImageActionType::Create;
+				m_actionSelected = ActionType::ImageCreate;
 
 				btnProcessImage().Content(winrt::box_value(L"Generate Image"));
 			}
 			else if (tag == L"Edit")
 			{
 				tbImagePromt().IsEnabled(true);
-				m_actionSelected = ImageActionType::Edit;
+				m_actionSelected = ActionType::ImageEdit;
 
 				btnProcessImage().Content(winrt::box_value(L"Browse and Edit Image"));
+			}
+			else if (tag == L"TextCompletion")
+			{
+				tbImagePromt().IsEnabled(true);
+				m_actionSelected = ActionType::TextCompletion;
+
+				btnProcessImage().Content(winrt::box_value(L"Text Completion"));
 			}
 
 			ddbAction().Content(winrt::box_value(flyoutItem.Text()));
@@ -71,23 +78,27 @@ namespace winrt::SampleApp::implementation
 
 		switch (m_actionSelected)
 		{
-		case ImageActionType::Create:
-
+		case ActionType::ImageCreate:
 			if (tbImagePromt().Text() != L"")
 			{
 				co_await ProcessImageCreationAsync(tbImagePromt().Text());
 			}
 			break;
 
-		case ImageActionType::Edit:
+		case ActionType::ImageEdit:
 			if (tbImagePromt().Text() != L"")
 			{
 				co_await ProcessImageEditAsync(tbImagePromt().Text());
 			}
 			break;
 
-		case ImageActionType::Variant:
+		case ActionType::ImageVariation:
 			co_await ProcessImageVariantAsync();
+			break;
+
+
+		case ActionType::TextCompletion:
+			co_await ProcessTextCompletionAsync(tbImagePromt().Text());
 			break;
 		}
 	}
@@ -97,6 +108,7 @@ namespace winrt::SampleApp::implementation
 		co_await ::SampleApp::Utils::StorageUtils::CreateFileFromImageAsync(image(), false);
 	}
 
+#pragma region Image Generation
 	IAsyncAction MainPage::ProcessImageVariantAsync()
 	{
 		if (!m_openAiService.IsRunning())
@@ -127,6 +139,8 @@ namespace winrt::SampleApp::implementation
 							auto img = BitmapImage{};
 							img.SetSource(stream);
 							image().Source(img);
+
+							ShowImageResult();
 						}
 					}
 				}
@@ -153,6 +167,8 @@ namespace winrt::SampleApp::implementation
 					auto img = BitmapImage{};
 					img.SetSource(stream);
 					image().Source(img);
+
+					ShowImageResult();
 				}
 			}
 		}
@@ -191,6 +207,8 @@ namespace winrt::SampleApp::implementation
 							auto img = BitmapImage{};
 							img.SetSource(stream);
 							image().Source(img);
+
+							ShowImageResult();
 						}
 					}
 				}
@@ -198,6 +216,35 @@ namespace winrt::SampleApp::implementation
 		}
 
 		co_return;
+	}
+#pragma endregion
+
+	IAsyncAction MainPage::ProcessTextCompletionAsync(winrt::hstring prompt)
+	{
+		if (!m_openAiService.IsRunning())
+		{
+			auto imageReq = OpenAI::Completion::CompletionRequest{};
+			imageReq.Prompt(prompt);
+
+			auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+			if (response.IsResponseSuccess())
+			{
+				textBlock().Text(response.ResponseText());
+				ShowTextResult();
+			}
+		}
+	}
+
+	void MainPage::ShowTextResult()
+	{
+		textBlock().Visibility(Windows::UI::Xaml::Visibility::Visible);
+		image().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
+	}
+
+	void MainPage::ShowImageResult()
+	{
+		textBlock().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
+		image().Visibility(Windows::UI::Xaml::Visibility::Visible);
 	}
 }
 
