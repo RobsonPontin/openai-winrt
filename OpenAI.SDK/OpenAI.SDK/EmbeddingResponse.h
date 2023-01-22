@@ -8,6 +8,7 @@ namespace winrt::OpenAI::Embedding::implementation
 	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse>
 	{
 		EmbeddingResponse() {}
+		EmbeddingResponse(hstring responseText);
 
 		bool IsResponseSuccess()
 		{

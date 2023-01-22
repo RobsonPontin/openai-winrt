@@ -30,6 +30,9 @@
     <ClCompile Include="EmbeddingResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="EnumUtils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="EmbeddingResponse.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumUtils.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

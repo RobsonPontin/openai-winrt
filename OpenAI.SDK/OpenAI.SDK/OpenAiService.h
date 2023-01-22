@@ -7,6 +7,8 @@
 #include <ImageResponse.h>
 #include <CompletionRequest.h>
 #include <CompletionResponse.h>
+#include <EmbeddingRequest.h>
+#include <EmbeddingResponse.h>
 
 
 namespace winrt::OpenAI::implementation
@@ -26,6 +28,8 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
 
         WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest);
+
+        WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {

@@ -20,18 +20,18 @@ namespace winrt::OpenAI::Embedding::implementation
 			m_model = val;
 		}
 
-		winrt::hstring Prompt()
+		winrt::hstring Input()
 		{
-			return m_prompt;
+			return m_input;
 		}
-		void Prompt(winrt::hstring val)
+		void Input(winrt::hstring val)
 		{
-			m_prompt = val;
+			m_input = val;
 		}
 
 		bool IsValid()
 		{
-			if (Prompt() != L"")
+			if (Input() != L"")
 			{
 				return true;
 			}
@@ -42,8 +42,8 @@ namespace winrt::OpenAI::Embedding::implementation
 		WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
-		winrt::hstring m_prompt{ L"" };
-		OpenAI::ModelType m_model{ ModelType::text_davinci_003 };
+		winrt::hstring m_input{ L"" };
+		OpenAI::ModelType m_model{ ModelType::text_embedding_ada_002 };
 	};
 }
 

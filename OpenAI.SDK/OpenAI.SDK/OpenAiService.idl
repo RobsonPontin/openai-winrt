@@ -30,6 +30,7 @@ namespace OpenAI
 
 		[default_overload]
 		Windows.Foundation.IAsyncOperation<OpenAI.Completion.CompletionResponse> RunRequestAsync(OpenAI.Completion.CompletionRequest completionRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Embedding.EmbeddingResponse> RunRequestAsync(OpenAI.Embedding.EmbeddingRequest embeddingRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 	}
 }
@@ -118,12 +119,15 @@ namespace OpenAI.Embedding
 	{
 		EmbeddingRequest();
 
-		String Prompt{ get; set; };
+		String Input{ get; set; };
 		Boolean IsValid{ get; };
 	};
 
 	unsealed runtimeclass EmbeddingResponse
 	{
 		protected EmbeddingResponse();
+
+		Boolean IsResponseSuccess();
+		String ResponseText();
 	};
 }

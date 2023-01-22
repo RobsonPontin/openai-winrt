@@ -37,7 +37,7 @@ namespace winrt::OpenAI::implementation
             WWH::HttpClient httpClient;
             httpClient.DefaultRequestHeaders().Authorization(
                 WWH::Headers::HttpCredentialsHeaderValue(L"Bearer", openAiKey));
-                        
+
             // Send the request and retrieve the response           
             WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
             auto stringResult = co_await response.Content().ReadAsStringAsync();
@@ -121,6 +121,36 @@ namespace winrt::OpenAI::implementation
             }
 
             co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>();
+        }
+    }
+
+    WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest)
+    {
+        if (m_openAiOptions != nullptr && embeddingRequest.IsValid())
+        {
+            auto options_impl = winrt::get_self<implementation::OpenAiOptions>(m_openAiOptions);
+            auto openAiKey = options_impl->OpenAiKey();
+
+            auto request_impl = winrt::get_self<OpenAI::Embedding::implementation::EmbeddingRequest>(embeddingRequest);
+            auto httpRequest = request_impl->BuildHttpRequest();
+
+            // Create an HTTP client to make the API request
+            WWH::HttpClient httpClient;
+            httpClient.DefaultRequestHeaders().Authorization(
+                WWH::Headers::HttpCredentialsHeaderValue(L"Bearer", openAiKey));
+
+            // Send the request and retrieve the response           
+            WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
+            auto stringResult = co_await response.Content().ReadAsStringAsync();
+            if (response.IsSuccessStatusCode())
+            {
+                // TODO: parse JSON. Also need to evaluate how to handle this into props of EmbeddingResponse?
+                // auto json = WDJ::JsonObject::Parse(stringResult);
+
+                co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(stringResult);
+            }
+
+            co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>();
         }
     }
 }
