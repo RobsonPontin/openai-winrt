@@ -13,7 +13,8 @@ namespace winrt::SampleApp::implementation
         ImageCreate,
         ImageVariation,
         ImageEdit,
-        TextCompletion
+        TextCompletion,
+        TextEmbedding
     };
 
     struct MainPage : MainPageT<MainPage>
@@ -21,9 +22,6 @@ namespace winrt::SampleApp::implementation
         MainPage()
         {
         }
-
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
 
     public:
         IAsyncAction btnProcessImage_Click(IInspectable const& sender, RoutedEventArgs const& e);
@@ -39,6 +37,7 @@ namespace winrt::SampleApp::implementation
         IAsyncAction ProcessImageEditAsync(winrt::hstring prompt);
 
         IAsyncAction ProcessTextCompletionAsync(winrt::hstring prompt);
+        IAsyncAction ProcessTextEmbeddingAsync(winrt::hstring prompt);
 
         void ShowTextResult();
         void ShowImageResult();

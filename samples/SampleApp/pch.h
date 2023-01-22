@@ -17,3 +17,4 @@
 #include "winrt/OpenAI.h"
 #include "winrt/OpenAI.Image.h"
 #include "winrt/OpenAI.Completion.h"
+#include "winrt/OpenAI.Embedding.h"

@@ -16,16 +16,6 @@ using namespace Windows::UI::Xaml::Controls;
 
 namespace winrt::SampleApp::implementation
 {
-    int32_t MainPage::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
-
-    void MainPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
 	void MainPage::MenuFlyoutItem_Click(IInspectable const& sender, RoutedEventArgs const&)
 	{
 		auto flyoutItem = sender.try_as<MenuFlyoutItem>();
@@ -59,6 +49,13 @@ namespace winrt::SampleApp::implementation
 				m_actionSelected = ActionType::TextCompletion;
 
 				btnProcessImage().Content(winrt::box_value(L"Text Completion"));
+			}
+			else if (tag == L"TextEmbedding")
+			{
+				tbImagePromt().IsEnabled(true);
+				m_actionSelected = ActionType::TextEmbedding;
+
+				btnProcessImage().Content(winrt::box_value(L"Text Embedding"));
 			}
 
 			ddbAction().Content(winrt::box_value(flyoutItem.Text()));
@@ -99,6 +96,10 @@ namespace winrt::SampleApp::implementation
 
 		case ActionType::TextCompletion:
 			co_await ProcessTextCompletionAsync(tbImagePromt().Text());
+			break;
+
+		case ActionType::TextEmbedding:
+			co_await ProcessTextEmbeddingAsync(tbImagePromt().Text());
 			break;
 		}
 	}
@@ -234,6 +235,23 @@ namespace winrt::SampleApp::implementation
 			}
 		}
 	}
+
+	IAsyncAction MainPage::ProcessTextEmbeddingAsync(winrt::hstring prompt)
+	{
+		if (!m_openAiService.IsRunning())
+		{
+			auto embReq = OpenAI::Embedding::EmbeddingRequest{};
+			embReq.Input(prompt);
+
+			auto response = co_await m_openAiService.RunRequestAsync(embReq);
+			if (response.IsResponseSuccess())
+			{
+				textBlock().Text(response.ResponseText());
+				ShowTextResult();
+			}
+		}
+	}
+
 
 	void MainPage::ShowTextResult()
 	{
