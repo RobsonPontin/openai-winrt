@@ -18,7 +18,7 @@ namespace winrt::OpenAI::Completion::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/completions"));
 
-		winrt::hstring model = ::OpenAI::Converters::ModelTypeToString(Model());
+		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
 
 		auto prompt = L"{\"model\": \"" + model + L"\", \"prompt\": \"" + Prompt() + L"\"}";
 		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);

@@ -18,36 +18,11 @@
 #endif
 
 #include "ImageUtils.h"
+#include "EnumUtils.h"
 #include "winrt/Windows.Web.Http.Headers.h"
 
 namespace winrt::OpenAI::Image::implementation
 {
-	// Helpers
-	winrt::hstring ResponseFormatToString(ResponseFormatType format)
-	{
-		switch (format)
-		{
-		case ResponseFormatType::Url:
-			return L"url";
-
-		case ResponseFormatType::b64_json:
-			return L"b64_json";
-		}
-
-		return L"";
-	}
-
-	winrt::hstring SizeToString(SizeType size)
-	{
-		switch (size)
-		{
-		case SizeType::Size1024:
-			return L"1024x1024";
-		}
-
-		return L"";
-	}
-
 	// Image Generation
 
 	// TODO: consider changing HttpStringContent to HttpMultipartFormDataContent
@@ -58,11 +33,11 @@ namespace winrt::OpenAI::Image::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/images/generations"));
 
-		winrt::hstring response_format = ResponseFormatToString(ResponseFormat());
-		winrt::hstring size = SizeToString(Size());
+		winrt::hstring response_format = ::Utils::Converters::ResponseFormatToString(ResponseFormat());
+		winrt::hstring imageSize = ::Utils::Converters::ImageSizeToString(Size());
 		winrt::hstring number = winrt::to_hstring(CreationNumber());
 
-		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + size + L"\", \"response_format\": \"" + response_format + L"\"}";
+		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\"}";
 		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);

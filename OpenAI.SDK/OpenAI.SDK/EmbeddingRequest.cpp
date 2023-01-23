@@ -18,7 +18,7 @@ namespace winrt::OpenAI::Embedding::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/embeddings"));
 
-		winrt::hstring model = ::OpenAI::Converters::ModelTypeToString(Model());
+		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
 
 		auto prompt = L"{\"model\": \"" + model + L"\", \"input\": \"" + Input() + L"\"}";
 		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);

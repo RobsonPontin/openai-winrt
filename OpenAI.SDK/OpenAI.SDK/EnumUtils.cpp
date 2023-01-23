@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "EnumUtils.h"
 
+using namespace winrt::OpenAI::Image;
 
-namespace OpenAI::Converters
+namespace Utils::Converters
 {
     static const std::map<winrt::OpenAI::ModelType, winrt::hstring> ModelTypesNames =
     {
@@ -23,4 +24,29 @@ namespace OpenAI::Converters
             return it->second;
         }
     }
+
+	winrt::hstring ResponseFormatToString(ResponseFormatType format)
+	{
+		switch (format)
+		{
+		case ResponseFormatType::Url:
+			return L"url";
+
+		case ResponseFormatType::b64_json:
+			return L"b64_json";
+		}
+
+		return L"";
+	}
+
+	winrt::hstring ImageSizeToString(SizeType size)
+	{
+		switch (size)
+		{
+		case SizeType::Size1024:
+			return L"1024x1024";
+		}
+
+		return L"";
+	}
 }
