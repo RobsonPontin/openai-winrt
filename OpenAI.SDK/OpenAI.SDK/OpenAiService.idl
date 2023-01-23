@@ -13,10 +13,9 @@ namespace OpenAI
 	{
 		OpenAiOptions();
 
-		OpenAI.ModelType Model{ get; };
-		String OpenAiKey{ get; };
+		String OpenAiKey{ get; set; };
 
-		void SetOpenAikey(String key);
+		Boolean SetOpenAiKeyFromEnvironmentVar(String enviromentVar);
 	};
 
 	[default_interface]

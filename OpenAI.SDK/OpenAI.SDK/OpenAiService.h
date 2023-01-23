@@ -44,7 +44,7 @@ namespace winrt::OpenAI::implementation
         {
             if (m_openAiOptions != nullptr)
             {
-                m_openAiOptions.SetOpenAikey(key);
+                m_openAiOptions.OpenAiKey(key);
             }
         }
 
