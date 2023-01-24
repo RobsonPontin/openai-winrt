@@ -143,9 +143,29 @@ namespace winrt::OpenAI::implementation
             WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
             auto stringResult = co_await response.Content().ReadAsStringAsync();
             if (response.IsSuccessStatusCode())
-            {
-                // TODO: parse JSON. Also need to evaluate how to handle this into props of EmbeddingResponse?
-                // auto json = WDJ::JsonObject::Parse(stringResult);
+            {                
+                auto json = WDJ::JsonObject::Parse(stringResult);
+                auto data = json.GetNamedArray(L"data");
+                
+                std::vector<double> embeddingList{};
+                int32_t index = 0;
+
+                for (auto embedding : data)
+                {
+                    auto obj = embedding.GetObject();
+                    index = obj.GetNamedNumber(L"index");
+                    auto embeddingArray = obj.GetNamedArray(L"embedding");
+
+                    for (int i = 0; i < embeddingArray.Size(); ++i)
+                    {
+                        double value = embeddingArray.GetNumberAt(i);
+                        embeddingList.push_back(value);
+                    }
+                }
+
+                // TODO: continue the proper parsing of this data. The idea is to create a list of enbeddingValue which will be 
+                // hold by the EmbeddingResponse.
+                auto embeddingVal = winrt::make<OpenAI::Embedding::implementation::EmbeddingValue>(index, embeddingList);
 
                 co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(stringResult);
             }

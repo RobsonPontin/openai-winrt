@@ -128,5 +128,12 @@ namespace OpenAI.Embedding
 
 		Boolean IsResponseSuccess();
 		String ResponseText();
+		Windows.Foundation.Collections.IVector<OpenAI.Embedding.EmbeddingValue> Data{ get; };
+	};
+
+	[default_interface]
+	runtimeclass EmbeddingValue
+	{
+		EmbeddingValue();
 	};
 }
