@@ -246,7 +246,23 @@ namespace winrt::SampleApp::implementation
 			auto response = co_await m_openAiService.RunRequestAsync(embReq);
 			if (response.IsResponseSuccess())
 			{
-				textBlock().Text(response.ResponseText());
+				auto result = response.Data().First();
+				auto embedding = result.Current().Embedding();
+
+				winrt::hstring resultText = L"";
+				for (int i = 0; i < embedding.Size(); ++i)
+				{
+					if (i == 0)
+					{
+						resultText = winrt::to_hstring(embedding.GetAt(i));
+					}
+					else
+					{
+						resultText = resultText + L"; " + winrt::to_hstring(embedding.GetAt(i));
+					}
+				}
+
+				textBlock().Text(resultText);
 				ShowTextResult();
 			}
 		}
