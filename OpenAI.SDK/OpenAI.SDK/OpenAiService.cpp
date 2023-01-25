@@ -146,28 +146,35 @@ namespace winrt::OpenAI::implementation
             {                
                 auto json = WDJ::JsonObject::Parse(stringResult);
                 auto data = json.GetNamedArray(L"data");
-                
-                std::vector<double> embeddingList{};
-                int32_t index = 0;
+               
+                WF::Collections::IVector<Embedding::EmbeddingValue> embeddingList{ single_threaded_vector<Embedding::EmbeddingValue>() };
 
-                for (auto embedding : data)
+                for (auto jsonValue : data)
                 {
-                    auto obj = embedding.GetObject();
-                    index = obj.GetNamedNumber(L"index");
+                    std::vector<double> embeddingValues{};
+                    int32_t index = 0;
+
+                    auto obj = jsonValue.GetObject();
+                    index = static_cast<int32_t>(obj.GetNamedNumber(L"index"));
                     auto embeddingArray = obj.GetNamedArray(L"embedding");
 
-                    for (int i = 0; i < embeddingArray.Size(); ++i)
+                    for (uint32_t i = 0; i < embeddingArray.Size(); ++i)
                     {
                         double value = embeddingArray.GetNumberAt(i);
-                        embeddingList.push_back(value);
+                        embeddingValues.push_back(value);
+                    }
+
+                    if (embeddingValues.size() > 0)
+                    {
+                        auto embeddingVal = winrt::make<OpenAI::Embedding::implementation::EmbeddingValue>(index, embeddingValues);
+                        embeddingList.Append(embeddingVal);
                     }
                 }
 
-                // TODO: continue the proper parsing of this data. The idea is to create a list of enbeddingValue which will be 
-                // hold by the EmbeddingResponse.
-                auto embeddingVal = winrt::make<OpenAI::Embedding::implementation::EmbeddingValue>(index, embeddingList);
-
-                co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(stringResult);
+                if (embeddingList.Size() > 0)
+                {
+                    co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(embeddingList);
+                }
             }
 
             co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>();

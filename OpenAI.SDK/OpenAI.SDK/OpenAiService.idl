@@ -127,13 +127,14 @@ namespace OpenAI.Embedding
 		protected EmbeddingResponse();
 
 		Boolean IsResponseSuccess();
-		String ResponseText();
 		Windows.Foundation.Collections.IVector<OpenAI.Embedding.EmbeddingValue> Data{ get; };
 	};
 
-	[default_interface]
-	runtimeclass EmbeddingValue
+	unsealed runtimeclass EmbeddingValue
 	{
-		EmbeddingValue();
+		protected EmbeddingValue();
+
+		Int32 Index{ get; };
+		Windows.Foundation.Collections.IVector<Double> Embedding{ get; };
 	};
 }

@@ -11,15 +11,18 @@
 
 namespace winrt::OpenAI::Embedding::implementation
 {
-	EmbeddingResponse::EmbeddingResponse(hstring responseText)
+	// Embedding Response
+
+	EmbeddingResponse::EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding)
 	{
-		m_responseText = responseText;
+		m_embedding = embedding;
 	}
+
+	// Embedding Value
 
 	EmbeddingValue::EmbeddingValue(int32_t index, std::vector<double> embedding)
 	{
 		m_index = index;
-		// TODO: setup WF List from vector
-		//m_embedding = embedding;
+		m_embedding = embedding;
 	}
 }

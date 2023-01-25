@@ -9,11 +9,11 @@ namespace winrt::OpenAI::Embedding::implementation
 	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse>
 	{
 		EmbeddingResponse() {}
-		EmbeddingResponse(hstring responseText);
+		EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding);
 
 		bool IsResponseSuccess()
 		{
-			if (ResponseText() != L"")
+			if (Data().Size() > 0)
 			{
 				return true;
 			}
@@ -21,19 +21,13 @@ namespace winrt::OpenAI::Embedding::implementation
 			return false;
 		}
 
-		hstring ResponseText()
-		{
-			return m_responseText;
-		}
-
-		WF::Collections::IVector<EmbeddingValue> Data()
+		WF::Collections::IVector<Embedding::EmbeddingValue> Data()
 		{
 			return m_embedding;
 		}
 
 	private:
-		hstring m_responseText{ L"" };
-		WF::Collections::IVector<EmbeddingValue> m_embedding;
+		WF::Collections::IVector<Embedding::EmbeddingValue> m_embedding;
 	};
 
 	struct EmbeddingValue : EmbeddingValueT<EmbeddingValue>
@@ -48,13 +42,14 @@ namespace winrt::OpenAI::Embedding::implementation
 
 		WF::Collections::IVector<double> Embedding()
 		{
-			return m_embedding;
+			auto result{ winrt::single_threaded_vector<double>(std::move(m_embedding)) };
+			return result;
 		}
 
 
 	private:
 		int32_t m_index = 0;
-		WF::Collections::IVector<double> m_embedding;
+		std::vector<double> m_embedding;
 	};
 }
 
