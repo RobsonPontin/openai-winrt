@@ -138,3 +138,17 @@ namespace OpenAI.Embedding
 		Windows.Foundation.Collections.IVector<Double> Embedding{ get; };
 	};
 }
+
+// Moderation
+
+namespace OpenAI.Moderation
+{
+	[default_interface]
+	runtimeclass ModerationRequest
+	{
+		ModerationRequest();
+
+		String Input{ get; set; };
+		Windows.Foundation.Collections.IVector<String> InputAsList{ get; set; };
+	};
+}

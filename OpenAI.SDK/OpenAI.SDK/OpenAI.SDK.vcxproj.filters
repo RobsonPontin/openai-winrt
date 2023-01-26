@@ -33,6 +33,9 @@
     <ClCompile Include="EnumUtils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ModerationRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -68,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="EnumUtils.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModerationRequest.h">
+      <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
