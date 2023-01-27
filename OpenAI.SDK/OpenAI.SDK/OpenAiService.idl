@@ -151,4 +151,11 @@ namespace OpenAI.Moderation
 		String Input{ get; set; };
 		Windows.Foundation.Collections.IVector<String> InputAsList{ get; set; };
 	};
+
+	unsealed runtimeclass ModerationResponse
+	{
+		protected ModerationResponse();
+
+		Boolean IsResponseSuccess();
+	};
 }
