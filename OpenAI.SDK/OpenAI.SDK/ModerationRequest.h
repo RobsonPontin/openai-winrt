@@ -64,6 +64,18 @@ namespace winrt::OpenAI::Moderation::implementation
 
 		}
 
+		bool IsValid()
+		{
+			if (Input() != L"" || m_inputAsList.size() > 0)
+			{
+				return true;
+			}
+
+			return false;
+		}
+		
+		WWH::HttpRequestMessage BuildHttpRequest();
+
 	private:
 		std::vector<winrt::hstring> m_inputAsList;
 		winrt::hstring m_input = L"";

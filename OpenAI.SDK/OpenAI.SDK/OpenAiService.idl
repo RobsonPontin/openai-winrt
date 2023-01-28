@@ -30,6 +30,7 @@ namespace OpenAI
 		[default_overload]
 		Windows.Foundation.IAsyncOperation<OpenAI.Completion.CompletionResponse> RunRequestAsync(OpenAI.Completion.CompletionRequest completionRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Embedding.EmbeddingResponse> RunRequestAsync(OpenAI.Embedding.EmbeddingRequest embeddingRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Moderation.ModerationResponse> RunRequestAsync(OpenAI.Moderation.ModerationRequest moderationRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 	}
 }
@@ -148,6 +149,7 @@ namespace OpenAI.Moderation
 	{
 		ModerationRequest();
 
+		Boolean IsValid{ get; };
 		String Input{ get; set; };
 		Windows.Foundation.Collections.IVector<String> InputAsList{ get; set; };
 	};

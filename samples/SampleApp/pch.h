@@ -18,3 +18,4 @@
 #include "winrt/OpenAI.Image.h"
 #include "winrt/OpenAI.Completion.h"
 #include "winrt/OpenAI.Embedding.h"
+#include "winrt/OpenAI.Moderation.h"

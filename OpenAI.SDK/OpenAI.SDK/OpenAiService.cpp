@@ -180,4 +180,62 @@ namespace winrt::OpenAI::implementation
             co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>();
         }
     }
+
+    WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest)
+    {
+        if (m_openAiOptions != nullptr && moderationRequest.IsValid())
+        {
+            auto options_impl = winrt::get_self<implementation::OpenAiOptions>(m_openAiOptions);
+            auto openAiKey = options_impl->OpenAiKey();
+
+            auto request_impl = winrt::get_self<OpenAI::Moderation::implementation::ModerationRequest>(moderationRequest);
+            auto httpRequest = request_impl->BuildHttpRequest();
+
+            // Create an HTTP client to make the API request
+            WWH::HttpClient httpClient;
+            httpClient.DefaultRequestHeaders().Authorization(
+                WWH::Headers::HttpCredentialsHeaderValue(L"Bearer", openAiKey));
+
+            // Send the request and retrieve the response           
+            WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
+            auto stringResult = co_await response.Content().ReadAsStringAsync();
+            if (response.IsSuccessStatusCode())
+            {
+                auto json = WDJ::JsonObject::Parse(stringResult);
+
+                // TODO: parse data
+                /*
+                 * {
+                      "id": "modr-6dY1XYd6T2iOzsYRn7hckqrHcpp4U",
+                      "model": "text-moderation-004",
+                      "results": [
+                        {
+                          "categories": {
+                            "hate": false,
+                            "hate/threatening": false,
+                            "self-harm": false,
+                            "sexual": false,
+                            "sexual/minors": false,
+                            "violence": true,
+                            "violence/graphic": false
+                          },
+                          "category_scores": {
+                            "hate": 0.029734386131167412,
+                            "hate/threatening": 0.00309771578758955,
+                            "self-harm": 2.064793225287076e-09,
+                            "sexual": 1.0425052323626005e-06,
+                            "sexual/minors": 7.927656753281553e-09,
+                            "violence": 0.9992383718490601,
+                            "violence/graphic": 4.949376670992933e-05
+                          },
+                          "flagged": true
+                        }
+                      ]
+                    } 
+                 */
+            }
+
+            co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>();
+        }
+    }
 }

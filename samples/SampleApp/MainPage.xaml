@@ -47,6 +47,10 @@
                             <MenuFlyoutItem Text="Text Embedding"
                                         Tag="TextEmbedding"
                                         Click="MenuFlyoutItem_Click"/>
+                            
+                            <MenuFlyoutItem Text="Text Moderation"
+                                        Tag="TextModeration"
+                                        Click="MenuFlyoutItem_Click"/>
                         </MenuFlyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>

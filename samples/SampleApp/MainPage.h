@@ -14,7 +14,8 @@ namespace winrt::SampleApp::implementation
         ImageVariation,
         ImageEdit,
         TextCompletion,
-        TextEmbedding
+        TextEmbedding,
+        TextModeration
     };
 
     struct MainPage : MainPageT<MainPage>
@@ -38,6 +39,7 @@ namespace winrt::SampleApp::implementation
 
         IAsyncAction ProcessTextCompletionAsync(winrt::hstring prompt);
         IAsyncAction ProcessTextEmbeddingAsync(winrt::hstring prompt);
+        IAsyncAction ProcessTextModerationAsync(winrt::hstring prompt);
 
         void ShowTextResult();
         void ShowImageResult();

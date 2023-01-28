@@ -57,6 +57,13 @@ namespace winrt::SampleApp::implementation
 
 				btnProcessImage().Content(winrt::box_value(L"Text Embedding"));
 			}
+			else if (tag == L"TextModeration")
+			{
+				tbImagePromt().IsEnabled(true);
+				m_actionSelected = ActionType::TextModeration;
+
+				btnProcessImage().Content(winrt::box_value(L"Text Moderation"));
+			}
 
 			ddbAction().Content(winrt::box_value(flyoutItem.Text()));
 		}
@@ -100,6 +107,9 @@ namespace winrt::SampleApp::implementation
 
 		case ActionType::TextEmbedding:
 			co_await ProcessTextEmbeddingAsync(tbImagePromt().Text());
+			break;
+		case ActionType::TextModeration:
+			co_await ProcessTextModerationAsync(tbImagePromt().Text());
 			break;
 		}
 	}
@@ -263,6 +273,23 @@ namespace winrt::SampleApp::implementation
 				}
 
 				textBlock().Text(resultText);
+				ShowTextResult();
+			}
+		}
+	}
+
+	IAsyncAction MainPage::ProcessTextModerationAsync(winrt::hstring prompt)
+	{
+		if (!m_openAiService.IsRunning())
+		{
+			auto embReq = OpenAI::Moderation::ModerationRequest{};
+			embReq.Input(prompt);
+
+			auto response = co_await m_openAiService.RunRequestAsync(embReq);
+			if (response.IsResponseSuccess())
+			{				
+				//TODO: parse it
+				//textBlock().Text(resultText);
 				ShowTextResult();
 			}
 		}

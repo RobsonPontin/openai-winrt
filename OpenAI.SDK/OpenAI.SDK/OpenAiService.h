@@ -9,6 +9,8 @@
 #include <CompletionResponse.h>
 #include <EmbeddingRequest.h>
 #include <EmbeddingResponse.h>
+#include <ModerationRequest.h>
+#include <ModerationResponse.h>
 
 
 namespace winrt::OpenAI::implementation
@@ -30,6 +32,8 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest);
 
         WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest);
+
+        WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {
