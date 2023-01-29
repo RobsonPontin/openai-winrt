@@ -7,7 +7,7 @@
 
 namespace winrt::OpenAI::Completion::implementation
 {
-	struct CompletionRequest : CompletionRequestT<CompletionRequest>
+	struct CompletionRequest : CompletionRequestT<CompletionRequest, BaseRequest>
 	{
 		CompletionRequest() {}
 

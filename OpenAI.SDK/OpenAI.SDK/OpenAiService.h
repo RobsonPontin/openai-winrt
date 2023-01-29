@@ -2,6 +2,7 @@
 
 #include "OpenAiService.g.h"
 
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <ImageRequest.h>
 #include <ImageResponse.h>
@@ -62,6 +63,9 @@ namespace winrt::OpenAI::implementation
             OpenAI::OpenAiOptions m_openAiOptions;
 
             const winrt::hstring OPEN_AI_API_URL = L"https://api.openai.com";
+
+            WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const& request);
+            WF::IAsyncOperation<WDJ::JsonObject> TryToParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
     };
 }
 

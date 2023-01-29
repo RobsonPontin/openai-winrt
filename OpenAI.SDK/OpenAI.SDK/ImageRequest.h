@@ -10,7 +10,7 @@
 
 namespace winrt::OpenAI::Image::implementation
 {
-	struct ImageRequest : ImageRequestT<ImageRequest>
+	struct ImageRequest : ImageRequestT<ImageRequest, BaseRequest>
 	{
 		winrt::hstring Prompt()
 		{

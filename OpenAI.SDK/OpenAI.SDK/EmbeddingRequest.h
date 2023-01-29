@@ -7,7 +7,7 @@
 
 namespace winrt::OpenAI::Embedding::implementation
 {
-	struct EmbeddingRequest : EmbeddingRequestT<EmbeddingRequest>
+	struct EmbeddingRequest : EmbeddingRequestT<EmbeddingRequest, BaseRequest>
 	{
 		EmbeddingRequest() {}
 

@@ -39,6 +39,9 @@
     <ClCompile Include="ModerationResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="BaseRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="ModerationResponse.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseRequest.h">
+      <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

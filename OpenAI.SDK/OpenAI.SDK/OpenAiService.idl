@@ -31,7 +31,16 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Embedding.EmbeddingResponse> RunRequestAsync(OpenAI.Embedding.EmbeddingRequest embeddingRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Moderation.ModerationResponse> RunRequestAsync(OpenAI.Moderation.ModerationRequest moderationRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
-	}
+	};
+
+	[default_interface]
+	unsealed runtimeclass BaseRequest
+	{
+		protected BaseRequest();
+
+		Boolean IsValid{ get; };
+		Windows.Web.Http.HttpRequestMessage BuildHttpRequest();
+	};
 }
 
 // OpenAI Image
@@ -48,14 +57,13 @@ namespace OpenAI.Image
 		b64_json
 	};
 
-	unsealed runtimeclass ImageRequest
+	unsealed runtimeclass ImageRequest : OpenAI.BaseRequest
 	{
 		String Prompt{ get; set; };
 		Int32 CreationNumber{ get; set; };
 		String ImageName{ get; set; };
 		SizeType Size{ get; set; };
 		ResponseFormatType ResponseFormat{ get; set; };
-		Boolean IsValid{ get; };
 	};
 
 	[default_interface]
@@ -93,12 +101,11 @@ namespace OpenAI.Image
 namespace OpenAI.Completion
 {
 	[default_interface]
-	runtimeclass CompletionRequest
+	runtimeclass CompletionRequest : OpenAI.BaseRequest
 	{
 		CompletionRequest();
 
 		String Prompt{ get; set; };
-		Boolean IsValid{ get; };
 	};
 
 	unsealed runtimeclass CompletionResponse
@@ -114,12 +121,11 @@ namespace OpenAI.Completion
 namespace OpenAI.Embedding
 {
 	[default_interface]
-	runtimeclass EmbeddingRequest
+	runtimeclass EmbeddingRequest : OpenAI.BaseRequest
 	{
 		EmbeddingRequest();
 
 		String Input{ get; set; };
-		Boolean IsValid{ get; };
 	};
 
 	unsealed runtimeclass EmbeddingResponse
@@ -144,11 +150,10 @@ namespace OpenAI.Embedding
 namespace OpenAI.Moderation
 {
 	[default_interface]
-	runtimeclass ModerationRequest
+	runtimeclass ModerationRequest : OpenAI.BaseRequest
 	{
 		ModerationRequest();
 
-		Boolean IsValid{ get; };
 		String Input{ get; set; };
 		Windows.Foundation.Collections.IVector<String> InputAsList{ get; set; };
 	};

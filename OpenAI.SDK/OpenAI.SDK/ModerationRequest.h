@@ -7,7 +7,7 @@
 
 namespace winrt::OpenAI::Moderation::implementation
 {
-	struct ModerationRequest : ModerationRequestT<ModerationRequest>
+	struct ModerationRequest : ModerationRequestT<ModerationRequest, BaseRequest>
 	{
 		ModerationRequest() {}
 
