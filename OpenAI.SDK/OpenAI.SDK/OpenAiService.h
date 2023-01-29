@@ -65,7 +65,7 @@ namespace winrt::OpenAI::implementation
             const winrt::hstring OPEN_AI_API_URL = L"https://api.openai.com";
 
             WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const& request);
-            WF::IAsyncOperation<WDJ::JsonObject> TryToParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
+            WF::IAsyncOperation<WDJ::JsonObject> ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
     };
 }
 
