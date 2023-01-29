@@ -203,7 +203,42 @@ namespace winrt::OpenAI::implementation
             {
                 auto json = WDJ::JsonObject::Parse(stringResult);
 
-                // TODO: parse data
+                auto id = json.GetNamedString(L"id");
+                auto results = json.GetNamedArray(L"results");
+                
+                // Only evaluate and parse first data from array
+                if (results.Size() == 1)
+                {
+                    std::vector<Moderation::IModerationValue> moderationValues;
+
+                    auto jsonValue = results.GetAt(0);
+                    auto categoryArray = jsonValue.GetObject();
+
+                    // flags
+                    auto categories = categoryArray.GetNamedObject(L"categories");                    
+                    auto hate = categories.GetNamedBoolean(L"hate");
+                    auto hateThreatening = categories.GetNamedBoolean(L"hate/threatening");
+                    auto selfHarm = categories.GetNamedBoolean(L"self-harm");
+                    auto sexual = categories.GetNamedBoolean(L"sexual");
+                    auto sexualMinors = categories.GetNamedBoolean(L"sexual/minors");
+                    auto violence = categories.GetNamedBoolean(L"violence");
+                    auto violenceGraphic = categories.GetNamedBoolean(L"violence/graphic");
+
+                    // scores
+                    auto category_scores = categoryArray.GetNamedObject(L"category_scores");
+                    auto dHate = category_scores.GetNamedNumber(L"hate");
+                    auto dHateThreatening = category_scores.GetNamedNumber(L"hate/threatening");
+                    auto dSelfHarm = category_scores.GetNamedNumber(L"self-harm");
+                    auto dSexual = category_scores.GetNamedNumber(L"sexual");
+                    auto dSexualMinors = category_scores.GetNamedNumber(L"sexual/minors");
+                    auto dViolence = category_scores.GetNamedNumber(L"violence");
+                    auto dViolenceGraphic = category_scores.GetNamedNumber(L"violence/graphic");
+
+                    // TODO: proper parse data to a list, reuse code, make response
+                    moderationValues.push_back(winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Hate, hate, dHate));
+                }
+                                
+                // TODO: parse data example
                 /*
                  * {
                       "id": "modr-6dY1XYd6T2iOzsYRn7hckqrHcpp4U",
