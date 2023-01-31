@@ -160,8 +160,6 @@ namespace winrt::OpenAI::implementation
                 // Only evaluate and parse first data from array
                 if (results.Size() == 1)
                 {
-                    std::vector<Moderation::IModerationValue> moderationValues;
-
                     auto jsonValue = results.GetAt(0);
                     auto categoryArray = jsonValue.GetObject();
 
@@ -185,40 +183,24 @@ namespace winrt::OpenAI::implementation
                     auto dViolence = category_scores.GetNamedNumber(L"violence");
                     auto dViolenceGraphic = category_scores.GetNamedNumber(L"violence/graphic");
 
-                    // TODO: proper parse data to a list, reuse code, make response
-                    moderationValues.push_back(winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Hate, hate, dHate));
-                }
+                    std::vector<Moderation::ModerationValue> moderationValues;
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Hate, hate, dHate));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::HateThreatening, hateThreatening, dHateThreatening));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::selfHarm, selfHarm, dSelfHarm));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Sexual, sexual, dSexual));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::SexualMinors, sexualMinors, dSexualMinors));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Violence, violence, dViolence));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::ViolenceGraphic, violenceGraphic, dViolenceGraphic));
 
-                // TODO: parse data example
-                /*
-                 * {
-                      "id": "modr-6dY1XYd6T2iOzsYRn7hckqrHcpp4U",
-                      "model": "text-moderation-004",
-                      "results": [
-                        {
-                          "categories": {
-                            "hate": false,
-                            "hate/threatening": false,
-                            "self-harm": false,
-                            "sexual": false,
-                            "sexual/minors": false,
-                            "violence": true,
-                            "violence/graphic": false
-                          },
-                          "category_scores": {
-                            "hate": 0.029734386131167412,
-                            "hate/threatening": 0.00309771578758955,
-                            "self-harm": 2.064793225287076e-09,
-                            "sexual": 1.0425052323626005e-06,
-                            "sexual/minors": 7.927656753281553e-09,
-                            "violence": 0.9992383718490601,
-                            "violence/graphic": 4.949376670992933e-05
-                          },
-                          "flagged": true
-                        }
-                      ]
-                    }
-                 */
+                    co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>(id, moderationValues);
+                }
             }
         }
 

@@ -11,14 +11,25 @@ namespace winrt::OpenAI::Moderation::implementation
 		ModerationResponse() {}
 		ModerationResponse(winrt::hstring id, std::vector<Moderation::ModerationValue> const& moderationValues);
 
+		bool IsResponseSuccess()
+		{
+			if (Id() != L"" && m_moderationValues.size() > 0)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
 		winrt::hstring Id()
 		{
 			return m_id;
 		}
 
-		bool IsResponseSuccess()
+		WF::Collections::IVector<Moderation::ModerationValue> Data()
 		{
-			return false;
+			auto result{ winrt::single_threaded_vector<Moderation::ModerationValue>(std::move(m_moderationValues)) };
+			return result;
 		}
 
 	private:

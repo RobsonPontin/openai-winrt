@@ -287,9 +287,21 @@ namespace winrt::SampleApp::implementation
 
 			auto response = co_await m_openAiService.RunRequestAsync(embReq);
 			if (response.IsResponseSuccess())
-			{				
-				//TODO: parse it
-				//textBlock().Text(resultText);
+			{			
+				auto moderationValues = response.Data();
+							
+				winrt::hstring violenceLevel = L"Error!" ;
+				
+				for (int i = 0; i < moderationValues.Size(); ++i)
+				{
+					auto value = moderationValues.GetAt(i);
+					if (value.Category() == OpenAI::Moderation::ModerationCategory::Violence)
+					{
+						violenceLevel = L"Violence Score: " + winrt::to_hstring(value.Score());
+					}
+				}
+
+				textBlock().Text(violenceLevel);
 				ShowTextResult();
 			}
 		}

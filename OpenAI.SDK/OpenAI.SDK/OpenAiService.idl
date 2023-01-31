@@ -174,14 +174,17 @@ namespace OpenAI.Moderation
 	{
 		protected ModerationResponse();
 
-		String Id{ get; };
 		Boolean IsResponseSuccess();
+		String Id{ get; };
+		Windows.Foundation.Collections.IVector<OpenAI.Moderation.ModerationValue> Data{ get; };
 	};
 
 	unsealed runtimeclass ModerationValue
 	{
 		protected ModerationValue();
 
+		OpenAI.Moderation.ModerationCategory Category{ get; };
 		Boolean Flagged{ get; };
+		Double Score{ get; };
 	};
 }
