@@ -41,6 +41,14 @@ namespace OpenAI
 		Boolean IsValid{ get; };
 		Windows.Web.Http.HttpRequestMessage BuildHttpRequest();
 	};
+
+	[default_interface]
+	unsealed runtimeclass ResponseError
+	{
+		protected ResponseError();
+
+		String ErrorMessage{ get; };
+	};
 }
 
 // OpenAI Image

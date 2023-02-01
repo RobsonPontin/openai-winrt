@@ -130,6 +130,7 @@
     <ClInclude Include="OpenAiService.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="CompletionRequest.h" />
+    <ClInclude Include="ResponseError.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseRequest.cpp" />
@@ -149,6 +150,7 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="CompletionRequest.cpp" />
+    <ClCompile Include="ResponseError.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenAI_SDK.def" />
