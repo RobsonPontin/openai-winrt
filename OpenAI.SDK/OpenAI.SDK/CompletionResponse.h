@@ -5,7 +5,7 @@
 
 namespace winrt::OpenAI::Completion::implementation
 {
-	struct CompletionResponse : CompletionResponseT<CompletionResponse>
+	struct CompletionResponse : CompletionResponseT<CompletionResponse, BaseResponse>
 	{
 		CompletionResponse() {}
 		CompletionResponse(hstring responseText);

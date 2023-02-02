@@ -6,7 +6,7 @@
 
 namespace winrt::OpenAI::Moderation::implementation
 {
-	struct ModerationResponse : ModerationResponseT<ModerationResponse>
+	struct ModerationResponse : ModerationResponseT<ModerationResponse, BaseResponse>
 	{
 		ModerationResponse() {}
 		ModerationResponse(winrt::hstring id, std::vector<Moderation::ModerationValue> const& moderationValues);

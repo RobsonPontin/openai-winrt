@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseRequest.h" />
+    <ClInclude Include="BaseResponse.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="CompletionResponse.h" />
     <ClInclude Include="EnumUtils.h" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseRequest.cpp" />
+    <ClCompile Include="BaseResponse.cpp" />
     <ClCompile Include="CompletionResponse.cpp" />
     <ClCompile Include="EnumUtils.cpp" />
     <ClCompile Include="EmbeddingRequest.cpp" />

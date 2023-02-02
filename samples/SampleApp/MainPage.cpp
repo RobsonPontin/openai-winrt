@@ -260,7 +260,7 @@ namespace winrt::SampleApp::implementation
 				auto embedding = result.Current().Embedding();
 
 				winrt::hstring resultText = L"";
-				for (int i = 0; i < embedding.Size(); ++i)
+				for (uint32_t i = 0; i < embedding.Size(); ++i)
 				{
 					if (i == 0)
 					{
@@ -292,7 +292,7 @@ namespace winrt::SampleApp::implementation
 							
 				winrt::hstring violenceLevel = L"Error!" ;
 				
-				for (int i = 0; i < moderationValues.Size(); ++i)
+				for (uint32_t i = 0; i < moderationValues.Size(); ++i)
 				{
 					auto value = moderationValues.GetAt(i);
 					if (value.Category() == OpenAI::Moderation::ModerationCategory::Violence)

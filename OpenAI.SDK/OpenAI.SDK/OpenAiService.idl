@@ -43,6 +43,14 @@ namespace OpenAI
 	};
 
 	[default_interface]
+	unsealed runtimeclass BaseResponse
+	{
+		protected BaseResponse();
+
+		Boolean IsResponseSuccess{ get; };
+	};
+
+	[default_interface]
 	unsealed runtimeclass ResponseError
 	{
 		protected ResponseError();
@@ -96,11 +104,10 @@ namespace OpenAI.Image
 		Windows.Foundation.IAsyncOperation<Boolean> SetImageAsync(Windows.Storage.StorageFile file);
 	};
 
-	unsealed runtimeclass ImageResponse
+	unsealed runtimeclass ImageResponse : OpenAI.BaseResponse
 	{
 		protected ImageResponse();
 
-		Boolean IsResponseSuccess{ get; };
 		Windows.Foundation.Collections.IVector<Windows.Storage.Streams.IBuffer> Images{ get; };
 	};
 }
@@ -116,11 +123,10 @@ namespace OpenAI.Completion
 		String Prompt{ get; set; };
 	};
 
-	unsealed runtimeclass CompletionResponse
+	unsealed runtimeclass CompletionResponse : OpenAI.BaseResponse
 	{
 		protected CompletionResponse();
 
-		Boolean IsResponseSuccess{ get; };
 		String ResponseText{ get; };
 	};
 }
@@ -136,11 +142,10 @@ namespace OpenAI.Embedding
 		String Input{ get; set; };
 	};
 
-	unsealed runtimeclass EmbeddingResponse
+	unsealed runtimeclass EmbeddingResponse : OpenAI.BaseResponse
 	{
 		protected EmbeddingResponse();
 
-		Boolean IsResponseSuccess();
 		Windows.Foundation.Collections.IVector<OpenAI.Embedding.EmbeddingValue> Data{ get; };
 	};
 
@@ -178,11 +183,10 @@ namespace OpenAI.Moderation
 		None
 	};
 
-	unsealed runtimeclass ModerationResponse
+	unsealed runtimeclass ModerationResponse : OpenAI.BaseResponse
 	{
 		protected ModerationResponse();
 
-		Boolean IsResponseSuccess();
 		String Id{ get; };
 		Windows.Foundation.Collections.IVector<OpenAI.Moderation.ModerationValue> Data{ get; };
 	};

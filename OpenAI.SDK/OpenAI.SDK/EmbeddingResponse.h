@@ -6,7 +6,7 @@
 
 namespace winrt::OpenAI::Embedding::implementation
 {
-	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse>
+	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse, BaseResponse>
 	{
 		EmbeddingResponse() {}
 		EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding);

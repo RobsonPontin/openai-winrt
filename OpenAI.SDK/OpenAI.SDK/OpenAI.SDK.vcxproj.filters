@@ -45,6 +45,9 @@
     <ClCompile Include="ResponseError.cpp">
       <Filter>src\Service</Filter>
     </ClCompile>
+    <ClCompile Include="BaseResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="ResponseError.h">
       <Filter>src\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseResponse.h">
+      <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

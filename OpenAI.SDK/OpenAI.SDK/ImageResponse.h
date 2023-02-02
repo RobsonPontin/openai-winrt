@@ -4,7 +4,7 @@
 
 namespace winrt::OpenAI::Image::implementation
 {
-	struct ImageResponse : ImageResponseT<ImageResponse>
+	struct ImageResponse : ImageResponseT<ImageResponse, BaseResponse>
 	{
 		ImageResponse() {}
 		ImageResponse(std::vector<WS::Streams::IBuffer> images);
