@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Completion.CompletionResponse.g.h"
-
+#include "BaseResponse.h"
 
 namespace winrt::OpenAI::Completion::implementation
 {
-	struct CompletionResponse : CompletionResponseT<CompletionResponse, BaseResponse>
+	struct CompletionResponse : CompletionResponseT<CompletionResponse, OpenAI::implementation::BaseResponse>
 	{
 		CompletionResponse() {}
 		CompletionResponse(hstring responseText);

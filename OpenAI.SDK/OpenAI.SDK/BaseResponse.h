@@ -4,14 +4,23 @@
 
 namespace winrt::OpenAI::implementation
 {
-	struct BaseResponse : BaseResponseT< BaseResponse>
+	struct BaseResponse : BaseResponseT<BaseResponse>
 	{
 		BaseResponse() {}
+		BaseResponse(OpenAI::ResponseError const& error);
 
 		virtual bool IsResponseSuccess()
 		{
 			return false;
 		}
+
+	    virtual OpenAI::ResponseError Error()
+		{
+			return m_error;
+		}
+
+	private:
+		OpenAI::ResponseError m_error{ nullptr };
 	};
 }
 

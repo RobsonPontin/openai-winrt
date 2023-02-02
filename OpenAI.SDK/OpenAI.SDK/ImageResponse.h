@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Image.ImageResponse.g.h"
+#include "BaseResponse.h"
 
 namespace winrt::OpenAI::Image::implementation
 {
-	struct ImageResponse : ImageResponseT<ImageResponse, BaseResponse>
+	struct ImageResponse : ImageResponseT<ImageResponse, OpenAI::implementation::BaseResponse>
 	{
 		ImageResponse() {}
 		ImageResponse(std::vector<WS::Streams::IBuffer> images);

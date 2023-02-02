@@ -7,5 +7,8 @@
 
 namespace winrt::OpenAI::implementation
 {
-
+	BaseResponse::BaseResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
 }

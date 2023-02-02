@@ -2,11 +2,11 @@
 
 #include "Moderation.ModerationResponse.g.h"
 #include "Moderation.ModerationValue.g.h"
-
+#include "BaseResponse.h"
 
 namespace winrt::OpenAI::Moderation::implementation
 {
-	struct ModerationResponse : ModerationResponseT<ModerationResponse, BaseResponse>
+	struct ModerationResponse : ModerationResponseT<ModerationResponse, OpenAI::implementation::BaseResponse>
 	{
 		ModerationResponse() {}
 		ModerationResponse(winrt::hstring id, std::vector<Moderation::ModerationValue> const& moderationValues);

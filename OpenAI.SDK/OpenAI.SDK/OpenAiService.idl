@@ -48,6 +48,7 @@ namespace OpenAI
 		protected BaseResponse();
 
 		Boolean IsResponseSuccess{ get; };
+		OpenAI.ResponseError Error{ get; };
 	};
 
 	[default_interface]

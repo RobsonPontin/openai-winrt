@@ -2,11 +2,11 @@
 
 #include "Embedding.EmbeddingResponse.g.h"
 #include "Embedding.EmbeddingValue.g.h"
-
+#include "BaseResponse.h"
 
 namespace winrt::OpenAI::Embedding::implementation
 {
-	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse, BaseResponse>
+	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse, OpenAI::implementation::BaseResponse>
 	{
 		EmbeddingResponse() {}
 		EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding);
