@@ -103,6 +103,7 @@ namespace OpenAI.Image
 		ImageEditRequest();
 
 		Windows.Foundation.IAsyncOperation<Boolean> SetImageAsync(Windows.Storage.StorageFile file);
+		Windows.Foundation.IAsyncOperation<Boolean> SetMaskAsync(Windows.Storage.StorageFile file);
 	};
 
 	unsealed runtimeclass ImageResponse : OpenAI.BaseResponse
