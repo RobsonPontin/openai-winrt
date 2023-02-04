@@ -42,10 +42,10 @@
     <ClCompile Include="BaseRequest.cpp">
       <Filter>src\Requests</Filter>
     </ClCompile>
-    <ClCompile Include="ResponseError.cpp">
-      <Filter>src\Service</Filter>
-    </ClCompile>
     <ClCompile Include="BaseResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
+    <ClCompile Include="ResponseError.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,10 +93,10 @@
     <ClInclude Include="BaseRequest.h">
       <Filter>src\Requests</Filter>
     </ClInclude>
-    <ClInclude Include="ResponseError.h">
-      <Filter>src\Service</Filter>
-    </ClInclude>
     <ClInclude Include="BaseResponse.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ResponseError.h">
       <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>

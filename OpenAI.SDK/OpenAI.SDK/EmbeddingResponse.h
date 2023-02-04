@@ -10,6 +10,7 @@ namespace winrt::OpenAI::Embedding::implementation
 	{
 		EmbeddingResponse() {}
 		EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding);
+		EmbeddingResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
 		{

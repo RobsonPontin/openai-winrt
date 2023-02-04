@@ -18,10 +18,25 @@
 #include "OpenAiOptions.h"
 #include "ImageUtils.h"
 #include "BaseRequest.h"
+#include "ResponseError.h"
 
 namespace winrt::OpenAI::implementation
 {
-    // TODO: all request Image, Completion, etc... should derive from an interface for IsValid, BuildHttp, Prompt, Model, etc...
+    WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const& httpMessage)
+    {
+        auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
+        if (json != nullptr)
+        {
+            auto error = json.GetNamedObject(L"error");
+            auto code = error.GetNamedString(L"code");
+            auto message = error.GetNamedString(L"message");
+            auto type = error.GetNamedString(L"type");
+
+            co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
+        }
+
+        co_return winrt::make<OpenAI::implementation::ResponseError>();
+    }
 
     WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest)
     {
@@ -52,9 +67,11 @@ namespace winrt::OpenAI::implementation
                 co_return winrt::make<OpenAI::Image::implementation::ImageResponse>(images);
             }
         }
-
-        // TODO: Handle error and response result
-        co_return winrt::make<OpenAI::Image::implementation::ImageResponse>();
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Image::implementation::ImageResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest)
@@ -95,8 +112,11 @@ namespace winrt::OpenAI::implementation
                 co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(text);
             }
         }
-
-        co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>();        
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(error);
+        }     
     }
 
     WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest)
@@ -141,8 +161,11 @@ namespace winrt::OpenAI::implementation
                 }
             }
         }
-
-        co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>();        
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest)
@@ -203,8 +226,11 @@ namespace winrt::OpenAI::implementation
                 }
             }
         }
-
-        co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>();
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)

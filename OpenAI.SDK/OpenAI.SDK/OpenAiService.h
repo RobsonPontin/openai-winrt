@@ -66,6 +66,7 @@ namespace winrt::OpenAI::implementation
 
             WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const& request);
             WF::IAsyncOperation<WDJ::JsonObject> ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
+            WF::IAsyncOperation<OpenAI::ResponseError> GetErrorFromMessageAsync(WWH::HttpResponseMessage const& message);
     };
 }
 

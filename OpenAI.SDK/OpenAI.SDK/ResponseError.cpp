@@ -8,8 +8,10 @@
 
 namespace winrt::OpenAI::implementation
 {
-	ResponseError::ResponseError(winrt::hstring errorMessage)
+	ResponseError::ResponseError(winrt::hstring const& code, winrt::hstring const& message, winrt::hstring const& type)
 	{
-		m_errorMessage = errorMessage;
+		m_errorCode = code;
+		m_errorMessage = message;
+		m_errorType = type;
 	}
 }

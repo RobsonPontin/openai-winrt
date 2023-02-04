@@ -9,6 +9,7 @@ namespace winrt::OpenAI::Image::implementation
 	{
 		ImageResponse() {}
 		ImageResponse(std::vector<WS::Streams::IBuffer> images);
+		ImageResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
 		{

@@ -19,7 +19,6 @@ namespace winrt::OpenAI::implementation
 			return m_error;
 		}
 
-	private:
 		OpenAI::ResponseError m_error{ nullptr };
 	};
 }

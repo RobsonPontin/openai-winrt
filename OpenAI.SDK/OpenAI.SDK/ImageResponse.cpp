@@ -11,4 +11,9 @@ namespace winrt::OpenAI::Image::implementation
 	{
 		m_images = images;
 	}
+
+	ImageResponse::ImageResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
 }

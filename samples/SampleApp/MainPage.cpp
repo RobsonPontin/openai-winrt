@@ -119,7 +119,7 @@ namespace winrt::SampleApp::implementation
 		co_await ::SampleApp::Utils::StorageUtils::CreateFileFromImageAsync(image(), false);
 	}
 
-#pragma region Image Generation
+#pragma region DALL-E
 	IAsyncAction MainPage::ProcessImageVariantAsync()
 	{
 		if (!m_openAiService.IsRunning())
@@ -230,6 +230,7 @@ namespace winrt::SampleApp::implementation
 	}
 #pragma endregion
 
+#pragma region GPT
 	IAsyncAction MainPage::ProcessTextCompletionAsync(winrt::hstring prompt)
 	{
 		if (!m_openAiService.IsRunning())
@@ -306,7 +307,7 @@ namespace winrt::SampleApp::implementation
 			}
 		}
 	}
-
+#pragma endregion
 
 	void MainPage::ShowTextResult()
 	{

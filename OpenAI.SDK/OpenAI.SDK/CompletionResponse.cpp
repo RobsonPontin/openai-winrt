@@ -11,4 +11,9 @@ namespace winrt::OpenAI::Completion::implementation
 	{
 		m_responseText = responseText;
 	}
+
+	CompletionResponse::CompletionResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
 }

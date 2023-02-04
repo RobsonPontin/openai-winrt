@@ -56,7 +56,9 @@ namespace OpenAI
 	{
 		protected ResponseError();
 
-		String ErrorMessage{ get; };
+		String Code{ get; };
+		String Message{ get; };
+		String Type{ get; };
 	};
 }
 

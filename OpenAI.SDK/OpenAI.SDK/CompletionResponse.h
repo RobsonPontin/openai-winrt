@@ -9,6 +9,7 @@ namespace winrt::OpenAI::Completion::implementation
 	{
 		CompletionResponse() {}
 		CompletionResponse(hstring responseText);
+		CompletionResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
 		{

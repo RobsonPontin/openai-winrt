@@ -10,6 +10,7 @@ namespace winrt::OpenAI::Moderation::implementation
 	{
 		ModerationResponse() {}
 		ModerationResponse(winrt::hstring id, std::vector<Moderation::ModerationValue> const& moderationValues);
+		ModerationResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
 		{
