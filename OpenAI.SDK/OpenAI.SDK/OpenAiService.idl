@@ -5,6 +5,7 @@ namespace OpenAI
 		image_alpha_001,
 		text_embedding_ada_002,
 		text_davinci_003,
+		Unknown
 	};
 
 	[default_interface]
@@ -59,6 +60,13 @@ namespace OpenAI
 		String Code{ get; };
 		String Message{ get; };
 		String Type{ get; };
+	};
+
+	runtimeclass ModelRequest : BaseRequest
+	{
+		ModelRequest();
+
+		ModelType Model{ get; set; };
 	};
 }
 

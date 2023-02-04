@@ -48,6 +48,9 @@
     <ClCompile Include="ResponseError.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="ModelRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -98,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="ResponseError.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelRequest.h">
+      <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

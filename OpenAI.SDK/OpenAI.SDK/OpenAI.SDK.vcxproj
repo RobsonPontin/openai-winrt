@@ -125,6 +125,7 @@
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
     <ClInclude Include="ImageUtils.h" />
+    <ClInclude Include="ModelRequest.h" />
     <ClInclude Include="ModerationRequest.h" />
     <ClInclude Include="ModerationResponse.h" />
     <ClInclude Include="OpenAiOptions.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
+    <ClCompile Include="ModelRequest.cpp" />
     <ClCompile Include="ModerationRequest.cpp" />
     <ClCompile Include="ModerationResponse.cpp" />
     <ClCompile Include="OpenAiOptions.cpp" />
