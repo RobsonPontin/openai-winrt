@@ -79,7 +79,8 @@
                    Grid.Row="1"
                    FontSize="30"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"/>
     </Grid>
    
 </Page>

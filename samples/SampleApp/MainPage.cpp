@@ -155,6 +155,10 @@ namespace winrt::SampleApp::implementation
 						}
 					}
 				}
+				else
+				{
+					ShowResponseError(response.Error());
+				}
 			}
 		}
 	}
@@ -181,6 +185,10 @@ namespace winrt::SampleApp::implementation
 
 					ShowImageResult();
 				}
+			}
+			else
+			{
+				ShowResponseError(response.Error());
 			}
 		}
 
@@ -223,6 +231,10 @@ namespace winrt::SampleApp::implementation
 						}
 					}
 				}
+				else
+				{
+					ShowResponseError(response.Error());
+				}
 			}
 		}
 
@@ -243,6 +255,10 @@ namespace winrt::SampleApp::implementation
 			{
 				textBlock().Text(response.ResponseText());
 				ShowTextResult();
+			}
+			else
+			{
+				ShowResponseError(response.Error());
 			}
 		}
 	}
@@ -276,6 +292,10 @@ namespace winrt::SampleApp::implementation
 				textBlock().Text(resultText);
 				ShowTextResult();
 			}
+			else
+			{
+				ShowResponseError(response.Error());
+			}
 		}
 	}
 
@@ -305,6 +325,10 @@ namespace winrt::SampleApp::implementation
 				textBlock().Text(violenceLevel);
 				ShowTextResult();
 			}
+			else
+			{
+				ShowResponseError(response.Error());
+			}
 		}
 	}
 #pragma endregion
@@ -319,6 +343,17 @@ namespace winrt::SampleApp::implementation
 	{
 		textBlock().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
 		image().Visibility(Windows::UI::Xaml::Visibility::Visible);
+	}
+
+	void MainPage::ShowResponseError(OpenAI::ResponseError const& error)
+	{
+		if (error == nullptr)
+		{
+			return;
+		}
+
+		textBlock().Text(L"Error:\n" + error.Message());
+		ShowTextResult();
 	}
 }
 
