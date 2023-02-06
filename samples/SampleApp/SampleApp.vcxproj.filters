@@ -18,10 +18,16 @@
     <ClCompile Include="StorageUtils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ImageUtils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="StorageUtils.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageUtils.h">
       <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
