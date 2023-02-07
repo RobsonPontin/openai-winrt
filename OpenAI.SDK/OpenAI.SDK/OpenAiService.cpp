@@ -38,7 +38,7 @@ namespace winrt::OpenAI::implementation
             }
             catch (winrt::hresult const&)
             {
-                // TODO: Parsing certain errors might throw
+                // TODO: Parsing certain JSON data might throw
             }
         }
 
