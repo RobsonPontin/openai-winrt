@@ -27,12 +27,19 @@ namespace winrt::OpenAI::implementation
         auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
         if (json != nullptr)
         {
-            auto error = json.GetNamedObject(L"error");
-            auto code = error.GetNamedString(L"code");
-            auto message = error.GetNamedString(L"message");
-            auto type = error.GetNamedString(L"type");
+            try
+            {
+                auto error = json.GetNamedObject(L"error");
+                auto code = error.GetNamedString(L"code");
+                auto message = error.GetNamedString(L"message");
+                auto type = error.GetNamedString(L"type");
 
-            co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
+                co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
+            }
+            catch (winrt::hresult const&)
+            {
+                // TODO: Parsing certain errors might throw
+            }
         }
 
         co_return winrt::make<OpenAI::implementation::ResponseError>();

@@ -109,6 +109,18 @@ namespace winrt::OpenAI::Image::implementation
 		co_return false;
 	}
 
+	WF::IAsyncOperation<bool> ImageEditRequest::SetMaskAsync(WS::Streams::IBuffer const& buffer)
+	{
+		if (buffer != nullptr)
+		{
+			m_imageMask = buffer;
+
+			co_return true;
+		}
+
+		co_return false;
+	}
+
 	WWH::HttpRequestMessage ImageEditRequest::BuildHttpRequest()
 	{
 		// Build Image Buffer Content

@@ -5,41 +5,27 @@
 #include "winrt/Windows.Storage.Streams.h"
 #include "winrt/Windows.Graphics.Imaging.h"
 #include "winrt/Windows.Graphics.Display.h"
-#include "winrt/Windows.UI.Xaml.Media.Imaging.h"
 
+using namespace Windows::Graphics::Imaging;
+using namespace Windows::Storage::Streams;
 
-namespace SampleApp::Utils
+namespace Utils
 {
-	// TODO: WIP on how to create a mask for DALL-E edit API.
-
 	/// <summary>
-	/// Small logic on how to edit every pixel data in BGRA8
+	/// Create a mask image to be used with DALL-E image editing.
+	/// The result is an image which has alpha value set to zero
+	/// in the region the editing must happen.
 	/// </summary>
-	IAsyncAction ImageUtils::CreateMaskFromImage(StorageFile const& file, Windows::Foundation::Rect rect)
+	IAsyncOperation<WriteableBitmap> ImageUtils::CreateMaskAsync(
+		int32_t width, 
+		int32_t height, 
+		Windows::Foundation::Rect rect)
 	{
-		auto img = co_await file.OpenReadAsync();
-		auto decoder = co_await winrt::Windows::Graphics::Imaging::BitmapDecoder::CreateAsync(img);
+		WriteableBitmap wb{ width, height };
+		uint32_t totalSize = width * height * 4;
 
-		auto width = decoder.PixelWidth();
-		auto height = decoder.PixelHeight();
-
-		auto writeableBitmap = Windows::UI::Xaml::Media::Imaging::WriteableBitmap(width, height);
-
-		// Scale the image to the appropriate size.
-		Windows::Graphics::Imaging::BitmapTransform transform;
-		transform.ScaledWidth(width);
-		transform.ScaledHeight(height);
-
-		Windows::Graphics::Imaging::PixelDataProvider pixelData{ co_await decoder.GetPixelDataAsync(
-			Windows::Graphics::Imaging::BitmapPixelFormat::Bgra8, // WriteableBitmap uses BGRA format 
-			Windows::Graphics::Imaging::BitmapAlphaMode::Straight,
-			transform,
-			Windows::Graphics::Imaging::ExifOrientationMode::IgnoreExifOrientation, // This sample ignores Exif orientation 
-			Windows::Graphics::Imaging::ColorManagementMode::DoNotColorManage
-		) };
-
-		winrt::com_array<uint8_t> sourcePixels{ pixelData.DetachPixelData() };
-		uint8_t* pTargetBytes{ writeableBitmap.PixelBuffer().data() };
+		auto imageArray{ winrt::com_array<uint8_t>(totalSize) };
+		uint8_t* pTargetBytes{ wb.PixelBuffer().data() };
 
 		// track x,y positioning
 		float line = 0;
@@ -50,45 +36,38 @@ namespace SampleApp::Utils
 		float width_edit = rect.Width;
 		float height_edit = rect.Height;
 
-		// BGRA8 == 4 bytes/uint8_t per pixel (Blue, Green, Red, and Alpha)
-		int every4 = 0;
 		uint8_t alphaVal = 0;
-		for (int i = 0; i < sourcePixels.size(); ++i)
+
+		for (int i = 0; i < imageArray.size(); i += 4)
 		{
-			if (every4 == 3)
+			// Track column and line number
+			if (column >= width - 1)
 			{
-				// Track column and line number
-				if (column >= width - 1)
-				{
-					line++;
-					column = 0;
-				}
-				else
-				{
-					column++;
-				}
-
-				if ((column >= x_editStart && column < x_editStart + width_edit)
-					&& (line >= y_editStart && line < y_editStart + height_edit))
-				{
-					*(pTargetBytes++) = alphaVal;
-				}
-				else
-				{
-					*(pTargetBytes++) = sourcePixels[i];
-				}
-
-				every4 = 0;
-
-				continue;
+				line++;
+				column = 0;
+			}
+			else
+			{
+				column++;
 			}
 
-			*(pTargetBytes++) = sourcePixels[i];
+			//BGRA format
+			*(pTargetBytes++) = 255; // Blue
+			*(pTargetBytes++) = 255;  // Green
+			*(pTargetBytes++) = 255; // Red
 
-			every4++;
+			// Deals with alpha separately
+			if ((column >= x_editStart && column < x_editStart + width_edit)
+				&& (line >= y_editStart && line < y_editStart + height_edit))
+			{
+				*(pTargetBytes++) = alphaVal;
+			}
+			else
+			{
+				*(pTargetBytes++) = 255; // Alpha
+			}
 		}
 
-		// TODO: buffer? image? soft bitmap?
-		// return writeableBitmap;
+		co_return wb;
 	}
 }

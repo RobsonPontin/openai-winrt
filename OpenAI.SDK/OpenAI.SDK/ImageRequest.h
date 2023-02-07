@@ -119,6 +119,7 @@ namespace winrt::OpenAI::Image::implementation
 		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile const& file);
 
 		WF::IAsyncOperation<bool> SetMaskAsync(WS::StorageFile const& file);
+		WF::IAsyncOperation<bool> SetMaskAsync(WS::Streams::IBuffer const& buffer);
 
 		bool IsValid()
 		{

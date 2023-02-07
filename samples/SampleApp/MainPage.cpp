@@ -5,13 +5,16 @@
 #include "winrt/Windows.Storage.Pickers.h"
 #include "winrt/Windows.Storage.Streams.h"
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
+#include "winrt/Windows.Graphics.Imaging.h"
 
 #include "StorageUtils.h"
+#include "ImageUtils.h"
 
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::Graphics::Imaging;
 
 
 namespace winrt::SampleApp::implementation
@@ -212,6 +215,42 @@ namespace winrt::SampleApp::implementation
 				imageReq.ImageName(file.Name());
 				imageReq.Prompt(prompt);
 				co_await imageReq.SetImageAsync(file);
+
+				/* For this example the mask will always cover the half bottom section of the
+				 * full image, so it will edit anything in it. */
+				
+				// Gathering image info
+				auto img = co_await file.OpenReadAsync();
+				auto decoder = co_await winrt::Windows::Graphics::Imaging::BitmapDecoder::CreateAsync(img);
+
+				auto fileWidth = static_cast<float>(decoder.PixelWidth());
+				auto fileHeight = static_cast<float>(decoder.PixelHeight());
+
+				Windows::Foundation::Rect rect{
+					0,   // Start x
+					fileHeight/2,  // Start y
+					fileWidth,   // Width
+					fileHeight/2}; // Height
+
+				auto mask = co_await ::Utils::ImageUtils::CreateMaskAsync(fileWidth, fileHeight, rect);
+
+				auto softBitmap = SoftwareBitmap::CreateCopyFromBuffer(
+					mask.PixelBuffer(),
+					BitmapPixelFormat::Bgra8,
+					mask.PixelWidth(),
+					mask.PixelHeight());
+
+				// Encode it to PNG
+				InMemoryRandomAccessStream stream{};
+				auto encoder = co_await BitmapEncoder::CreateAsync(BitmapEncoder::PngEncoderId(), stream);
+				encoder.SetSoftwareBitmap(softBitmap);
+
+				co_await encoder.FlushAsync();
+
+				Buffer buffer{static_cast<uint32_t>(stream.Size())};
+				auto result = co_await stream.ReadAsync(buffer, stream.Size(), InputStreamOptions::None);
+
+				co_await imageReq.SetMaskAsync(result);
 
 				auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 				if (response.IsResponseSuccess())
