@@ -2,8 +2,6 @@
 
 #include "OpenAiService.g.h"
 
-#include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Storage.Streams.h>
 #include <ImageRequest.h>
 #include <ImageResponse.h>
 #include <CompletionRequest.h>
@@ -12,6 +10,9 @@
 #include <EmbeddingResponse.h>
 #include <ModerationRequest.h>
 #include <ModerationResponse.h>
+
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Storage.Streams.h>
 
 
 namespace winrt::OpenAI::implementation

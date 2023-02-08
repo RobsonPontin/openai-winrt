@@ -2,6 +2,7 @@
 
 #include "OpenAiService.h"
 
+
 namespace Utils::Converters
 {
 	winrt::hstring ModelTypeToString(winrt::OpenAI::ModelType model);

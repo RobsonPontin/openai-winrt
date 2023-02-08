@@ -28,13 +28,17 @@ namespace OpenAI::Utils
 
             auto size = static_cast<uint32_t>(encoded.Size());
             WS::Streams::Buffer buffer{ size };
-            co_await encoded.ReadAsync(buffer, size, WS::Streams::InputStreamOptions::None);
+            co_await encoded.ReadAsync(buffer, size, WSS::InputStreamOptions::None);
 
             co_return buffer;
         }
+        catch (winrt::hresult)
+        {
+            // TOOD: log error
+        }
         catch (...)
         {
-            // Sigh...
+            // TODO: log error
         }
 
         co_return nullptr;

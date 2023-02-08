@@ -14,13 +14,13 @@ namespace winrt::OpenAI::Moderation::implementation
 		/// <summary>
 		/// The input text to classify
 		/// </summary>
-		WF::Collections::IVector<winrt::hstring> InputAsList()
+		WFC::IVector<winrt::hstring> InputAsList()
 		{
 			auto result{ winrt::single_threaded_vector<winrt::hstring>(std::move(m_inputAsList)) };
 			return result;
 		}
 
-		void InputAsList(WF::Collections::IVector<winrt::hstring> value)
+		void InputAsList(WFC::IVector<winrt::hstring> value)
 		{
 			std::vector<winrt::hstring> strVector;
 			strVector.assign(std::cbegin(value), std::cend(value));
@@ -40,7 +40,7 @@ namespace winrt::OpenAI::Moderation::implementation
 			m_input = value;
 		}
 
-		WF::Collections::IVector<winrt::hstring> InputCalculated()
+		WFC::IVector<winrt::hstring> InputCalculated()
 		{
 			if (Input() != L"" && InputAsList() != nullptr)
 			{

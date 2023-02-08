@@ -38,7 +38,7 @@ namespace winrt::OpenAI::Image::implementation
 		winrt::hstring number = winrt::to_hstring(CreationNumber());
 
 		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\"}";
-		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 
@@ -69,7 +69,7 @@ namespace winrt::OpenAI::Image::implementation
 		auto fileName = ImageName() == L"" ? L"untitled" : ImageName();
 		multipartContent.Add(bContent, L"image", fileName);
 
-		winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID
+		winrt::hstring boundary = winrt::to_hstring(WF::GuidHelper::CreateNewGuid()); // create unique ID
 		multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
 
 		// Set up the API endpoint and parameters            
@@ -143,7 +143,7 @@ namespace winrt::OpenAI::Image::implementation
 
 		multipartContent.Add(WWH::HttpStringContent{ Prompt()}, L"prompt");
 
-		winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID
+		winrt::hstring boundary = winrt::to_hstring(WF::GuidHelper::CreateNewGuid()); // create unique ID
 		multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
 
 		// Set up the API endpoint and parameters            

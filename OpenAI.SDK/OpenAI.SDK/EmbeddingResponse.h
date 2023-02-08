@@ -9,7 +9,7 @@ namespace winrt::OpenAI::Embedding::implementation
 	struct EmbeddingResponse : EmbeddingResponseT<EmbeddingResponse, OpenAI::implementation::BaseResponse>
 	{
 		EmbeddingResponse() {}
-		EmbeddingResponse(WF::Collections::IVector<Embedding::EmbeddingValue> const& embedding);
+		EmbeddingResponse(WFC::IVector<Embedding::EmbeddingValue> const& embedding);
 		EmbeddingResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
@@ -22,13 +22,13 @@ namespace winrt::OpenAI::Embedding::implementation
 			return false;
 		}
 
-		WF::Collections::IVector<Embedding::EmbeddingValue> Data()
+		WFC::IVector<Embedding::EmbeddingValue> Data()
 		{
 			return m_embedding;
 		}
 
 	private:
-		WF::Collections::IVector<Embedding::EmbeddingValue> m_embedding;
+		WFC::IVector<Embedding::EmbeddingValue> m_embedding;
 	};
 
 	struct EmbeddingValue : EmbeddingValueT<EmbeddingValue>

@@ -19,7 +19,7 @@ namespace winrt::OpenAI::Moderation::implementation
 			WF::Uri(L"https://api.openai.com/v1/moderations"));
 
 		auto prompt = L"{\"input\": \"" + Input() + L"\"}";
-		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 
