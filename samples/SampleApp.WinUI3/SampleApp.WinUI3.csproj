@@ -38,7 +38,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenAiSdkCsProjection\OpenAiSdkCsProjection.csproj" />
+    <ProjectReference Include="..\..\OpenAiSdkCsProjection\OpenAiSdkCsProjection.csproj" />
   </ItemGroup>
 
   <!-- 

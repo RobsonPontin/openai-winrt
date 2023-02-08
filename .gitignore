@@ -25,3 +25,7 @@
 /OpenAI.SDK/SampleApp.WinUI3/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64
 /OpenAI.SDK/OpenAiSdkCsProjection/bin/Debug/net7.0-windows10.0.19041.0
 /OpenAI.SDK/SampleApp.WinUI3/bin/x64/Debug/net7.0-windows10.0.19041.0/win10-x64
+/OpenAiSdkCsProjection/obj
+/OpenAiSdkCsProjection/bin/Debug/net7.0-windows10.0.19041.0
+/samples/SampleApp.WinUI3/bin/x64/Debug/net7.0-windows10.0.19041.0/win10-x64
+/samples/SampleApp.WinUI3/obj

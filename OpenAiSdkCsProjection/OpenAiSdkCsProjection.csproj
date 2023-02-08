@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenAI.SDK\OpenAI.SDK.vcxproj" />
+    <ProjectReference Include="..\OpenAI.SDK\OpenAI.SDK\OpenAI.SDK.vcxproj" />
   </ItemGroup>
 
   <!--CsWinRT properties-->
