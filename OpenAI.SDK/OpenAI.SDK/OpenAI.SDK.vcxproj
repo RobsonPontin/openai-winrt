@@ -174,6 +174,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseRequest.h" />
+    <ClInclude Include="BaseResponse.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="CompletionResponse.h" />
     <ClInclude Include="EnumUtils.h" />
@@ -182,15 +183,18 @@
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
     <ClInclude Include="ImageUtils.h" />
+    <ClInclude Include="ModelRequest.h" />
     <ClInclude Include="ModerationRequest.h" />
     <ClInclude Include="ModerationResponse.h" />
     <ClInclude Include="OpenAiOptions.h" />
     <ClInclude Include="OpenAiService.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="CompletionRequest.h" />
+    <ClInclude Include="ResponseError.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseRequest.cpp" />
+    <ClCompile Include="BaseResponse.cpp" />
     <ClCompile Include="CompletionResponse.cpp" />
     <ClCompile Include="EnumUtils.cpp" />
     <ClCompile Include="EmbeddingRequest.cpp" />
@@ -198,6 +202,7 @@
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
+    <ClCompile Include="ModelRequest.cpp" />
     <ClCompile Include="ModerationRequest.cpp" />
     <ClCompile Include="ModerationResponse.cpp" />
     <ClCompile Include="OpenAiOptions.cpp" />
@@ -207,6 +212,7 @@
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="CompletionRequest.cpp" />
+    <ClCompile Include="ResponseError.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenAI_SDK.def" />

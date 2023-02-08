@@ -46,7 +46,7 @@ namespace winrt::OpenAI::Image::implementation
 	}
 
 	// Image Variation
-	WF::IAsyncOperation<bool> ImageVariationRequest::SetImageAsync(WS::StorageFile file)
+	WF::IAsyncOperation<bool> ImageVariationRequest::SetImageAsync(WS::StorageFile const& file)
 	{
 		auto imgBuffer = co_await ::OpenAI::Utils::Convert::FileToPngBufferAsync(file);
 		if (imgBuffer)
@@ -83,7 +83,7 @@ namespace winrt::OpenAI::Image::implementation
 	}
 
 	// Image Edit
-	WF::IAsyncOperation<bool> ImageEditRequest::SetImageAsync(WS::StorageFile file)
+	WF::IAsyncOperation<bool> ImageEditRequest::SetImageAsync(WS::StorageFile const& file)
 	{
 		auto imgBuffer = co_await ::OpenAI::Utils::Convert::FileToPngBufferAsync(file);
 		if (imgBuffer)
@@ -96,19 +96,51 @@ namespace winrt::OpenAI::Image::implementation
 		co_return false;
 	}
 
+	WF::IAsyncOperation<bool> ImageEditRequest::SetMaskAsync(WS::StorageFile const& file)
+	{
+		auto imgBuffer = co_await ::OpenAI::Utils::Convert::FileToPngBufferAsync(file);
+		if (imgBuffer)
+		{
+			 m_imageMask = imgBuffer;
+
+			co_return true;
+		}
+
+		co_return false;
+	}
+
+	WF::IAsyncOperation<bool> ImageEditRequest::SetMaskAsync(WS::Streams::IBuffer const& buffer)
+	{
+		if (buffer != nullptr)
+		{
+			m_imageMask = buffer;
+
+			co_return true;
+		}
+
+		co_return false;
+	}
+
 	WWH::HttpRequestMessage ImageEditRequest::BuildHttpRequest()
 	{
 		// Build Image Buffer Content
 		WWH::HttpBufferContent imgContent{ m_imageBuffer };
 		imgContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
-		WWH::HttpBufferContent maskContent{ m_imageMask };
-		maskContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
 
 		WWH::HttpMultipartFormDataContent multipartContent{};
 
 		auto fileName = ImageName() == L"" ? L"untitled" : ImageName();
 		multipartContent.Add(imgContent, L"image", fileName);
-		multipartContent.Add(maskContent, L"image", fileName);
+
+		// Add optional mask argument
+		if (m_imageMask)
+		{
+			WWH::HttpBufferContent maskContent{ m_imageMask };
+			maskContent.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"image/png"));
+
+			multipartContent.Add(maskContent, L"mask", fileName);
+		}
+
 		multipartContent.Add(WWH::HttpStringContent{ Prompt()}, L"prompt");
 
 		winrt::hstring boundary = winrt::to_hstring(Windows::Foundation::GuidHelper::CreateNewGuid()); // create unique ID

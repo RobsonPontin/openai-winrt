@@ -2,23 +2,35 @@
 
 #include "Moderation.ModerationResponse.g.h"
 #include "Moderation.ModerationValue.g.h"
-
+#include "BaseResponse.h"
 
 namespace winrt::OpenAI::Moderation::implementation
 {
-	struct ModerationResponse : ModerationResponseT<ModerationResponse>
+	struct ModerationResponse : ModerationResponseT<ModerationResponse, OpenAI::implementation::BaseResponse>
 	{
 		ModerationResponse() {}
 		ModerationResponse(winrt::hstring id, std::vector<Moderation::ModerationValue> const& moderationValues);
+		ModerationResponse(OpenAI::ResponseError const& error);
+
+		bool IsResponseSuccess()
+		{
+			if (Id() != L"" && m_moderationValues.size() > 0)
+			{
+				return true;
+			}
+
+			return false;
+		}
 
 		winrt::hstring Id()
 		{
 			return m_id;
 		}
 
-		bool IsResponseSuccess()
+		WF::Collections::IVector<Moderation::ModerationValue> Data()
 		{
-			return false;
+			auto result{ winrt::single_threaded_vector<Moderation::ModerationValue>(std::move(m_moderationValues)) };
+			return result;
 		}
 
 	private:

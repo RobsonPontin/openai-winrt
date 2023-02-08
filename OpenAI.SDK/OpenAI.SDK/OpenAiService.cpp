@@ -18,10 +18,32 @@
 #include "OpenAiOptions.h"
 #include "ImageUtils.h"
 #include "BaseRequest.h"
+#include "ResponseError.h"
 
 namespace winrt::OpenAI::implementation
 {
-    // TODO: all request Image, Completion, etc... should derive from an interface for IsValid, BuildHttp, Prompt, Model, etc...
+    WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const& httpMessage)
+    {
+        auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
+        if (json != nullptr)
+        {
+            try
+            {
+                auto error = json.GetNamedObject(L"error");
+                auto code = error.GetNamedString(L"code");
+                auto message = error.GetNamedString(L"message");
+                auto type = error.GetNamedString(L"type");
+
+                co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
+            }
+            catch (winrt::hresult const&)
+            {
+                // TODO: Parsing certain JSON data might throw
+            }
+        }
+
+        co_return winrt::make<OpenAI::implementation::ResponseError>();
+    }
 
     WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest)
     {
@@ -52,9 +74,11 @@ namespace winrt::OpenAI::implementation
                 co_return winrt::make<OpenAI::Image::implementation::ImageResponse>(images);
             }
         }
-
-        // TODO: Handle error and response result
-        co_return winrt::make<OpenAI::Image::implementation::ImageResponse>();
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Image::implementation::ImageResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest)
@@ -95,8 +119,11 @@ namespace winrt::OpenAI::implementation
                 co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(text);
             }
         }
-
-        co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>();        
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(error);
+        }     
     }
 
     WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest)
@@ -141,8 +168,11 @@ namespace winrt::OpenAI::implementation
                 }
             }
         }
-
-        co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>();        
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Embedding::implementation::EmbeddingResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest)
@@ -160,8 +190,6 @@ namespace winrt::OpenAI::implementation
                 // Only evaluate and parse first data from array
                 if (results.Size() == 1)
                 {
-                    std::vector<Moderation::IModerationValue> moderationValues;
-
                     auto jsonValue = results.GetAt(0);
                     auto categoryArray = jsonValue.GetObject();
 
@@ -185,44 +213,31 @@ namespace winrt::OpenAI::implementation
                     auto dViolence = category_scores.GetNamedNumber(L"violence");
                     auto dViolenceGraphic = category_scores.GetNamedNumber(L"violence/graphic");
 
-                    // TODO: proper parse data to a list, reuse code, make response
-                    moderationValues.push_back(winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Hate, hate, dHate));
-                }
+                    std::vector<Moderation::ModerationValue> moderationValues;
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Hate, hate, dHate));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::HateThreatening, hateThreatening, dHateThreatening));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::selfHarm, selfHarm, dSelfHarm));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Sexual, sexual, dSexual));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::SexualMinors, sexualMinors, dSexualMinors));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::Violence, violence, dViolence));
+                    moderationValues.push_back(
+                        winrt::make<Moderation::implementation::ModerationValue>(Moderation::ModerationCategory::ViolenceGraphic, violenceGraphic, dViolenceGraphic));
 
-                // TODO: parse data example
-                /*
-                 * {
-                      "id": "modr-6dY1XYd6T2iOzsYRn7hckqrHcpp4U",
-                      "model": "text-moderation-004",
-                      "results": [
-                        {
-                          "categories": {
-                            "hate": false,
-                            "hate/threatening": false,
-                            "self-harm": false,
-                            "sexual": false,
-                            "sexual/minors": false,
-                            "violence": true,
-                            "violence/graphic": false
-                          },
-                          "category_scores": {
-                            "hate": 0.029734386131167412,
-                            "hate/threatening": 0.00309771578758955,
-                            "self-harm": 2.064793225287076e-09,
-                            "sexual": 1.0425052323626005e-06,
-                            "sexual/minors": 7.927656753281553e-09,
-                            "violence": 0.9992383718490601,
-                            "violence/graphic": 4.949376670992933e-05
-                          },
-                          "flagged": true
-                        }
-                      ]
-                    }
-                 */
+                    co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>(id, moderationValues);
+                }
             }
         }
-
-        co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>();
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Moderation::implementation::ModerationResponse>(error);
+        }
     }
 
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)

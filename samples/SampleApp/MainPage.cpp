@@ -5,13 +5,16 @@
 #include "winrt/Windows.Storage.Pickers.h"
 #include "winrt/Windows.Storage.Streams.h"
 #include "winrt/Windows.UI.Xaml.Media.Imaging.h"
+#include "winrt/Windows.Graphics.Imaging.h"
 
 #include "StorageUtils.h"
+#include "ImageUtils.h"
 
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::Graphics::Imaging;
 
 
 namespace winrt::SampleApp::implementation
@@ -119,7 +122,7 @@ namespace winrt::SampleApp::implementation
 		co_await ::SampleApp::Utils::StorageUtils::CreateFileFromImageAsync(image(), false);
 	}
 
-#pragma region Image Generation
+#pragma region DALL-E
 	IAsyncAction MainPage::ProcessImageVariantAsync()
 	{
 		if (!m_openAiService.IsRunning())
@@ -155,6 +158,10 @@ namespace winrt::SampleApp::implementation
 						}
 					}
 				}
+				else
+				{
+					ShowResponseError(response.Error());
+				}
 			}
 		}
 	}
@@ -182,6 +189,10 @@ namespace winrt::SampleApp::implementation
 					ShowImageResult();
 				}
 			}
+			else
+			{
+				ShowResponseError(response.Error());
+			}
 		}
 
 		co_return;
@@ -205,6 +216,42 @@ namespace winrt::SampleApp::implementation
 				imageReq.Prompt(prompt);
 				co_await imageReq.SetImageAsync(file);
 
+				/* For this example the mask will always cover the half bottom section of the
+				 * full image, so it will edit anything in it. */
+				
+				// Gathering image info
+				auto img = co_await file.OpenReadAsync();
+				auto decoder = co_await winrt::Windows::Graphics::Imaging::BitmapDecoder::CreateAsync(img);
+
+				auto fileWidth = static_cast<float>(decoder.PixelWidth());
+				auto fileHeight = static_cast<float>(decoder.PixelHeight());
+
+				Windows::Foundation::Rect rect{
+					0,   // Start x
+					fileHeight/2,  // Start y
+					fileWidth,   // Width
+					fileHeight/2}; // Height
+
+				auto mask = co_await ::Utils::ImageUtils::CreateMaskAsync(fileWidth, fileHeight, rect);
+
+				auto softBitmap = SoftwareBitmap::CreateCopyFromBuffer(
+					mask.PixelBuffer(),
+					BitmapPixelFormat::Bgra8,
+					mask.PixelWidth(),
+					mask.PixelHeight());
+
+				// Encode it to PNG
+				InMemoryRandomAccessStream stream{};
+				auto encoder = co_await BitmapEncoder::CreateAsync(BitmapEncoder::PngEncoderId(), stream);
+				encoder.SetSoftwareBitmap(softBitmap);
+
+				co_await encoder.FlushAsync();
+
+				Buffer buffer{static_cast<uint32_t>(stream.Size())};
+				auto result = co_await stream.ReadAsync(buffer, stream.Size(), InputStreamOptions::None);
+
+				co_await imageReq.SetMaskAsync(result);
+
 				auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 				if (response.IsResponseSuccess())
 				{
@@ -223,6 +270,10 @@ namespace winrt::SampleApp::implementation
 						}
 					}
 				}
+				else
+				{
+					ShowResponseError(response.Error());
+				}
 			}
 		}
 
@@ -230,6 +281,7 @@ namespace winrt::SampleApp::implementation
 	}
 #pragma endregion
 
+#pragma region GPT
 	IAsyncAction MainPage::ProcessTextCompletionAsync(winrt::hstring prompt)
 	{
 		if (!m_openAiService.IsRunning())
@@ -242,6 +294,10 @@ namespace winrt::SampleApp::implementation
 			{
 				textBlock().Text(response.ResponseText());
 				ShowTextResult();
+			}
+			else
+			{
+				ShowResponseError(response.Error());
 			}
 		}
 	}
@@ -260,7 +316,7 @@ namespace winrt::SampleApp::implementation
 				auto embedding = result.Current().Embedding();
 
 				winrt::hstring resultText = L"";
-				for (int i = 0; i < embedding.Size(); ++i)
+				for (uint32_t i = 0; i < embedding.Size(); ++i)
 				{
 					if (i == 0)
 					{
@@ -275,6 +331,10 @@ namespace winrt::SampleApp::implementation
 				textBlock().Text(resultText);
 				ShowTextResult();
 			}
+			else
+			{
+				ShowResponseError(response.Error());
+			}
 		}
 	}
 
@@ -287,14 +347,30 @@ namespace winrt::SampleApp::implementation
 
 			auto response = co_await m_openAiService.RunRequestAsync(embReq);
 			if (response.IsResponseSuccess())
-			{				
-				//TODO: parse it
-				//textBlock().Text(resultText);
+			{			
+				auto moderationValues = response.Data();
+							
+				winrt::hstring violenceLevel = L"Error!" ;
+				
+				for (uint32_t i = 0; i < moderationValues.Size(); ++i)
+				{
+					auto value = moderationValues.GetAt(i);
+					if (value.Category() == OpenAI::Moderation::ModerationCategory::Violence)
+					{
+						violenceLevel = L"Violence Score: " + winrt::to_hstring(value.Score());
+					}
+				}
+
+				textBlock().Text(violenceLevel);
 				ShowTextResult();
+			}
+			else
+			{
+				ShowResponseError(response.Error());
 			}
 		}
 	}
-
+#pragma endregion
 
 	void MainPage::ShowTextResult()
 	{
@@ -306,6 +382,17 @@ namespace winrt::SampleApp::implementation
 	{
 		textBlock().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
 		image().Visibility(Windows::UI::Xaml::Visibility::Visible);
+	}
+
+	void MainPage::ShowResponseError(OpenAI::ResponseError const& error)
+	{
+		if (error == nullptr)
+		{
+			return;
+		}
+
+		textBlock().Text(L"Error:\n" + error.Message());
+		ShowTextResult();
 	}
 }
 

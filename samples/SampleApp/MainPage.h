@@ -43,6 +43,7 @@ namespace winrt::SampleApp::implementation
 
         void ShowTextResult();
         void ShowImageResult();
+        void ShowResponseError(OpenAI::ResponseError const& error);
     };
 }
 

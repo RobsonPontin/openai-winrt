@@ -17,6 +17,11 @@ namespace winrt::OpenAI::Moderation::implementation
 		m_moderationValues = moderationValues;
 	}
 
+	ModerationResponse::ModerationResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
+
 	ModerationValue::ModerationValue(ModerationCategory category, bool flagged, double score)
 	{
 		m_category = category;

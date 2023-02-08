@@ -94,7 +94,7 @@ namespace winrt::OpenAI::Image::implementation
 	{
 		ImageVariationRequest() {}
 		
-		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile file);
+		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile const& file);
 
 		bool IsValid()
 		{
@@ -116,7 +116,10 @@ namespace winrt::OpenAI::Image::implementation
 	{
 		ImageEditRequest() {}
 
-		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile file);
+		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile const& file);
+
+		WF::IAsyncOperation<bool> SetMaskAsync(WS::StorageFile const& file);
+		WF::IAsyncOperation<bool> SetMaskAsync(WS::Streams::IBuffer const& buffer);
 
 		bool IsValid()
 		{

@@ -18,6 +18,11 @@ namespace winrt::OpenAI::Embedding::implementation
 		m_embedding = embedding;
 	}
 
+	EmbeddingResponse::EmbeddingResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
+
 	// Embedding Value
 
 	EmbeddingValue::EmbeddingValue(int32_t index, std::vector<double> embedding)

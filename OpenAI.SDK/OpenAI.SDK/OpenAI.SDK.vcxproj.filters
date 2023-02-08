@@ -42,6 +42,15 @@
     <ClCompile Include="BaseRequest.cpp">
       <Filter>src\Requests</Filter>
     </ClCompile>
+    <ClCompile Include="BaseResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
+    <ClCompile Include="ResponseError.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -85,6 +94,15 @@
       <Filter>src\Response</Filter>
     </ClInclude>
     <ClInclude Include="BaseRequest.h">
+      <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseResponse.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ResponseError.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelRequest.h">
       <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
