@@ -8,7 +8,7 @@ namespace winrt::OpenAI::Image::implementation
 	struct ImageResponse : ImageResponseT<ImageResponse, OpenAI::implementation::BaseResponse>
 	{
 		ImageResponse() {}
-		ImageResponse(std::vector<WS::Streams::IBuffer> images);
+		ImageResponse(std::vector<WSS::IBuffer> images);
 		ImageResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
@@ -21,11 +21,11 @@ namespace winrt::OpenAI::Image::implementation
 			return false;
 		}
 
-		WF::Collections::IVector<WS::Streams::IBuffer> Images()
+		WF::Collections::IVector<WSS::IBuffer> Images()
 		{
-			Windows::Foundation::Collections::IVector<WS::Streams::IBuffer> vector
+			Windows::Foundation::Collections::IVector<WSS::IBuffer> vector
 			{ 
-				winrt::single_threaded_vector<WS::Streams::IBuffer>() 
+				winrt::single_threaded_vector<WSS::IBuffer>() 
 			};
 			
 			for (int i = 0; i < m_images.size(); ++i)
@@ -37,7 +37,7 @@ namespace winrt::OpenAI::Image::implementation
 		}
 
 	private:
-		std::vector<WS::Streams::IBuffer> m_images;
+		std::vector<WSS::IBuffer> m_images;
 	};
 }
 

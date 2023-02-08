@@ -109,7 +109,7 @@ namespace winrt::OpenAI::Image::implementation
 		WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
-		WS::Streams::IBuffer m_imageBuffer{ nullptr };
+		WSS::IBuffer m_imageBuffer{ nullptr };
 	};
 
 	struct ImageEditRequest : ImageEditRequestT<ImageEditRequest, ImageRequest>
@@ -119,7 +119,7 @@ namespace winrt::OpenAI::Image::implementation
 		WF::IAsyncOperation<bool> SetImageAsync(WS::StorageFile const& file);
 
 		WF::IAsyncOperation<bool> SetMaskAsync(WS::StorageFile const& file);
-		WF::IAsyncOperation<bool> SetMaskAsync(WS::Streams::IBuffer const& buffer);
+		WF::IAsyncOperation<bool> SetMaskAsync(WSS::IBuffer const& buffer);
 
 		bool IsValid()
 		{
@@ -135,8 +135,8 @@ namespace winrt::OpenAI::Image::implementation
 		WWH::HttpRequestMessage BuildHttpRequest();
 
 	private:
-		WS::Streams::IBuffer m_imageBuffer{ nullptr };
-		WS::Streams::IBuffer m_imageMask{ nullptr };
+		WSS::IBuffer m_imageBuffer{ nullptr };
+		WSS::IBuffer m_imageMask{ nullptr };
 	};
 }
 

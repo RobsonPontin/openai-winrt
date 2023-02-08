@@ -5,8 +5,12 @@ namespace winrt
 {
 	namespace Windows
 	{
-		namespace Foundation {}
-		namespace Storage {}
+		namespace Foundation {
+			namespace Collections {}
+		}
+		namespace Storage {
+			namespace Streams {}
+		}
 		namespace Graphics {
 			namespace Imaging {}
 		}
@@ -28,8 +32,9 @@ namespace winrt
 }
 
 namespace WF = winrt::Windows::Foundation;
+namespace WFC = winrt::Windows::Foundation::Collections;
 namespace WS = winrt::Windows::Storage;
+namespace WSS = winrt::Windows::Storage::Streams;
 namespace WGI = winrt::Windows::Graphics::Imaging;
-namespace WUXC = winrt::Windows::UI::Xaml::Controls;
 namespace WWH = winrt::Windows::Web::Http;
 namespace WDJ = winrt::Windows::Data::Json;

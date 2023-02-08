@@ -21,7 +21,7 @@ namespace winrt::OpenAI::Completion::implementation
 		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
 
 		auto prompt = L"{\"model\": \"" + model + L"\", \"prompt\": \"" + Prompt() + L"\"}";
-		WWH::HttpStringContent content(prompt, winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 

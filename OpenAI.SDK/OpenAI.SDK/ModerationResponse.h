@@ -27,7 +27,7 @@ namespace winrt::OpenAI::Moderation::implementation
 			return m_id;
 		}
 
-		WF::Collections::IVector<Moderation::ModerationValue> Data()
+		WFC::IVector<Moderation::ModerationValue> Data()
 		{
 			auto result{ winrt::single_threaded_vector<Moderation::ModerationValue>(std::move(m_moderationValues)) };
 			return result;

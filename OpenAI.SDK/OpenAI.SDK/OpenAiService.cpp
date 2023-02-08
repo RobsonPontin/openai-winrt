@@ -138,7 +138,7 @@ namespace winrt::OpenAI::implementation
                 // Parse JSON response
                 auto data = json.GetNamedArray(L"data");
 
-                WF::Collections::IVector<Embedding::EmbeddingValue> embeddingList{ single_threaded_vector<Embedding::EmbeddingValue>() };
+                WFC::IVector<Embedding::EmbeddingValue> embeddingList{ single_threaded_vector<Embedding::EmbeddingValue>() };
 
                 for (auto jsonValue : data)
                 {
