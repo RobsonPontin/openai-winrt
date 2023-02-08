@@ -18,3 +18,6 @@
 /OpenAI.SDK/packages
 /OpenAI.SDK/OpenAiSdkCsProjection/obj
 /OpenAI.SDK/SampleApp.WinUI3/obj
+/OpenAI.SDK/OpenAI.SDK/x64/Debug_WASDK
+/OpenAI.SDK/SampleApp.WinUI3/SampleApp.WinUI3.csproj.user
+/OpenAI.SDK/x64/Debug_WASDK/OpenAI.SDK
