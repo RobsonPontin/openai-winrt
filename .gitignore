@@ -21,3 +21,5 @@
 /OpenAI.SDK/OpenAI.SDK/x64/Debug_WASDK
 /OpenAI.SDK/SampleApp.WinUI3/SampleApp.WinUI3.csproj.user
 /OpenAI.SDK/x64/Debug_WASDK/OpenAI.SDK
+/OpenAI.SDK/OpenAiSdkCsProjection/bin/Debug/net6.0-windows10.0.19041.0
+/OpenAI.SDK/SampleApp.WinUI3/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64
