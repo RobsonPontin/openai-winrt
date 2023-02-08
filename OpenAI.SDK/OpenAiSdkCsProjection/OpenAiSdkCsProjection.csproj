@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+	<!-- Set Platform to AnyCPU to allow consumption of the projection assembly from any architecture. -->
+	<Platform>AnyCPU</Platform>
+    <UseWinUI>true</UseWinUI>
+    <!-- Workaround for MSB3271 error on processor architecture mismatch -->
+	<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221109.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenAI.SDK\OpenAI.SDK.vcxproj" />
+  </ItemGroup>
+
+  <!--CsWinRT properties-->
+  <PropertyGroup>
+	<!--Specify namespaces to create a C# projection for-->
+	<CsWinRTIncludes>OpenAI</CsWinRTIncludes>
+	<!--Set output path for generated source files/projection dll to OutDir (defined in Directory.Build.props)-->
+	<CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
+  </PropertyGroup>
+</Project>

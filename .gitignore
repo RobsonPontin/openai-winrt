@@ -16,3 +16,5 @@
 /samples/SampleApp/x64/Debug
 /OpenAI.SDK/x64/Debug/SampleApp
 /OpenAI.SDK/packages
+/OpenAI.SDK/OpenAiSdkCsProjection/obj
+/OpenAI.SDK/SampleApp.WinUI3/obj
