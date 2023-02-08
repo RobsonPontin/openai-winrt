@@ -65,13 +65,15 @@ Create a new image from a source image file considering the prompt editing comma
 
 ```cpp
 Windows::Storage::StorageFile file = GetFileFromPicker();
+WindowS::Storage::StorageFile mask = GetFileFromPicker();
 
-winrt::hstring prompt = L"remove the background from the image";
+winrt::hstring prompt = L"add a small tiger with shoes";
 
 auto imageReq = OpenAI::Image::ImageEditRequest{};
 imageReq.ImageName(file.Name());
 imageReq.Prompt(prompt);
 co_await imageReq.SetImageAsync(file);
+co_await imageReq.SetMaskAsync(mask); // Mask needed to declare which are of the image the editing should be applied
 
 auto response = co_await m_openAiService.RunRequestAsync(imageReq);
 ```
