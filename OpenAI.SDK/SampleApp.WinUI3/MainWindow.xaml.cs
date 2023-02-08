@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-
+using System.Linq;
+using Windows.Storage.Streams;
 
 namespace SampleApp.WinUI3
 {
@@ -25,13 +27,28 @@ namespace SampleApp.WinUI3
             }
 
             var imgRequest = new OpenAI.Image.ImageCreateRequest();
-            imgRequest.Prompt = "A robot bird flying above a green lake, abstract, art";
+            // Change to something else (or move it to a text box in the XAML)
+            imgRequest.Prompt = "A robot bird flying above a green lake";
 
             var result = await m_openAiService.RunRequestAsync(imgRequest);
             if (result.IsResponseSuccess)
             {
                 // Handle image received
-                //var img = result.Images.First();
+                var imgBuffer = result.Images.First();
+
+                var stream = new InMemoryRandomAccessStream();
+                var outputStream = stream.GetOutputStreamAt(0);
+                var datawriter = new DataWriter(outputStream);
+                datawriter.WriteBuffer(imgBuffer);
+                await datawriter.StoreAsync();
+                await outputStream.FlushAsync();
+
+                if (stream != null)
+                {
+                    var img = new BitmapImage();
+                    img.SetSource(stream);
+                    image.Source = img;
+                }
             }
         }
     }
