@@ -7,7 +7,7 @@
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{83833e84-befd-4efd-b9ce-481dc11fe6a3}</ProjectGuid>
-    <ProjectName>SampleApp</ProjectName>
+    <ProjectName>SampleApp.UWP</ProjectName>
     <RootNamespace>SampleApp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>

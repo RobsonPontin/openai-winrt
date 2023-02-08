@@ -29,3 +29,5 @@
 /OpenAiSdkCsProjection/bin/Debug/net7.0-windows10.0.19041.0
 /samples/SampleApp.WinUI3/bin/x64/Debug/net7.0-windows10.0.19041.0/win10-x64
 /samples/SampleApp.WinUI3/obj
+/samples/SampleApp.UWP/Generated Files
+/samples/SampleApp.UWP/x64/Debug
