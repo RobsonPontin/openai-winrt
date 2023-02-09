@@ -22,6 +22,15 @@
 
 namespace winrt::OpenAI::implementation
 {
+    OpenAiService::OpenAiService()
+    {
+    }
+
+    OpenAiService::OpenAiService(OpenAI::OpenAiOptions const& options)
+    {
+        m_openAiOptions = options;
+    }
+
     WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const& httpMessage)
     {
         auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);

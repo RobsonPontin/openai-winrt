@@ -21,13 +21,8 @@ namespace winrt::OpenAI::implementation
     {
     public:
 
-        OpenAiService()
-        {}
-
-        OpenAiService(OpenAI::OpenAiOptions const& options)
-        {
-            m_openAiOptions = options;
-        }
+        OpenAiService();
+        OpenAiService(OpenAI::OpenAiOptions const& options);
 
         WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
 

@@ -22,8 +22,10 @@ namespace SampleApp.WinUI3
         {
             if (m_openAiService == null)
             {
-                m_openAiService = new OpenAI.OpenAiService();
-                m_openAiService.SetOpenAiSecretKey("YOU_OPEN_AI_KEY");
+                var options = new OpenAI.OpenAiOptions();
+                options.SetOpenAiKeyFromEnvironmentVar("MY_OPEN_AI_API_KEY");
+
+                m_openAiService = new OpenAI.OpenAiService(options);
             }
 
             var imgRequest = new OpenAI.Image.ImageCreateRequest();
