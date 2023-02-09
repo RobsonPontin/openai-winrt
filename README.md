@@ -6,11 +6,15 @@ For more information visit https://openai.com/.
 
 ## OpenAI Service
 
-It is necessary to initialize the service with a API Key, which can be obtained at https://openai.com/.
+It is necessary to initialize the service with an API Key, which can be obtained at https://openai.com/.
 
-```cpp
-OpenAI::OpenAiService m_openAiService{};
-m_openAiService.SetOpenAiSecretKey(L"SECRET API KEY");
+The example below show how to get the OpenAI Key by passing your environment variable which contains it.
+
+```cs
+var options = new OpenAI.OpenAiOptions();
+options.SetOpenAiKeyFromEnvironmentVar("MY_OPEN_AI_API_KEY");
+
+m_openAiService = new OpenAI.OpenAiService(options);
 ```
 
 ## GPT3 APIs
