@@ -10,11 +10,11 @@ namespace winrt::OpenAI::implementation
 	{
 		ModelRequest() {}
 
-		OpenAI::ModelType Model()
+		winrt::hstring Model()
 		{
 			return m_model;
 		}
-		void Model(OpenAI::ModelType val)
+		void Model(winrt::hstring val)
 		{
 			m_model = val;
 		}
@@ -27,7 +27,7 @@ namespace winrt::OpenAI::implementation
 		WWH::HttpRequestMessage BuildHttpRequest();
 	
 	private:
-		OpenAI::ModelType m_model{ ModelType::Unknown };
+		winrt::hstring m_model{ L"" };
 	};
 }
 

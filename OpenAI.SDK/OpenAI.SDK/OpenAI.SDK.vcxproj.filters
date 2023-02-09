@@ -51,6 +51,9 @@
     <ClCompile Include="ModelRequest.cpp">
       <Filter>src\Requests</Filter>
     </ClCompile>
+    <ClCompile Include="ModelResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="ModelRequest.h">
       <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelResponse.h">
+      <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,9 +13,9 @@ namespace winrt::OpenAI::implementation
 	{
 		winrt::hstring modelRequest = L"models";
 
-		if (Model() != ModelType::Unknown)
+		if (Model() != L"")
 		{
-			modelRequest = L"model/" +  ::Utils::Converters::ModelTypeToString(Model());
+			modelRequest = L"model/" +  Model();
 		}
 
 		// Set up the API endpoint and parameters
