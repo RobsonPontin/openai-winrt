@@ -49,6 +49,19 @@ namespace SampleApp.WinUI3
                     img.SetSource(stream);
                     image.Source = img;
                 }
+
+                textBlock.Visibility = Visibility.Collapsed;
+                image.Visibility = Visibility.Visible;
+            }
+            else
+            {                
+                if (result.Error!= null) 
+                {
+                    textBlock.Text = result.Error.Message;
+
+                    textBlock.Visibility = Visibility.Visible;
+                    image.Visibility = Visibility.Collapsed;
+                }
             }
         }
     }

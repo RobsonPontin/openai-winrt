@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">        
+    <Grid>        
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -18,5 +18,6 @@
         
         <Button x:Name="myButton" Click="myButton_Click">Generate Image</Button>
         <Image x:Name="image" VerticalAlignment="Stretch" Grid.Row="1"/>
+        <TextBlock x:Name="textBlock" Grid.Row="1"/>
     </Grid>
 </Window>
