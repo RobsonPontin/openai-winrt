@@ -30,13 +30,20 @@ namespace winrt::OpenAI::Image::implementation
 			m_imageName = val;
 		}
 
-		int CreationNumber()
+		int GenerationNumber()
 		{
 			return m_generationNumber;
 		}
-		void CreationNumber(int val)
+		void GenerationNumber(int val)
 		{
-			m_generationNumber = val;
+			if (val >= MAX_GENERATION_NUMBER)
+			{
+				m_generationNumber = MAX_GENERATION_NUMBER;
+			}
+			else
+			{
+				m_generationNumber = val;
+			}
 		}
 
 		SizeType Size()
@@ -65,6 +72,11 @@ namespace winrt::OpenAI::Image::implementation
 		virtual WWH::HttpRequestMessage BuildHttpRequest() { return nullptr; }
 
 	private:
+		/// <summary>
+		/// Max number of images to generate
+		/// </summary>
+		const int MAX_GENERATION_NUMBER = 10;
+
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_imageName{ L"" };
 		int m_generationNumber{ 1 };

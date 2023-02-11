@@ -66,19 +66,24 @@ namespace winrt::OpenAI::implementation
                 // Extract the image data from the JSON response
                 auto data = json.GetNamedValue(L"data");
 
-                // It will return an array of images, in this case we are only getting the first one
-                auto jValue = data.GetArray().GetAt(0).GetObject();
-                auto stringUri = jValue.GetNamedString(L"url");
-
-                WF::Uri aiImage{ stringUri };
-
-                // Result will come in PNG format
-                WWH::HttpClient httpClientGet;
-                auto result = co_await httpClientGet.GetAsync(aiImage);
-                auto imageBuffer = co_await result.Content().ReadAsBufferAsync();
-
+                auto imageArray = data.GetArray();
                 std::vector<WS::Streams::IBuffer> images;
-                images.push_back(imageBuffer);
+
+                for (int i = 0; i < imageArray.Size(); ++i)
+                {
+                    // It will return an array of images, in this case we are only getting the first one
+                    auto jValue = imageArray.GetAt(i).GetObject();
+                    auto stringUri = jValue.GetNamedString(L"url");
+
+                    WF::Uri aiImage{ stringUri };
+
+                    // Result will come in PNG format
+                    WWH::HttpClient httpClientGet;
+                    auto result = co_await httpClientGet.GetAsync(aiImage);
+                    auto imageBuffer = co_await result.Content().ReadAsBufferAsync();
+
+                    images.push_back(imageBuffer);
+                }
 
                 co_return winrt::make<OpenAI::Image::implementation::ImageResponse>(images);
             }

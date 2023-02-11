@@ -35,7 +35,7 @@ namespace winrt::OpenAI::Image::implementation
 
 		winrt::hstring response_format = ::Utils::Converters::ResponseFormatToString(ResponseFormat());
 		winrt::hstring imageSize = ::Utils::Converters::ImageSizeToString(Size());
-		winrt::hstring number = winrt::to_hstring(CreationNumber());
+		winrt::hstring number = winrt::to_hstring(GenerationNumber());
 
 		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\"}";
 		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
@@ -68,6 +68,7 @@ namespace winrt::OpenAI::Image::implementation
 
 		auto fileName = ImageName() == L"" ? L"untitled" : ImageName();
 		multipartContent.Add(bContent, L"image", fileName);
+		multipartContent.Add(WWH::HttpStringContent{ winrt::to_hstring(GenerationNumber()) }, L"num_images");
 
 		winrt::hstring boundary = winrt::to_hstring(WF::GuidHelper::CreateNewGuid()); // create unique ID
 		multipartContent.Headers().TryAppendWithoutValidation(L"Content-Type", L"multipart/form-data; boundary=" + boundary);
