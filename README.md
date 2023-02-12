@@ -1,6 +1,6 @@
 # WinRT SDK for OpenAI DALL·E and GPT
 
-A community-maintained (unofficial) OpenAI WinRT SDK that can be used with UWP (Universal Windows Platform) and/or WinUI 3 (Desktop) apps for both C++ and C# languages.
+A community-maintained (unofficial) OpenAI WinRT SDK that can be used with [UWP (Universal Windows Platform)](https://learn.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) and/or [WinUI 3 (Desktop)](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/) apps for both C++ and C# languages.
 
 For more information visit https://openai.com/.
 
