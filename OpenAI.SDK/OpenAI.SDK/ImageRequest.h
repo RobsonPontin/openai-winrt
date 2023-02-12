@@ -64,6 +64,16 @@ namespace winrt::OpenAI::Image::implementation
 			return m_responseFormat;
 		}
 
+		winrt::hstring User()
+		{
+			return m_user;
+		}
+
+		void User(winrt::hstring val)
+		{
+			m_user = val;
+		}
+
 		virtual bool IsValid()
 		{
 			return false; 
@@ -79,6 +89,7 @@ namespace winrt::OpenAI::Image::implementation
 
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_imageName{ L"" };
+		winrt::hstring m_user = L"";
 		int m_generationNumber{ 1 };
 		SizeType m_size{ SizeType::Size1024 };
 		ResponseFormatType m_responseFormat{ ResponseFormatType::Url };

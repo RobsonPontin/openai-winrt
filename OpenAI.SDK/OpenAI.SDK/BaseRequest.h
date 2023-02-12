@@ -7,7 +7,7 @@
 
 namespace winrt::OpenAI::implementation
 {
-	struct BaseRequest : BaseRequestT< BaseRequest>
+	struct BaseRequest : BaseRequestT<BaseRequest>
 	{
 		BaseRequest() {}
 

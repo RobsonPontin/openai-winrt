@@ -37,7 +37,7 @@ namespace winrt::OpenAI::Image::implementation
 		winrt::hstring imageSize = ::Utils::Converters::ImageSizeToString(Size());
 		winrt::hstring number = winrt::to_hstring(GenerationNumber());
 
-		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\"}";
+		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\", \"user\": \"" + User() + L"\"}";
 		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);

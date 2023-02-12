@@ -69,7 +69,7 @@ namespace winrt::OpenAI::implementation
                 auto imageArray = data.GetArray();
                 std::vector<WS::Streams::IBuffer> images;
 
-                for (int i = 0; i < imageArray.Size(); ++i)
+                for (uint32_t i = 0; i < imageArray.Size(); ++i)
                 {
                     // It will return an array of images, in this case we are only getting the first one
                     auto jValue = imageArray.GetAt(i).GetObject();

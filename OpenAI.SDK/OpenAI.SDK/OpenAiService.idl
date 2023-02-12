@@ -97,6 +97,7 @@ namespace OpenAI.Image
 		String ImageName{ get; set; };
 		SizeType Size{ get; set; };
 		ResponseFormatType ResponseFormat{ get; set; };
+		String User{ get; set; };
 	};
 
 	[default_interface]
