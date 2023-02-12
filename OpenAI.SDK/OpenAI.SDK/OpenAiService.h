@@ -10,6 +10,8 @@
 #include <EmbeddingResponse.h>
 #include <ModerationRequest.h>
 #include <ModerationResponse.h>
+#include <EditsRequest.h>
+#include <EditsResponse.h>
 
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -31,6 +33,8 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest);
 
         WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest);
+
+        WF::IAsyncOperation<OpenAI::Edits::EditsResponse> RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const& editRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {

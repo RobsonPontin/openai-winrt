@@ -254,6 +254,25 @@ namespace winrt::OpenAI::implementation
         }
     }
 
+    WF::IAsyncOperation<OpenAI::Edits::EditsResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const& editRequest)
+    {
+        // Send the request and retrieve the response  
+        WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(editRequest);
+        if (response.IsSuccessStatusCode())
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(response);
+            if (json != nullptr)
+            {
+                // TODO:
+            }
+        }
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>(error);
+        }
+    }
+
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)
     {
         if (m_openAiOptions != nullptr && request.IsValid())

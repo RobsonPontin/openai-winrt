@@ -10,6 +10,8 @@ namespace Utils::Converters
         { winrt::OpenAI::ModelType::image_alpha_001, L"image-alpha-001" },
         { winrt::OpenAI::ModelType::text_embedding_ada_002,L"text-embedding-ada-002" },
         { winrt::OpenAI::ModelType::text_davinci_003, L"text-davinci-003" },
+		{ winrt::OpenAI::ModelType::text_davinci_edit_001, L"text-davinci-edit-001" },
+		{ winrt::OpenAI::ModelType::code_davinci_edit_001, L"code-davinci-edit-001" },
     };
 
     winrt::hstring ModelTypeToString(winrt::OpenAI::ModelType model)

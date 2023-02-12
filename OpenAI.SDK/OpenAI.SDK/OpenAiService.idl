@@ -5,6 +5,8 @@ namespace OpenAI
 		image_alpha_001,
 		text_embedding_ada_002,
 		text_davinci_003,
+		text_davinci_edit_001,
+		code_davinci_edit_001,
 		Unknown
 	};
 
@@ -33,6 +35,7 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Embedding.EmbeddingResponse> RunRequestAsync(OpenAI.Embedding.EmbeddingRequest embeddingRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Moderation.ModerationResponse> RunRequestAsync(OpenAI.Moderation.ModerationRequest moderationRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Edits.EditsResponse> RunRequestAsync(OpenAI.Edits.EditsRequest editsRequest);
 	};
 
 	[default_interface]
@@ -234,5 +237,12 @@ namespace OpenAI.Edits
 
 		String Input{ get; set; };
 		String Instruction{ get; set; };
+		Double Temperature{get; set; };
+		Double TopP{ get; set; };
+	};
+
+	unsealed runtimeclass EditsResponse : OpenAI.BaseResponse
+	{
+		protected EditsResponse();
 	};
 }
