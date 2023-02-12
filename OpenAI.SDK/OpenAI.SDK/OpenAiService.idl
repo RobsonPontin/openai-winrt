@@ -222,3 +222,17 @@ namespace OpenAI.Moderation
 		Double Score{ get; };
 	};
 }
+
+// Edits
+
+namespace OpenAI.Edits
+{
+	[default_interface]
+	runtimeclass EditsRequest : OpenAI.BaseRequest
+	{
+		EditsRequest();
+
+		String Input{ get; set; };
+		String Instruction{ get; set; };
+	};
+}

@@ -54,6 +54,9 @@
     <ClCompile Include="ModelResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="EditsRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="ModelResponse.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="EditsRequest.h">
+      <Filter>src\Requests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

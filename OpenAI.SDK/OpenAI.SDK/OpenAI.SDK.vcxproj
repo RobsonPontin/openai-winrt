@@ -180,6 +180,7 @@
     <ClInclude Include="BaseResponse.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="CompletionResponse.h" />
+    <ClInclude Include="EditsRequest.h" />
     <ClInclude Include="EnumUtils.h" />
     <ClInclude Include="EmbeddingRequest.h" />
     <ClInclude Include="EmbeddingResponse.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="BaseRequest.cpp" />
     <ClCompile Include="BaseResponse.cpp" />
     <ClCompile Include="CompletionResponse.cpp" />
+    <ClCompile Include="EditsRequest.cpp" />
     <ClCompile Include="EnumUtils.cpp" />
     <ClCompile Include="EmbeddingRequest.cpp" />
     <ClCompile Include="EmbeddingResponse.cpp" />
