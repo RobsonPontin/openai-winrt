@@ -235,6 +235,7 @@ namespace OpenAI.Edits
 	{
 		EditsRequest();
 
+		OpenAI.ModelType Model{ get; set; };
 		String Input{ get; set; };
 		String Instruction{ get; set; };
 		Double Temperature{get; set; };
@@ -245,4 +246,6 @@ namespace OpenAI.Edits
 	{
 		protected EditsResponse();
 	};
+
+	// TODO: implement EditsValue for all diff choices edits might sent to response
 }

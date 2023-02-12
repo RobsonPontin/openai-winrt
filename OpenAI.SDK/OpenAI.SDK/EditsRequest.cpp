@@ -16,7 +16,7 @@ namespace winrt::OpenAI::Edits::implementation
 		// Set up the API endpoint and parameters
 		WWH::HttpRequestMessage request(
 			WWH::HttpMethod::Post(),
-			WF::Uri(L"https://api.openai.com/v1/embeddings"));
+			WF::Uri(L"https://api.openai.com/v1/edits"));
 
 		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
 

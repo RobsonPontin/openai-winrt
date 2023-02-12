@@ -58,7 +58,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(imageRequest);
-        if (response.IsSuccessStatusCode())
+        if (response == nullptr || response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -99,7 +99,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(completionRequest);
-        if (response.IsSuccessStatusCode())
+        if (response == nullptr || response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -144,7 +144,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(embeddingRequest);
-        if (response.IsSuccessStatusCode())
+        if (response == nullptr || response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -193,7 +193,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(moderationRequest);
-        if (response.IsSuccessStatusCode())
+        if (response == nullptr || response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -258,12 +258,23 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(editRequest);
-        if (response.IsSuccessStatusCode())
+        if (response == nullptr || response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
             {
-                // TODO:
+                // TODO: parse JSON
+                /*                
+                L"{
+                \"object\":\"edit\",
+                \"created\":1676229043,
+                \"choices\":[{\"text\":\"What day of the week is it?\\n\",\"index\":0}],
+                \"usage\":{\"prompt_tokens\":25,
+                \"completion_tokens\":28,
+                \"total_tokens\":53}}\n"                
+                */
+
+                co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>();
             }
         }
         else

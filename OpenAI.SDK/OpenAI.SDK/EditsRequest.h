@@ -89,6 +89,11 @@ namespace winrt::OpenAI::Edits::implementation
 
 		bool IsValid()
 		{
+			if (Model() != OpenAI::ModelType::Unknown && Input() != L"" && Instruction() != L"")
+			{
+				return true;
+			}
+
 			return false;
 		}
 
@@ -102,7 +107,7 @@ namespace winrt::OpenAI::Edits::implementation
 		uint16_t m_generationNumber = 1;
 		double m_temperature = 1.0;
 		double m_topP = 1.0;
-		OpenAI::ModelType m_model{ ModelType::text_davinci_003 };
+		OpenAI::ModelType m_model{ ModelType::Unknown };
 	};
 }
 
