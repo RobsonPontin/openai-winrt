@@ -5,10 +5,25 @@
 #include "Edits.EditsResponse.g.cpp"
 #endif
 
+#if __has_include("Edits.EditsValue.g.cpp")
+#include "Edits.EditsValue.g.cpp"
+#endif
+
 namespace winrt::OpenAI::Edits::implementation
 {
 	EditsResponse::EditsResponse(OpenAI::ResponseError const& error)
 	{
 		m_error = error;
+	}
+
+	EditsResponse::EditsResponse(std::vector<Edits::EditsValue> editsValues)
+	{
+		m_editsValues = editsValues;
+	}
+
+	EditsValue::EditsValue(uint32_t index, winrt::hstring text)
+	{
+		m_index = index;
+		m_text = text;
 	}
 }

@@ -47,7 +47,6 @@ namespace winrt::OpenAI::Embedding::implementation
 			return result;
 		}
 
-
 	private:
 		int32_t m_index = 0;
 		std::vector<double> m_embedding;

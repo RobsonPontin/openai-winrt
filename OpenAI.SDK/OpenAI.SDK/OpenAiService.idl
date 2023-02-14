@@ -245,7 +245,15 @@ namespace OpenAI.Edits
 	unsealed runtimeclass EditsResponse : OpenAI.BaseResponse
 	{
 		protected EditsResponse();
+
+		Windows.Foundation.Collections.IVector<OpenAI.Edits.EditsValue> Choices{ get; };
 	};
 
-	// TODO: implement EditsValue for all diff choices edits might sent to response
+	unsealed runtimeclass EditsValue
+	{
+		protected EditsValue();
+
+		UInt32 Index { get; };
+		String Text { get; };
+	};
 }

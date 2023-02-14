@@ -263,6 +263,20 @@ namespace winrt::OpenAI::implementation
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
             {
+                // Parse JSON response
+                auto choices = json.GetNamedArray(L"choices");
+
+                std::vector<Edits::EditsValue> editsList{};
+
+                for (auto jsonValue : choices)
+                {
+                    auto obj = jsonValue.GetObject();
+                    auto text = obj.GetNamedString(L"text");
+                    auto index = static_cast<uint32_t>(obj.GetNamedNumber(L"index"));
+
+                    editsList.push_back(winrt::make<OpenAI::Edits::implementation::EditsValue>(index, text));
+                }
+
                 // TODO: parse JSON
                 /*                
                 L"{
@@ -274,7 +288,7 @@ namespace winrt::OpenAI::implementation
                 \"total_tokens\":53}}\n"                
                 */
 
-                co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>();
+                co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>(editsList);
             }
         }
         else
