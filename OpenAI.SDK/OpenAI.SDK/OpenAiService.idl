@@ -247,6 +247,7 @@ namespace OpenAI.Edits
 		protected EditsResponse();
 
 		Windows.Foundation.Collections.IVector<OpenAI.Edits.EditsChoice> Choices{ get; };
+		OpenAI.Edits.EditsUsage Usage{ get; };
 	};
 
 	unsealed runtimeclass EditsChoice
@@ -255,5 +256,14 @@ namespace OpenAI.Edits
 
 		UInt32 Index { get; };
 		String Text { get; };
+	};
+
+	unsealed runtimeclass EditsUsage
+	{
+		protected EditsUsage();
+
+		UInt32 PromptTokens{ get; };
+		UInt32 CompletionTokens{ get; };
+		UInt32 TotalTokens{ get; };
 	};
 }

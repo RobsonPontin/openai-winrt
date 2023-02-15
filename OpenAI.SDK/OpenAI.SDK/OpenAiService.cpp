@@ -276,19 +276,15 @@ namespace winrt::OpenAI::implementation
 
                     editsList.push_back(winrt::make<OpenAI::Edits::implementation::EditsChoice>(index, text));
                 }
+                
+                auto usage = json.GetNamedObject(L"usage");
+                auto promptTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"prompt_tokens"));
+                auto completionTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"completion_tokens"));
+                auto totalTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"total_tokens"));
 
-                // TODO: parse JSON
-                /*                
-                L"{
-                \"object\":\"edit\",
-                \"created\":1676229043,
-                \"choices\":[{\"text\":\"What day of the week is it?\\n\",\"index\":0}],
-                \"usage\":{\"prompt_tokens\":25,
-                \"completion_tokens\":28,
-                \"total_tokens\":53}}\n"                
-                */
+                auto editsUsage = winrt::make<OpenAI::Edits::implementation::EditsUsage>(promptTokens, completionTokens, totalTokens);
 
-                co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>(editsList);
+                co_return winrt::make<OpenAI::Edits::implementation::EditsResponse>(editsList, editsUsage);
             }
         }
         else
