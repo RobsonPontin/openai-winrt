@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Edits.EditsResponse.g.h"
-#include "Edits.EditsValue.g.h"
+#include "Edits.EditsChoice.g.h"
 #include "BaseResponse.h"
 
 namespace winrt::OpenAI::Edits::implementation
@@ -10,22 +10,22 @@ namespace winrt::OpenAI::Edits::implementation
 	{
 		EditsResponse() {}
 	    EditsResponse(OpenAI::ResponseError const& error);
-		EditsResponse(std::vector<Edits::EditsValue> editsValues);
+		EditsResponse(std::vector<Edits::EditsChoice> editsChoices);
 
-		WF::Collections::IVector<Edits::EditsValue> Choices()
+		WF::Collections::IVector<Edits::EditsChoice> Choices()
 		{
-			auto result{ winrt::single_threaded_vector<Edits::EditsValue>(std::move(m_editsValues)) };
+			auto result{ winrt::single_threaded_vector<Edits::EditsChoice>(std::move(m_editsChoices)) };
 			return result;
 		}
 
 	private:
-		std::vector<Edits::EditsValue> m_editsValues;
+		std::vector<Edits::EditsChoice> m_editsChoices;
 	};
 
-	struct EditsValue : EditsValueT<EditsValue>
+	struct EditsChoice : EditsChoiceT<EditsChoice>
 	{
-		EditsValue() {}
-		EditsValue(uint32_t index, winrt::hstring text);
+		EditsChoice() {}
+		EditsChoice(uint32_t index, winrt::hstring text);
 
 		uint32_t Index()
 		{
@@ -49,7 +49,7 @@ namespace winrt::OpenAI::Edits::factory_implementation
 	{
 	};
 
-	struct EditsValue : EditsValueT<EditsValue, implementation::EditsValue>
+	struct EditsChoice : EditsChoiceT<EditsChoice, implementation::EditsChoice>
 	{
 	};
 }

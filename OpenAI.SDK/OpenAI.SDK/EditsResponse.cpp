@@ -5,8 +5,8 @@
 #include "Edits.EditsResponse.g.cpp"
 #endif
 
-#if __has_include("Edits.EditsValue.g.cpp")
-#include "Edits.EditsValue.g.cpp"
+#if __has_include("Edits.EditsChoice.g.cpp")
+#include "Edits.EditsChoice.g.cpp"
 #endif
 
 namespace winrt::OpenAI::Edits::implementation
@@ -16,12 +16,12 @@ namespace winrt::OpenAI::Edits::implementation
 		m_error = error;
 	}
 
-	EditsResponse::EditsResponse(std::vector<Edits::EditsValue> editsValues)
+	EditsResponse::EditsResponse(std::vector<Edits::EditsChoice> editsChoices)
 	{
-		m_editsValues = editsValues;
+		m_editsChoices = editsChoices;
 	}
 
-	EditsValue::EditsValue(uint32_t index, winrt::hstring text)
+	EditsChoice::EditsChoice(uint32_t index, winrt::hstring text)
 	{
 		m_index = index;
 		m_text = text;

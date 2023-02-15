@@ -246,12 +246,12 @@ namespace OpenAI.Edits
 	{
 		protected EditsResponse();
 
-		Windows.Foundation.Collections.IVector<OpenAI.Edits.EditsValue> Choices{ get; };
+		Windows.Foundation.Collections.IVector<OpenAI.Edits.EditsChoice> Choices{ get; };
 	};
 
-	unsealed runtimeclass EditsValue
+	unsealed runtimeclass EditsChoice
 	{
-		protected EditsValue();
+		protected EditsChoice();
 
 		UInt32 Index { get; };
 		String Text { get; };

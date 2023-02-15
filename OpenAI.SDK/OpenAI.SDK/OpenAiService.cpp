@@ -266,7 +266,7 @@ namespace winrt::OpenAI::implementation
                 // Parse JSON response
                 auto choices = json.GetNamedArray(L"choices");
 
-                std::vector<Edits::EditsValue> editsList{};
+                std::vector<Edits::EditsChoice> editsList{};
 
                 for (auto jsonValue : choices)
                 {
@@ -274,7 +274,7 @@ namespace winrt::OpenAI::implementation
                     auto text = obj.GetNamedString(L"text");
                     auto index = static_cast<uint32_t>(obj.GetNamedNumber(L"index"));
 
-                    editsList.push_back(winrt::make<OpenAI::Edits::implementation::EditsValue>(index, text));
+                    editsList.push_back(winrt::make<OpenAI::Edits::implementation::EditsChoice>(index, text));
                 }
 
                 // TODO: parse JSON
