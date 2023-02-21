@@ -20,8 +20,15 @@ namespace winrt::OpenAI::Edits::implementation
 
 		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
 
-		auto prompt = L"{\"model\": \"" + model + L"\", \"input\": \"" + Input() + L"\", \"instruction\": \"" + Instruction() + L"\"}";
-		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
+		Windows::Data::Json::JsonObject jsonObj{};
+		jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(model));
+		jsonObj.Insert(L"input", WDJ::JsonValue::CreateStringValue(Input()));
+		jsonObj.Insert(L"instruction", WDJ::JsonValue::CreateStringValue(Instruction()));
+		jsonObj.Insert(L"temperature", WDJ::JsonValue::CreateNumberValue(Temperature()));
+		jsonObj.Insert(L"top_p", WDJ::JsonValue::CreateNumberValue(TopP()));
+		jsonObj.Insert(L"n", WDJ::JsonValue::CreateNumberValue(GenerationNumber()));
+
+		WWH::HttpStringContent content(jsonObj.ToString(), WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 

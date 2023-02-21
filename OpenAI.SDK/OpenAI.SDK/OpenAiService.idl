@@ -146,6 +146,19 @@ namespace OpenAI.Completion
 		CompletionRequest();
 
 		String Prompt{ get; set; };
+		String Suffix{ get; set; };
+		UInt32 MaxTokens{ get; set; };
+		Double Temperature{ get; set; };
+		Double TopP{ get; set; };
+		UInt16 GenerationNumber{ get; set; };
+		Boolean Stream{ get; set; };
+		UInt32 Logprobs{ get; set; };
+		Boolean Echo{ get; set; };
+		String Stop{ get; set; };
+		Double PresencePenalty{ get; set; };
+		Double FrequencyPenalty{ get; set; };
+		UInt16 BestOf{ get; set; };
+
 	};
 
 	unsealed runtimeclass CompletionResponse : OpenAI.BaseResponse
@@ -238,6 +251,7 @@ namespace OpenAI.Edits
 		OpenAI.ModelType Model{ get; set; };
 		String Input{ get; set; };
 		String Instruction{ get; set; };
+		UInt16 GenerationNumber{ get; set; };
 		Double Temperature{get; set; };
 		Double TopP{ get; set; };
 	};
