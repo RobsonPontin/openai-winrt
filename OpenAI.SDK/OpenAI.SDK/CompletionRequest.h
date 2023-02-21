@@ -105,6 +105,26 @@ namespace winrt::OpenAI::Completion::implementation
 			m_logProbs = val;
 		}
 
+		bool Echo()
+		{
+			return m_echo;
+		}
+
+		void Echo(bool val)
+		{
+			m_echo = val;
+		}
+
+		winrt::hstring Stop()
+		{
+			return m_stop;
+		}
+
+		void Stop(winrt::hstring val)
+		{
+			m_stop = val;
+		}
+
 		/// <summary>
 		/// Number between -2.0 and 2.0. 
 		/// Positive values penalize new tokens based on whether they appear in the text so far, 
@@ -157,6 +177,16 @@ namespace winrt::OpenAI::Completion::implementation
 			{
 				m_frequencyPenalty = val;
 			}
+		}
+
+		uint16_t BestOf()
+		{
+			return m_bestOf;
+		}
+
+		void BestOf(uint16_t val)
+		{
+			m_bestOf = val;
 		}
 
 		bool IsValid()
