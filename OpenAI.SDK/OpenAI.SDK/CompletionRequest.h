@@ -49,6 +49,26 @@ namespace winrt::OpenAI::Completion::implementation
 			m_maxTokens = val;
 		}
 
+		double Temperature()
+		{
+			return m_temperature;
+		}
+
+		void Temperature(double val)
+		{
+			m_temperature = val;
+		}
+
+		double TopP()
+		{
+			return m_topP;
+		}
+
+		void TopP(double val)
+		{
+			m_topP = val;
+		}
+
 		uint16_t GenerationNumber()
 		{
 			return m_generationNumber;
@@ -160,12 +180,12 @@ namespace winrt::OpenAI::Completion::implementation
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_suffix{ L"" };
 		winrt::hstring m_stop{ L"" };
-		uint32_t m_maxTokens = 0;
+		uint32_t m_maxTokens = 16;
 		uint32_t m_logProbs = 0;
 		uint16_t m_generationNumber = 1;
 		uint16_t m_bestOf = 1;
-		double m_temperature = 0.0;
-		double m_topP = 0.0;
+		double m_temperature = 1.0;
+		double m_topP = 1.0;
 		double m_presencePenalty = 0.0;
 		double m_frequencyPenalty = 0.0;
 		bool m_stream = false;
