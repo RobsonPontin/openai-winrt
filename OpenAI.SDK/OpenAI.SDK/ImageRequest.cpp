@@ -35,10 +35,16 @@ namespace winrt::OpenAI::Image::implementation
 
 		winrt::hstring response_format = ::Utils::Converters::ResponseFormatToString(ResponseFormat());
 		winrt::hstring imageSize = ::Utils::Converters::ImageSizeToString(Size());
-		winrt::hstring number = winrt::to_hstring(GenerationNumber());
 
-		auto prompt = L"{\"model\": \"image-alpha-001\", \"prompt\": \"" + Prompt() + L"\", \"num_images\":" + number + L", \"size\": \"" + imageSize + L"\", \"response_format\": \"" + response_format + L"\", \"user\": \"" + User() + L"\"}";
-		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
+		Windows::Data::Json::JsonObject jsonObj{};
+		jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(L"image-alpha-001")); // TODO: use a proper member to select model
+		jsonObj.Insert(L"prompt", WDJ::JsonValue::CreateStringValue(Prompt()));
+		jsonObj.Insert(L"num_images", WDJ::JsonValue::CreateNumberValue(GenerationNumber()));
+		jsonObj.Insert(L"size", WDJ::JsonValue::CreateStringValue(imageSize));
+		jsonObj.Insert(L"response_format", WDJ::JsonValue::CreateStringValue(response_format));
+		jsonObj.Insert(L"user", WDJ::JsonValue::CreateStringValue(User()));
+
+		WWH::HttpStringContent content(jsonObj.ToString(), WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 
