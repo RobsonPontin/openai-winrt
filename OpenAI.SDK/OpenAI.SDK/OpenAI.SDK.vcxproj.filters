@@ -60,6 +60,12 @@
     <ClCompile Include="EditsResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="FilesRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -121,6 +127,12 @@
       <Filter>src\Requests</Filter>
     </ClInclude>
     <ClInclude Include="EditsResponse.h">
+      <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="FilesRequest.h">
+      <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="FilesResponse.h">
       <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>

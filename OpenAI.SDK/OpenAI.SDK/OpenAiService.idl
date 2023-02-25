@@ -79,6 +79,17 @@ namespace OpenAI
 	{
 		protected ModelResponse();
 	};
+
+	[default_interface]
+	runtimeclass FilesRequest : BaseRequest
+	{
+		FilesRequest();
+	};
+
+	unsealed runtimeclass FilesResponse : BaseRequest
+	{
+		protected FilesResponse();
+	};
 }
 
 // OpenAI Image

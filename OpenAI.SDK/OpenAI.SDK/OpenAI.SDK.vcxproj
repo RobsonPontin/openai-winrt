@@ -185,6 +185,8 @@
     <ClInclude Include="EnumUtils.h" />
     <ClInclude Include="EmbeddingRequest.h" />
     <ClInclude Include="EmbeddingResponse.h" />
+    <ClInclude Include="FilesRequest.h" />
+    <ClInclude Include="FilesResponse.h" />
     <ClInclude Include="ImageRequest.h" />
     <ClInclude Include="ImageResponse.h" />
     <ClInclude Include="ImageUtils.h" />
@@ -207,6 +209,8 @@
     <ClCompile Include="EnumUtils.cpp" />
     <ClCompile Include="EmbeddingRequest.cpp" />
     <ClCompile Include="EmbeddingResponse.cpp" />
+    <ClCompile Include="FilesRequest.cpp" />
+    <ClCompile Include="FilesResponse.cpp" />
     <ClCompile Include="ImageRequest.cpp" />
     <ClCompile Include="ImageResponse.cpp" />
     <ClCompile Include="ImageUtils.cpp" />
