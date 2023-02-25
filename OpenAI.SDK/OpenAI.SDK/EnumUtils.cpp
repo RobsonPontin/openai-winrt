@@ -12,6 +12,8 @@ namespace Utils::Converters
         { winrt::OpenAI::ModelType::text_davinci_003, L"text-davinci-003" },
 		{ winrt::OpenAI::ModelType::text_davinci_edit_001, L"text-davinci-edit-001" },
 		{ winrt::OpenAI::ModelType::code_davinci_edit_001, L"code-davinci-edit-001" },
+		{ winrt::OpenAI::ModelType::text_moderation_stable, L"text-moderation-stable" },
+		{ winrt::OpenAI::ModelType::text_moderation_latest, L"text-moderation-latest" },
     };
 
     winrt::hstring ModelTypeToString(winrt::OpenAI::ModelType model)

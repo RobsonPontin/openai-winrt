@@ -40,6 +40,15 @@ namespace winrt::OpenAI::Moderation::implementation
 			m_input = value;
 		}
 
+		OpenAI::ModelType Model()
+		{
+			return m_model;
+		}
+		void Model(OpenAI::ModelType val)
+		{
+			m_model = val;
+		}
+
 		WFC::IVector<winrt::hstring> InputCalculated()
 		{
 			if (Input() != L"" && InputAsList() != nullptr)
@@ -61,7 +70,6 @@ namespace winrt::OpenAI::Moderation::implementation
 			}
 
 			return InputAsList();
-
 		}
 
 		bool IsValid()
@@ -79,6 +87,7 @@ namespace winrt::OpenAI::Moderation::implementation
 	private:
 		std::vector<winrt::hstring> m_inputAsList;
 		winrt::hstring m_input = L"";
+		OpenAI::ModelType m_model{ ModelType::Unknown };
 	};
 }
 

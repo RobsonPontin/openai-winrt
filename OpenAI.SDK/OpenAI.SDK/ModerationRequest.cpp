@@ -18,8 +18,16 @@ namespace winrt::OpenAI::Moderation::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/moderations"));
 
-		auto prompt = L"{\"input\": \"" + Input() + L"\"}";
-		WWH::HttpStringContent content(prompt, WSS::UnicodeEncoding::Utf8);
+		Windows::Data::Json::JsonObject jsonObj{};
+		jsonObj.Insert(L"input", WDJ::JsonValue::CreateStringValue(Input()));
+
+		if (Model() != OpenAI::ModelType::Unknown)
+		{
+			winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
+			jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(model));
+		}
+
+		WWH::HttpStringContent content(jsonObj.ToString(), WSS::UnicodeEncoding::Utf8);
 		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
 		request.Content(content);
 

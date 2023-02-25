@@ -7,6 +7,8 @@ namespace OpenAI
 		text_davinci_003,
 		text_davinci_edit_001,
 		code_davinci_edit_001,
+		text_moderation_stable,
+		text_moderation_latest,
 		Unknown
 	};
 
@@ -206,6 +208,7 @@ namespace OpenAI.Moderation
 		ModerationRequest();
 
 		String Input{ get; set; };
+		OpenAI.ModelType Model{ get; set; };
 		Windows.Foundation.Collections.IVector<String> InputAsList{ get; set; };
 	};
 
