@@ -111,26 +111,55 @@ namespace winrt::OpenAI::implementation
                 auto model = json.GetNamedString(L"model");
 
                 // Get choices vector
-                auto choices = json.GetNamedValue(L"choices");
-                auto firstChoice = choices.GetArray().GetAt(0).GetObject();
-                auto text = firstChoice.GetNamedString(L"text");
+                auto choices = json.GetNamedArray(L"choices");
 
-                // TODO: Example of response to be parsed:
-                /*
-                     { "id":"cmpl-6Zx709yAFD1tRUubVOm3t4QXRAIqM",
-                       "object":"text_completion",
-                       "created":1674026726,
-                       "model":"text-davinci-003",
-                       "choices":[
-                       {
-                          "text":"\n\nQ: Did you hear about the restaurant on the moon?\nA",
-                          "index":0,
-                          "logprobs":null,
-                          "finish_reason":"length"
-                       }],"usage":{"prompt_tokens":6,"completion_tokens":16,"total_tokens":22}}
-                */
+                std::vector<Completion::CompletionChoice> completionList{};
 
-                co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(text);
+                for (auto jsonValue : choices)
+                {
+                    auto obj = jsonValue.GetObject();
+                    auto text = obj.GetNamedString(L"text");
+                    auto finishReason = obj.GetNamedString(L"finish_reason");
+                    auto index = static_cast<uint32_t>(obj.GetNamedNumber(L"index"));
+                    
+                    /* TODO: parse Logprobs
+                     * Example: "logprobs": {"tokens":[],"token_logprobs":[],"top_logprobs":[],"text_offset":[]} 
+                     */
+                    // auto ob = obj.GetNamedObject(L"logprobs");                    
+
+                    completionList.push_back(
+                        winrt::make<OpenAI::Completion::implementation::CompletionChoice>(text, finishReason, index));
+                }
+
+                auto usage = json.GetNamedObject(L"usage");
+                
+                uint32_t promptTokens = 0;
+                if (usage.HasKey(L"prompt_tokens"))
+                {
+                    promptTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"prompt_tokens"));
+                }
+
+                uint32_t completionTokens = 0;
+                if (usage.HasKey(L"completion_tokens"))
+                {
+                    completionTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"completion_tokens"));
+                }
+
+                uint32_t totalTokens = 0;
+                if (usage.HasKey(L"total_tokens"))
+                {
+                    totalTokens = static_cast<uint32_t>(usage.GetNamedNumber(L"total_tokens"));
+                }
+
+                auto completionUsage = winrt::make<OpenAI::Completion::implementation::CompletionUsage>(promptTokens, completionTokens, totalTokens);
+
+                co_return winrt::make<OpenAI::Completion::implementation::CompletionResponse>(
+                    id,
+                    object,
+                    created,
+                    model,
+                    completionList,
+                    completionUsage);
             }
         }
         else

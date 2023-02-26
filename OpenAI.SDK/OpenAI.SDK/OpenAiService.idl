@@ -178,7 +178,31 @@ namespace OpenAI.Completion
 	{
 		protected CompletionResponse();
 
-		String ResponseText{ get; };
+		String Id{ get; };
+		String Object{ get; };
+		String Model{ get; };
+		Double Created{ get; };
+
+		Windows.Foundation.Collections.IVector<OpenAI.Completion.CompletionChoice> Choices{ get; };
+		OpenAI.Completion.CompletionUsage Usage{ get; };
+	};
+
+	unsealed runtimeclass CompletionChoice
+	{
+		protected CompletionChoice();
+
+		String Text { get; };
+		String FinishReason{ get; };
+		UInt32 Index{ get; };
+	};
+
+	unsealed runtimeclass CompletionUsage
+	{
+		protected CompletionUsage();
+
+		UInt32 PromptTokens{ get; };
+		UInt32 CompletionTokens{ get; };
+		UInt32 TotalTokens{ get; };
 	};
 }
 

@@ -286,13 +286,13 @@ namespace winrt::SampleApp::implementation
 	{
 		if (!m_openAiService.IsRunning())
 		{
-			auto imageReq = OpenAI::Completion::CompletionRequest{};
-			imageReq.Prompt(prompt);
+			auto completReq = OpenAI::Completion::CompletionRequest{};
+			completReq.Prompt(prompt);
 
-			auto response = co_await m_openAiService.RunRequestAsync(imageReq);
+			auto response = co_await m_openAiService.RunRequestAsync(completReq);
 			if (response.IsResponseSuccess())
 			{
-				textBlock().Text(response.ResponseText());
+				textBlock().Text(response.Choices().GetAt(0).Text());
 				ShowTextResult();
 			}
 			else
