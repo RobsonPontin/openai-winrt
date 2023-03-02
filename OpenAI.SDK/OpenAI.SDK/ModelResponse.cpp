@@ -4,3 +4,23 @@
 #if __has_include("ModelResponse.g.cpp")
 #include "ModelResponse.g.cpp"
 #endif
+
+#if __has_include("ModelValue.g.cpp")
+#include "ModelValue.g.cpp"
+#endif
+
+
+namespace winrt::OpenAI::implementation
+{
+	ModelResponse::ModelResponse(OpenAI::ResponseError const& error)
+	{
+		m_error = error;
+	}
+
+	ModelValue::ModelValue(hstring id, hstring object, hstring ownedBy)
+	{
+		m_id = id;
+		m_object = object;
+		m_ownedBy = ownedBy;
+	}
+}

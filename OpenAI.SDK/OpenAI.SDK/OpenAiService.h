@@ -12,6 +12,10 @@
 #include <ModerationResponse.h>
 #include <EditsRequest.h>
 #include <EditsResponse.h>
+#include <ModelRequest.h>
+#include <ModelResponse.h>
+#include <FilesRequest.h>
+#include <FilesResponse.h>
 
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -35,6 +39,10 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest);
 
         WF::IAsyncOperation<OpenAI::Edits::EditsResponse> RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const& editRequest);
+
+        WF::IAsyncOperation<OpenAI::ModelResponse> RunRequestAsync(winrt::OpenAI::ModelRequest const& modelRequest);
+
+        WF::IAsyncOperation<OpenAI::FilesResponse> RunRequestAsync(winrt::OpenAI::FilesRequest const& filesRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {

@@ -323,6 +323,44 @@ namespace winrt::OpenAI::implementation
         }
     }
 
+    WF::IAsyncOperation<OpenAI::ModelResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::ModelRequest const& modelRequest)
+    {
+        // Send the request and retrieve the response  
+        WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(modelRequest);
+        if (response == nullptr || response.IsSuccessStatusCode())
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(response);
+            if (json != nullptr)
+            {
+                // TODO: json parsing and response
+            }
+        }
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::implementation::ModelResponse>(error);
+        }
+    }
+
+    WF::IAsyncOperation<OpenAI::FilesResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::FilesRequest const& filesRequest)
+    {
+        // Send the request and retrieve the response  
+        WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(filesRequest);
+        if (response == nullptr || response.IsSuccessStatusCode())
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(response);
+            if (json != nullptr)
+            {
+                // TODO: json parsing and response
+            }
+        }
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::implementation::FilesResponse>(error);
+        }
+    }
+
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)
     {
         if (m_openAiOptions != nullptr && request.IsValid())

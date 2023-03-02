@@ -80,6 +80,15 @@ namespace OpenAI
 		protected ModelResponse();
 	};
 
+	unsealed runtimeclass ModelValue
+	{
+		protected ModelValue();
+
+		String Id{ get; };
+		String Object{ get; };
+		String OwnedBy{ get; };
+	};
+
 	[default_interface]
 	runtimeclass FilesRequest : BaseRequest
 	{
@@ -89,6 +98,13 @@ namespace OpenAI
 	unsealed runtimeclass FilesResponse : BaseRequest
 	{
 		protected FilesResponse();
+	};
+
+	unsealed runtimeclass FileValue
+	{
+		protected FileValue();
+
+		String Id{ get; };
 	};
 }
 

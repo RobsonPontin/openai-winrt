@@ -16,9 +16,6 @@ namespace winrt::OpenAI::implementation
 		}
 
 		WWH::HttpRequestMessage BuildHttpRequest();
-
-	private:
-		winrt::hstring m_model{ L"" };
 	};
 }
 
