@@ -335,3 +335,22 @@ namespace OpenAI.Edits
 		UInt32 TotalTokens{ get; };
 	};
 }
+
+// Chat
+
+namespace OpenAI.Chat
+{
+	[default_interface]
+	runtimeclass ChatRequest : OpenAI.BaseRequest
+	{
+		ChatRequest();
+	};
+
+	runtimeclass ChatMessage
+	{
+		ChatMessage();
+
+		String Role{ get; set; };
+		String Content{ get; set; };
+	};
+}
