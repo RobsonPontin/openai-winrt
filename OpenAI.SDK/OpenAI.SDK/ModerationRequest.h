@@ -16,7 +16,8 @@ namespace winrt::OpenAI::Moderation::implementation
 		/// </summary>
 		WFC::IVector<winrt::hstring> InputAsList()
 		{
-			auto result{ winrt::single_threaded_vector<winrt::hstring>(std::move(m_inputAsList)) };
+			auto inputAsList_copy = m_inputAsList;
+			auto result{ winrt::single_threaded_vector<winrt::hstring>(std::move(inputAsList_copy)) };
 			return result;
 		}
 

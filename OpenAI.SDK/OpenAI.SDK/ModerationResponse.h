@@ -29,7 +29,8 @@ namespace winrt::OpenAI::Moderation::implementation
 
 		WFC::IVector<Moderation::ModerationValue> Data()
 		{
-			auto result{ winrt::single_threaded_vector<Moderation::ModerationValue>(std::move(m_moderationValues)) };
+			auto moderationValues_copy = m_moderationValues;
+			auto result{ winrt::single_threaded_vector<Moderation::ModerationValue>(std::move(moderationValues_copy)) };
 			return result;
 		}
 

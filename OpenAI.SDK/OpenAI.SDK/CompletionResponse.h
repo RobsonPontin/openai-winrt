@@ -53,7 +53,8 @@ namespace winrt::OpenAI::Completion::implementation
 
 		WF::Collections::IVector<Completion::CompletionChoice> Choices()
 		{
-			auto result{ winrt::single_threaded_vector<Completion::CompletionChoice>(std::move(m_completionChoices)) };
+			auto completionChoices_copy = m_completionChoices;
+			auto result{ winrt::single_threaded_vector<Completion::CompletionChoice>(std::move(completionChoices_copy)) };
 			return result;
 		}
 

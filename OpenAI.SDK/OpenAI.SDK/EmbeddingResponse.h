@@ -43,7 +43,8 @@ namespace winrt::OpenAI::Embedding::implementation
 
 		WF::Collections::IVector<double> Embedding()
 		{
-			auto result{ winrt::single_threaded_vector<double>(std::move(m_embedding)) };
+			auto embedding_copy = m_embedding;
+			auto result{ winrt::single_threaded_vector<double>(std::move(embedding_copy)) };
 			return result;
 		}
 

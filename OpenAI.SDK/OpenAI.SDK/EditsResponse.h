@@ -15,7 +15,8 @@ namespace winrt::OpenAI::Edits::implementation
 
 		WF::Collections::IVector<Edits::EditsChoice> Choices()
 		{
-			auto result{ winrt::single_threaded_vector<Edits::EditsChoice>(std::move(m_editsChoices)) };
+			auto editsChoices_copy = m_editsChoices;
+			auto result{ winrt::single_threaded_vector<Edits::EditsChoice>(std::move(editsChoices_copy)) };
 			return result;
 		}
 
