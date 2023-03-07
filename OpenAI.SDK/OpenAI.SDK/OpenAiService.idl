@@ -353,4 +353,22 @@ namespace OpenAI.Chat
 		String Role{ get; set; };
 		String Content{ get; set; };
 	};
+
+	unsealed runtimeclass ChatResponse : OpenAI.BaseResponse
+	{
+		protected ChatResponse();
+
+		String Id{ get; };
+		String Object{ get; };
+		String FinishReason{ get; };
+		Double Created{ get; };
+	};
+
+	unsealed runtimeclass ChatChoice
+	{
+		protected ChatChoice();
+
+		UInt32 Index{ get; };
+		OpenAI.Chat.ChatMessage Message{ get; };
+	};
 }

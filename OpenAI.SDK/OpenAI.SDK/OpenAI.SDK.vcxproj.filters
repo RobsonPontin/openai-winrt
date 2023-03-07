@@ -69,6 +69,9 @@
     <ClCompile Include="ChatRequest.cpp">
       <Filter>src\Requests</Filter>
     </ClCompile>
+    <ClCompile Include="ChatResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -140,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="ChatRequest.h">
       <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatResponse.h">
+      <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
