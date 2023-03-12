@@ -16,6 +16,8 @@
 #include <ModelResponse.h>
 #include <FilesRequest.h>
 #include <FilesResponse.h>
+#include <ChatRequest.h>
+#include <ChatResponse.h>
 
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -43,6 +45,8 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::ModelResponse> RunRequestAsync(winrt::OpenAI::ModelRequest const& modelRequest);
 
         WF::IAsyncOperation<OpenAI::FilesResponse> RunRequestAsync(winrt::OpenAI::FilesRequest const& filesRequest);
+
+        WF::IAsyncOperation<OpenAI::Chat::ChatResponse> RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const& chatRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {

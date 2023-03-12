@@ -174,26 +174,16 @@ namespace winrt::OpenAI::Chat::implementation
 
 	struct ChatMessage : ChatMessageT<ChatMessage>
 	{
-		ChatMessage() = default;
+		ChatMessage(winrt::hstring role, winrt::hstring content);
 
 		winrt::hstring Role()
 		{
 			return m_role;
 		}
 
-		void Role(winrt::hstring role)
-		{
-			m_role = role;
-		}
-
 		winrt::hstring Content()
 		{
 			return m_content;
-		}
-
-		void Content(winrt::hstring content)
-		{
-			m_content = content;
 		}
 
 	private:

@@ -361,6 +361,55 @@ namespace winrt::OpenAI::implementation
         }
     }
 
+    WF::IAsyncOperation<OpenAI::Chat::ChatResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const& chatRequest)
+    {
+        // Send the request and retrieve the response  
+        WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(chatRequest);
+        if (response == nullptr || response.IsSuccessStatusCode())
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(response);
+            if (json != nullptr)
+            {
+                // Extract the text completion data from the JSON response
+                auto id = json.GetNamedString(L"id");
+                auto object = json.GetNamedString(L"object");
+                auto created = json.GetNamedNumber(L"created");
+
+                // Get choices vector
+                auto choices = json.GetNamedArray(L"choices");
+
+                std::vector<Chat::ChatChoice> chatChoiceList{};
+
+                for (auto jsonValue : choices)
+                {
+                    auto obj = jsonValue.GetObject();
+                    auto index = static_cast<uint32_t>(obj.GetNamedNumber(L"index"));
+                    auto finishReason = obj.GetNamedString(L"finish_reason");
+
+                    auto message_obj = obj.GetNamedObject(L"message");
+                    auto message_role = message_obj.GetNamedString(L"role");
+                    auto message_content = message_obj.GetNamedString(L"content");
+
+                    auto message = winrt::make<Chat::implementation::ChatMessage>(message_role, message_content);
+
+                    chatChoiceList.push_back(
+                        winrt::make<OpenAI::Chat::implementation::ChatChoice>(index, finishReason, message));
+                }
+
+                co_return winrt::make<OpenAI::Chat::implementation::ChatResponse>(
+                    id,
+                    object,
+                    created,
+                    chatChoiceList);
+            }
+        }
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Chat::implementation::ChatResponse>(error);
+        }
+    }
+
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)
     {
         if (m_openAiOptions != nullptr && request.IsValid())

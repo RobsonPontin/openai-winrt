@@ -38,6 +38,7 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Moderation.ModerationResponse> RunRequestAsync(OpenAI.Moderation.ModerationRequest moderationRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Edits.EditsResponse> RunRequestAsync(OpenAI.Edits.EditsRequest editsRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Chat.ChatResponse> RunRequestAsync(OpenAI.Chat.ChatRequest chatRequest);
 	};
 
 	[default_interface]
@@ -348,10 +349,10 @@ namespace OpenAI.Chat
 
 	runtimeclass ChatMessage
 	{
-		ChatMessage();
+		ChatMessage(String role, String content);
 
-		String Role{ get; set; };
-		String Content{ get; set; };
+		String Role{ get; };
+		String Content{ get; };
 	};
 
 	unsealed runtimeclass ChatResponse : OpenAI.BaseResponse
@@ -360,8 +361,9 @@ namespace OpenAI.Chat
 
 		String Id{ get; };
 		String Object{ get; };
-		String FinishReason{ get; };
 		Double Created{ get; };
+
+		Windows.Foundation.Collections.IVector<OpenAI.Chat.ChatChoice> Choices{ get; };
 	};
 
 	unsealed runtimeclass ChatChoice
@@ -369,6 +371,7 @@ namespace OpenAI.Chat
 		protected ChatChoice();
 
 		UInt32 Index{ get; };
+		String FinishReason{ get; };
 		OpenAI.Chat.ChatMessage Message{ get; };
 	};
 }

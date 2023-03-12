@@ -26,4 +26,10 @@ namespace winrt::OpenAI::Chat::implementation
 
 		return request;
 	}
+
+	ChatMessage::ChatMessage(winrt::hstring role, winrt::hstring content)
+	{
+		m_role = role;
+		m_content = content;
+	}
 }

@@ -9,7 +9,11 @@ namespace winrt::OpenAI::Chat::implementation
 	struct ChatResponse : ChatResponseT<ChatResponse, OpenAI::implementation::BaseResponse>
 	{
 		ChatResponse() {}
-		ChatResponse(hstring id, hstring object, hstring finishReason, double created);
+		ChatResponse(
+			hstring id,
+			hstring object,
+			double created,
+			std::vector<Chat::ChatChoice> chatChoices);
 		ChatResponse(OpenAI::ResponseError const& error);
 
 		bool IsResponseSuccess()
@@ -27,27 +31,29 @@ namespace winrt::OpenAI::Chat::implementation
 			return m_object;
 		}
 
-		winrt::hstring FinishReason()
-		{
-			return m_finishReason;
-		}
-
 		double Created()
 		{
 			return m_created;
 		}
 
+		WF::Collections::IVector<Chat::ChatChoice> Choices()
+		{
+			auto chatChoises_cpy = m_chatChoices;
+			auto result{ winrt::single_threaded_vector<Chat::ChatChoice>(std::move(chatChoises_cpy)) };
+			return result;
+		}
+
 	private:
 		hstring m_id = L"";
 		hstring m_object = L"";
-		hstring m_finishReason = L"";
 		double m_created = 0;
+		std::vector<Chat::ChatChoice> m_chatChoices;
 	};
 
 	struct ChatChoice : ChatChoiceT<ChatChoice>
 	{
-		ChatChoice() {}
-		ChatChoice(uint32_t index, Chat::ChatMessage const& message);
+		ChatChoice() = default;
+		ChatChoice(uint32_t index, winrt::hstring finish_reason, Chat::ChatMessage const& message);
 
 		uint32_t Index()
 		{
@@ -59,9 +65,15 @@ namespace winrt::OpenAI::Chat::implementation
 			return m_message;
 		}
 
+		winrt::hstring FinishReason()
+		{
+			return m_finishReason;
+		}
+
 	private:
+		hstring m_finishReason = L"";
 		uint32_t m_index = 0;
-		OpenAI::Chat::ChatMessage m_message;
+		OpenAI::Chat::ChatMessage m_message{ nullptr };
 	};
 }
 
