@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.Streams;
 
 namespace SampleApp.WinUI3
@@ -64,6 +65,28 @@ namespace SampleApp.WinUI3
                     textBlock.Visibility = Visibility.Visible;
                     image.Visibility = Visibility.Collapsed;
                 }
+            }
+        }
+
+        private async Task RequestChatAsync()
+        {
+            if (m_openAiService == null)
+            {
+                return;
+            }
+
+            var chatReq = new OpenAI.Chat.ChatRequest();
+            var message = new OpenAI.Chat.ChatMessage(
+                "user",
+                "can we fly?"
+            );
+
+            chatReq.Messages.Add(message);
+
+            var result = await m_openAiService.RunRequestAsync(chatReq);
+            if (result.IsResponseSuccess)
+            {
+                // TODO: handle chat response
             }
         }
     }

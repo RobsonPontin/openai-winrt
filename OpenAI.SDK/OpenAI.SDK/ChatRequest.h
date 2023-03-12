@@ -9,16 +9,25 @@ namespace winrt::OpenAI::Chat::implementation
 {
 	struct ChatRequest : ChatRequestT<ChatRequest, BaseRequest>
 	{
-		ChatRequest() = default;
+		ChatRequest();
 	
-		winrt::hstring User()
+		winrt::hstring Role()
 		{
-			return m_user;
+			return m_role;
 		}
 
-		void User(winrt::hstring user)
+		void Role(winrt::hstring val)
 		{
-			m_user = user;
+			m_role = val;
+		}
+
+		OpenAI::ModelType Model()
+		{
+			return m_model;
+		}
+		void Model(OpenAI::ModelType val)
+		{
+			m_model = val;
 		}
 
 		WFC::IVector<Chat::ChatMessage> Messages()
@@ -147,6 +156,11 @@ namespace winrt::OpenAI::Chat::implementation
 
 		bool IsValid()
 		{
+			if (m_messages.Size() > 0)
+			{
+				return true;
+			}
+
 			return false;
 		}
 
@@ -166,7 +180,8 @@ namespace winrt::OpenAI::Chat::implementation
 		double m_frequencyPenalty = 0.0;
 		bool m_stream = false;
 		winrt::hstring m_stop; // NOTE: (it can be an array) Up to 4 sequences where the API will stop generating further tokens.
-		winrt::hstring m_user;
+		winrt::hstring m_role = L"user";
+		OpenAI::ModelType m_model{ ModelType::gpt_3_5_turbo };
 		// TODO: logit_bias
 
 		WFC::IVector<OpenAI::Chat::ChatMessage> m_messages;

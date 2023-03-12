@@ -58,7 +58,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(imageRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -99,7 +99,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(completionRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -173,7 +173,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(embeddingRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -222,7 +222,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(moderationRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -287,7 +287,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(editRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -327,7 +327,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(modelRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -346,7 +346,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(filesRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
@@ -365,7 +365,7 @@ namespace winrt::OpenAI::implementation
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(chatRequest);
-        if (response == nullptr || response.IsSuccessStatusCode())
+        if (response != nullptr && response.IsSuccessStatusCode())
         {
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)

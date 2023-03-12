@@ -15,6 +15,14 @@
 
 namespace winrt::OpenAI::Chat::implementation
 {
+	ChatRequest::ChatRequest()
+	{
+		m_messages = WFC::IVector<OpenAI::Chat::ChatMessage>
+		{ 
+			winrt::single_threaded_vector<OpenAI::Chat::ChatMessage>() 
+		};
+	}
+
 	WWH::HttpRequestMessage ChatRequest::BuildHttpRequest()
 	{
 		// Set up the API endpoint and parameters
@@ -22,7 +30,28 @@ namespace winrt::OpenAI::Chat::implementation
 			WWH::HttpMethod::Post(),
 			WF::Uri(L"https://api.openai.com/v1/chat/completions"));
 
-		// TODO:
+		WDJ::JsonObject jsonObj{};
+
+		winrt::hstring model = ::Utils::Converters::ModelTypeToString(Model());
+		jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(model));
+
+		WDJ::JsonArray messageArray{};
+
+		for (int i = 0; i < m_messages.Size(); ++i)
+		{
+			WDJ::JsonObject message{};			
+			message.Insert(L"role", WDJ::JsonValue::CreateStringValue(m_messages.GetAt(i).Role()));
+			message.Insert(L"content", WDJ::JsonValue::CreateStringValue(m_messages.GetAt(i).Content()));
+
+			messageArray.Append(message);
+		}
+
+		jsonObj.Insert(L"messages", messageArray);
+		auto dd = jsonObj.ToString();
+
+		WWH::HttpStringContent content(jsonObj.ToString(), WSS::UnicodeEncoding::Utf8);
+		content.Headers().ContentType(WWH::Headers::HttpMediaTypeHeaderValue(L"application/json"));
+		request.Content(content);
 
 		return request;
 	}

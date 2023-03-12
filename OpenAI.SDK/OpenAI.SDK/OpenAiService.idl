@@ -9,6 +9,7 @@ namespace OpenAI
 		code_davinci_edit_001,
 		text_moderation_stable,
 		text_moderation_latest,
+		gpt_3_5_turbo,
 		Unknown
 	};
 
@@ -345,6 +346,17 @@ namespace OpenAI.Chat
 	runtimeclass ChatRequest : OpenAI.BaseRequest
 	{
 		ChatRequest();
+
+		String Role{ get; set; };
+		Windows.Foundation.Collections.IVector<OpenAI.Chat.ChatMessage> Messages{ get; set; };
+		UInt32 MaxTokens{ get; set; };
+		Double Temperature{ get; set; };
+		Double TopP{ get; set; };
+		UInt16 GenerationNumber{ get; set; };
+		Boolean Stream{ get; set; };
+		String Stop{ get; set; };
+		Double PresencePenalty{ get; set; };
+		Double FrequencyPenalty{ get; set; };
 	};
 
 	runtimeclass ChatMessage

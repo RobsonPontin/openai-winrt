@@ -1,7 +1,8 @@
 {
   "profiles": {
     "SampleApp.WinUI3 (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
     },
     "SampleApp.WinUI3 (Unpackaged)": {
       "commandName": "Project"

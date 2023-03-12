@@ -18,6 +18,11 @@ namespace winrt::OpenAI::Chat::implementation
 
 		bool IsResponseSuccess()
 		{
+			if (m_chatChoices.size() > 0)
+			{
+				return true;
+			}
+
 			return false;
 		}
 
