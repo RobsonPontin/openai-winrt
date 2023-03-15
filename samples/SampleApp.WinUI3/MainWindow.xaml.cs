@@ -29,6 +29,10 @@ namespace SampleApp.WinUI3
                 m_openAiService = new OpenAI.OpenAiService(options);
             }
 
+            await RequestModelsAsync();
+
+            return;
+
             var imgRequest = new OpenAI.Image.ImageCreateRequest();
             // Change to something else (or move it to a text box in the XAML)
             imgRequest.Prompt = "A robot bird flying above a green lake";
@@ -87,6 +91,15 @@ namespace SampleApp.WinUI3
             if (result.IsResponseSuccess)
             {
                 // TODO: handle chat response
+            }
+        }
+
+        public async Task RequestModelsAsync()
+        {
+            var result = await m_openAiService.RunRequestAsync(new OpenAI.ModelRequest());
+            if (result.IsResponseSuccess)
+            {
+                // TODO: handle model response
             }
         }
     }

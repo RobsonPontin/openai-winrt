@@ -20,7 +20,7 @@ namespace winrt::OpenAI::implementation
 
 		// Set up the API endpoint and parameters
 		WWH::HttpRequestMessage request(
-			WWH::HttpMethod::Post(),
+			WWH::HttpMethod::Get(),
 			WF::Uri(L"https://api.openai.com/v1/" + modelRequest));
 
 		return request;

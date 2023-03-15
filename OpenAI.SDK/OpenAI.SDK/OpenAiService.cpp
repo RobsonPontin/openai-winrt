@@ -332,7 +332,24 @@ namespace winrt::OpenAI::implementation
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
             {
-                // TODO: json parsing and response
+                // Extract the text completion data from the JSON response
+                auto object = json.GetNamedString(L"object");
+
+                // Get choices vector
+                auto data = json.GetNamedArray(L"data");
+                std::vector<OpenAI::ModelValue> models{};
+
+                for (auto jsonValue : data)
+                {
+                    auto obj = jsonValue.GetObject();
+                    auto id = obj.GetNamedString(L"id");
+                    auto model_object = obj.GetNamedString(L"object");
+                    auto owned_by = obj.GetNamedString(L"owned_by");
+
+                    models.push_back(winrt::make<OpenAI::implementation::ModelValue>(id, model_object, owned_by));
+                }
+
+                co_return winrt::make<OpenAI::implementation::ModelResponse>(models, object);
             }
         }
         else

@@ -39,6 +39,7 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Moderation.ModerationResponse> RunRequestAsync(OpenAI.Moderation.ModerationRequest moderationRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Image.ImageResponse> RunRequestAsync(OpenAI.Image.ImageRequest imageRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Edits.EditsResponse> RunRequestAsync(OpenAI.Edits.EditsRequest editsRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.ModelResponse> RunRequestAsync(OpenAI.ModelRequest modelRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Chat.ChatResponse> RunRequestAsync(OpenAI.Chat.ChatRequest chatRequest);
 	};
 
@@ -77,9 +78,12 @@ namespace OpenAI
 		String Model{ get; set; };
 	};
 
-	unsealed runtimeclass ModelResponse : BaseRequest
+	unsealed runtimeclass ModelResponse : BaseResponse
 	{
 		protected ModelResponse();
+
+		Windows.Foundation.Collections.IVector<OpenAI.ModelValue> Data{ get; };
+		String Object{ get; };
 	};
 
 	unsealed runtimeclass ModelValue

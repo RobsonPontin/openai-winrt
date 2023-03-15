@@ -12,6 +12,12 @@
 
 namespace winrt::OpenAI::implementation
 {
+	ModelResponse::ModelResponse(std::vector<OpenAI::ModelValue> models, hstring object)
+	{
+		m_models = models;
+		m_object = object;
+	}
+
 	ModelResponse::ModelResponse(OpenAI::ResponseError const& error)
 	{
 		m_error = error;
