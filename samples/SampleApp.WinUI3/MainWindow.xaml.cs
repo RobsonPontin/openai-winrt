@@ -4,6 +4,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
@@ -17,9 +18,13 @@ namespace SampleApp.WinUI3
         public MainWindow()
         {
             this.InitializeComponent();
+
+            ModelValues = new ObservableCollection<OpenAI.ModelValue>();
         }
 
-        private async void myButton_Click(object sender, RoutedEventArgs e)
+        public ObservableCollection<OpenAI.ModelValue> ModelValues { get; set; }
+
+        private void InitOpenAIService()
         {
             if (m_openAiService == null)
             {
@@ -28,10 +33,11 @@ namespace SampleApp.WinUI3
 
                 m_openAiService = new OpenAI.OpenAiService(options);
             }
+        }
 
-            await RequestModelsAsync();
-
-            return;
+        private async void myButton_Click(object sender, RoutedEventArgs e)
+        {
+            InitOpenAIService();
 
             var imgRequest = new OpenAI.Image.ImageCreateRequest();
             // Change to something else (or move it to a text box in the XAML)
@@ -74,10 +80,7 @@ namespace SampleApp.WinUI3
 
         private async Task RequestChatAsync()
         {
-            if (m_openAiService == null)
-            {
-                return;
-            }
+            InitOpenAIService();
 
             var chatReq = new OpenAI.Chat.ChatRequest();
             var message = new OpenAI.Chat.ChatMessage(
@@ -96,11 +99,25 @@ namespace SampleApp.WinUI3
 
         public async Task RequestModelsAsync()
         {
+            InitOpenAIService();
+
             var result = await m_openAiService.RunRequestAsync(new OpenAI.ModelRequest());
             if (result.IsResponseSuccess)
             {
-                // TODO: handle model response
+                // Show entire list of model in the UI
+                lvModels.Visibility = Visibility.Visible;
+
+                var models = result.Data.ToList<OpenAI.ModelValue>();
+                foreach (OpenAI.ModelValue model in models)
+                {
+                    ModelValues.Add(model);
+                }                
             }
+        }
+
+        private async void btnGetModels_Click(object sender, RoutedEventArgs e)
+        {
+            await RequestModelsAsync();
         }
     }
 }
