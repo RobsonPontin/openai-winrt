@@ -24,11 +24,20 @@ namespace winrt::OpenAI::implementation
 {
     OpenAiService::OpenAiService()
     {
+        SetOpenAiOptionsInternal(OpenAI::OpenAiOptions{});
     }
 
     OpenAiService::OpenAiService(OpenAI::OpenAiOptions const& options)
     {
+        SetOpenAiOptionsInternal(options);
+    }
+
+    void OpenAiService::SetOpenAiOptionsInternal(OpenAI::OpenAiOptions const& options)
+    {
         m_openAiOptions = options;
+
+        auto options_impl = winrt::get_self<implementation::OpenAiOptions>(m_openAiOptions);
+        m_openAiOptions_impl.copy_from(options_impl);
     }
 
     WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const& httpMessage)
@@ -431,16 +440,14 @@ namespace winrt::OpenAI::implementation
     {
         if (m_openAiOptions != nullptr && request.IsValid())
         {
-            // TODO: cache this value to avoid casting
-            auto options_impl = winrt::get_self<implementation::OpenAiOptions>(m_openAiOptions);
-            auto openAiKey = options_impl->OpenAiKey();
-
-            auto httpRequest = request.BuildHttpRequest();
+            auto openAiKey = m_openAiOptions_impl->OpenAiKey();
 
             // Create an HTTP client to make the API request
             WWH::HttpClient httpClient;
             httpClient.DefaultRequestHeaders().Authorization(
                 WWH::Headers::HttpCredentialsHeaderValue(L"Bearer", openAiKey));
+
+            auto httpRequest = request.BuildHttpRequest();
 
             // Send the request and retrieve the response           
             WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);

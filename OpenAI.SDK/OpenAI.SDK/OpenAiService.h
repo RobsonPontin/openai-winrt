@@ -2,6 +2,7 @@
 
 #include "OpenAiService.g.h"
 
+#include <OpenAiOptions.h>
 #include <ImageRequest.h>
 #include <ImageResponse.h>
 #include <CompletionRequest.h>
@@ -50,7 +51,7 @@ namespace winrt::OpenAI::implementation
 
         void Options(OpenAI::OpenAiOptions val)
         {
-            m_openAiOptions = val;
+            SetOpenAiOptionsInternal(val);
         }
         OpenAI::OpenAiOptions Options()
         {
@@ -72,9 +73,12 @@ namespace winrt::OpenAI::implementation
 
         private:
             bool m_isServiceRunning{ false };
-            OpenAI::OpenAiOptions m_openAiOptions;
+            OpenAI::OpenAiOptions m_openAiOptions{ nullptr };
+            winrt::com_ptr<implementation::OpenAiOptions> m_openAiOptions_impl;
 
             const winrt::hstring OPEN_AI_API_URL = L"https://api.openai.com";
+
+            void SetOpenAiOptionsInternal(OpenAI::OpenAiOptions const& options);
 
             WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const& request);
             WF::IAsyncOperation<WDJ::JsonObject> ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
