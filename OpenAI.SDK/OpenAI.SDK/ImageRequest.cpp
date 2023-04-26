@@ -23,6 +23,13 @@
 
 namespace winrt::OpenAI::Image::implementation
 {
+	const hstring DEFAULT_IMAGE_REQUEST_MODEL = L"image-alpha-001";
+
+	ImageRequest::ImageRequest()
+	{
+		m_model = DEFAULT_IMAGE_REQUEST_MODEL;
+	}
+
 	// Image Generation
 
 	// TODO: consider changing HttpStringContent to HttpMultipartFormDataContent
@@ -37,7 +44,7 @@ namespace winrt::OpenAI::Image::implementation
 		winrt::hstring imageSize = ::Utils::Converters::ImageSizeToString(Size());
 
 		Windows::Data::Json::JsonObject jsonObj{};
-		jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(L"image-alpha-001")); // TODO: use a proper member to select model
+		jsonObj.Insert(L"model", WDJ::JsonValue::CreateStringValue(Model()));
 		jsonObj.Insert(L"prompt", WDJ::JsonValue::CreateStringValue(Prompt()));
 		jsonObj.Insert(L"num_images", WDJ::JsonValue::CreateNumberValue(GenerationNumber()));
 		jsonObj.Insert(L"size", WDJ::JsonValue::CreateStringValue(imageSize));

@@ -130,6 +130,7 @@ namespace OpenAI.Image
 
 	unsealed runtimeclass ImageRequest : OpenAI.BaseRequest
 	{
+		String Model { get; set; };
 		String Prompt{ get; set; };
 		Int32 GenerationNumber{ get; set; };
 		String ImageName{ get; set; };

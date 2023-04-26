@@ -12,6 +12,17 @@ namespace winrt::OpenAI::Image::implementation
 {
 	struct ImageRequest : ImageRequestT<ImageRequest, BaseRequest>
 	{
+		ImageRequest();
+
+		winrt::hstring Model()
+		{
+			return m_model;
+		}
+		void Model(winrt::hstring val)
+		{
+			m_model = val;
+		}
+
 		winrt::hstring Prompt()
 		{
 			return m_prompt;
@@ -87,6 +98,7 @@ namespace winrt::OpenAI::Image::implementation
 		/// </summary>
 		const int MAX_GENERATION_NUMBER = 10;
 
+		winrt::hstring m_model{ L"" };
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_imageName{ L"" };
 		winrt::hstring m_user = L"";
