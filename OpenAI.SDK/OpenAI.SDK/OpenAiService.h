@@ -33,21 +33,21 @@ namespace winrt::OpenAI::implementation
         OpenAiService();
         OpenAiService(OpenAI::OpenAiOptions const& options);
 
-        WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest);
+        WF::IAsyncOperation<OpenAI::Image::ImageResponse> RunRequestAsync(winrt::OpenAI::Image::ImageRequest const imageRequest);
 
-        WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest);
+        WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const completionRequest);
 
-        WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest);
+        WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const embeddingRequest);
 
-        WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest);
+        WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const moderationRequest);
 
-        WF::IAsyncOperation<OpenAI::Edits::EditsResponse> RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const& editRequest);
+        WF::IAsyncOperation<OpenAI::Edits::EditsResponse> RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const editRequest);
 
-        WF::IAsyncOperation<OpenAI::ModelResponse> RunRequestAsync(winrt::OpenAI::ModelRequest const& modelRequest);
+        WF::IAsyncOperation<OpenAI::ModelResponse> RunRequestAsync(winrt::OpenAI::ModelRequest const modelRequest);
 
-        WF::IAsyncOperation<OpenAI::FilesResponse> RunRequestAsync(winrt::OpenAI::FilesRequest const& filesRequest);
+        WF::IAsyncOperation<OpenAI::FilesResponse> RunRequestAsync(winrt::OpenAI::FilesRequest const filesRequest);
 
-        WF::IAsyncOperation<OpenAI::Chat::ChatResponse> RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const& chatRequest);
+        WF::IAsyncOperation<OpenAI::Chat::ChatResponse> RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const chatRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {
@@ -80,9 +80,9 @@ namespace winrt::OpenAI::implementation
 
             void SetOpenAiOptionsInternal(OpenAI::OpenAiOptions const& options);
 
-            WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const& request);
-            WF::IAsyncOperation<WDJ::JsonObject> ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg);
-            WF::IAsyncOperation<OpenAI::ResponseError> GetErrorFromMessageAsync(WWH::HttpResponseMessage const& message);
+            WF::IAsyncOperation<WWH::HttpResponseMessage> PerformHttpRequestAsync(OpenAI::BaseRequest const request);
+            WF::IAsyncOperation<WDJ::JsonObject> ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const msg);
+            WF::IAsyncOperation<OpenAI::ResponseError> GetErrorFromMessageAsync(WWH::HttpResponseMessage const message);
     };
 }
 

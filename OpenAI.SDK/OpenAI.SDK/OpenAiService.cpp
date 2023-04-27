@@ -40,7 +40,7 @@ namespace winrt::OpenAI::implementation
         m_openAiOptions_impl.copy_from(options_impl);
     }
 
-    WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const& httpMessage)
+    WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const httpMessage)
     {
         auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
         if (json != nullptr)
@@ -63,7 +63,7 @@ namespace winrt::OpenAI::implementation
         co_return winrt::make<OpenAI::implementation::ResponseError>();
     }
 
-    WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const& imageRequest)
+    WF::IAsyncOperation<OpenAI::Image::ImageResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Image::ImageRequest const imageRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(imageRequest);
@@ -104,7 +104,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const& completionRequest)
+    WF::IAsyncOperation<OpenAI::Completion::CompletionResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Completion::CompletionRequest const completionRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(completionRequest);
@@ -178,7 +178,7 @@ namespace winrt::OpenAI::implementation
         }     
     }
 
-    WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const& embeddingRequest)
+    WF::IAsyncOperation<OpenAI::Embedding::EmbeddingResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Embedding::EmbeddingRequest const embeddingRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(embeddingRequest);
@@ -227,7 +227,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const& moderationRequest)
+    WF::IAsyncOperation<OpenAI::Moderation::ModerationResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Moderation::ModerationRequest const moderationRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(moderationRequest);
@@ -292,7 +292,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::Edits::EditsResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const& editRequest)
+    WF::IAsyncOperation<OpenAI::Edits::EditsResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Edits::EditsRequest const editRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(editRequest);
@@ -332,7 +332,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::ModelResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::ModelRequest const& modelRequest)
+    WF::IAsyncOperation<OpenAI::ModelResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::ModelRequest const modelRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await PerformHttpRequestAsync(modelRequest);
@@ -368,7 +368,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::FilesResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::FilesRequest const& filesRequest)
+    WF::IAsyncOperation<OpenAI::FilesResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::FilesRequest const filesRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(filesRequest);
@@ -387,7 +387,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<OpenAI::Chat::ChatResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const& chatRequest)
+    WF::IAsyncOperation<OpenAI::Chat::ChatResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const chatRequest)
     {
         // Send the request and retrieve the response  
         WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(chatRequest);
@@ -436,7 +436,7 @@ namespace winrt::OpenAI::implementation
         }
     }
 
-    WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const& request)
+    WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const request)
     {
         if (m_openAiOptions != nullptr && request.IsValid())
         {
@@ -449,15 +449,14 @@ namespace winrt::OpenAI::implementation
 
             auto httpRequest = request.BuildHttpRequest();
 
-            // Send the request and retrieve the response           
-            WWH::HttpResponseMessage response = co_await httpClient.SendRequestAsync(httpRequest);
-            co_return response;
+            // Send the request and retrieve the response
+            co_return co_await httpClient.SendRequestAsync(httpRequest);
         }
 
         co_return nullptr;
     }
 
-    WF::IAsyncOperation<WDJ::JsonObject> OpenAiService::ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const& msg)
+    WF::IAsyncOperation<WDJ::JsonObject> OpenAiService::ParseHttpMsgToJsonAsync(WWH::HttpResponseMessage const msg)
     {
         WDJ::JsonObject jsonObject = nullptr;
 
