@@ -11,6 +11,11 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="src\Views\MainPage.xaml" />
+    <None Remove="src\Views\Pages\ImagesPage.xaml" />
+    <None Remove="src\Views\Pages\ModelsPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -23,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230331000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
 	<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.2" />
@@ -39,6 +45,21 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenAiSdkCsProjection\OpenAiSdkCsProjection.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="src\Views\Pages\ModelsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="src\Views\Pages\ImagesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="src\Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
