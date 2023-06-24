@@ -34,6 +34,14 @@ namespace SampleApp.WinUI3.ViewModels
                     Icon = new SymbolIcon((Symbol)0xE15F),
                     Content = "Chat",
                     Tag = typeof(ChatPage)
+                },
+
+                // PDF
+                new NavigationViewItem
+                {
+                    Icon = new SymbolIcon((Symbol)0xE130),
+                    Content = "PDF",
+                    Tag = typeof(PdfPage)
                 }
             };
         }

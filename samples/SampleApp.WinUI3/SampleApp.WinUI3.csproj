@@ -16,6 +16,7 @@
     <None Remove="src\Views\Pages\ChatPage.xaml" />
     <None Remove="src\Views\Pages\ImagesPage.xaml" />
     <None Remove="src\Views\Pages\ModelsPage.xaml" />
+    <None Remove="src\Views\Pages\PdfPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenAiSdkCsProjection\OpenAiSdkCsProjection.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="src\Views\Pages\PdfPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="src\Views\Pages\ChatPage.xaml">
