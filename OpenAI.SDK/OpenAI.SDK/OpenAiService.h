@@ -75,6 +75,7 @@ namespace winrt::OpenAI::implementation
             bool m_isServiceRunning{ false };
             OpenAI::OpenAiOptions m_openAiOptions{ nullptr };
             winrt::com_ptr<implementation::OpenAiOptions> m_openAiOptions_impl;
+            bool m_isInternetAvailable{ false };
 
             const winrt::hstring OPEN_AI_API_URL = L"https://api.openai.com";
 

@@ -8,6 +8,7 @@ namespace winrt::OpenAI::implementation
     struct ResponseError : ResponseErrorT<ResponseError>
     {
         ResponseError() = default;
+        ResponseError(winrt::hstring const& message);
         ResponseError(winrt::hstring const& code, winrt::hstring const& message, winrt::hstring const& type);
 
         winrt::hstring Code()

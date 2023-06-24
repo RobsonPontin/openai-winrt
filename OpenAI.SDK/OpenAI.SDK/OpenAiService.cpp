@@ -17,6 +17,7 @@
 
 #include "OpenAiOptions.h"
 #include "ImageUtils.h"
+#include "ConnectionUtils.h"
 #include "BaseRequest.h"
 #include "ResponseError.h"
 
@@ -42,21 +43,29 @@ namespace winrt::OpenAI::implementation
 
     WF::IAsyncOperation<OpenAI::ResponseError> OpenAiService::GetErrorFromMessageAsync(WWH::HttpResponseMessage const httpMessage)
     {
-        auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
-        if (json != nullptr)
+        if (!m_isInternetAvailable)
         {
-            try
-            {
-                auto error = json.GetNamedObject(L"error");
-                auto code = error.GetNamedString(L"code");
-                auto message = error.GetNamedString(L"message");
-                auto type = error.GetNamedString(L"type");
+            co_return winrt::make<OpenAI::implementation::ResponseError>(L"No internet connection.");
+        }
 
-                co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
-            }
-            catch (winrt::hresult const&)
+        if (httpMessage != nullptr)
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(httpMessage);
+            if (json != nullptr)
             {
-                // TODO: Parsing certain JSON data might throw
+                try
+                {
+                    auto error = json.GetNamedObject(L"error");
+                    auto code = error.GetNamedString(L"code");
+                    auto message = error.GetNamedString(L"message");
+                    auto type = error.GetNamedString(L"type");
+
+                    co_return winrt::make<OpenAI::implementation::ResponseError>(code, message, type);
+                }
+                catch (winrt::hresult const&)
+                {
+                    // TODO: Parsing certain JSON data might throw
+                }
             }
         }
 
@@ -438,6 +447,11 @@ namespace winrt::OpenAI::implementation
 
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const request)
     {
+        if (!(m_isInternetAvailable = ::Utils::Connection::IsInternetConnected()))
+        {
+            co_return nullptr;
+        }
+
         if (m_openAiOptions != nullptr && request.IsValid())
         {
             auto openAiKey = m_openAiOptions_impl->OpenAiKey();
@@ -449,8 +463,15 @@ namespace winrt::OpenAI::implementation
 
             auto httpRequest = request.BuildHttpRequest();
 
-            // Send the request and retrieve the response
-            co_return co_await httpClient.SendRequestAsync(httpRequest);
+            try
+            {
+                // Send the request and retrieve the response
+                co_return co_await httpClient.SendRequestAsync(httpRequest);
+            }
+            catch (winrt::hresult const& ex)
+            {
+                // TODO:
+            }
         }
 
         co_return nullptr;

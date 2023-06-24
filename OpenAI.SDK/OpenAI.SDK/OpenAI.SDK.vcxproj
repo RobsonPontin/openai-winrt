@@ -148,14 +148,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)'=='Debug'">stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug_WASDK'">
     <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;WIN_APP_SDK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug_WASDK|x64'">stdcpp20</LanguageStandard>
+      <PreprocessorDefinitions>_DEBUG;WIN_APP_SDK;WINAPI_PARTITION_DESKTOP=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard Condition="'$(Configuration)'=='Debug_WASDK'">stdcpp20</LanguageStandard>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies Condition="'$(Configuration)'=='Debug_WASDK'">wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
@@ -168,11 +171,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release_WASDK'">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;WIN_APP_SDK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;WIN_APP_SDK;WINAPI_PARTITION_DESKTOP=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies Condition="'$(Configuration)'=='Release_WASDK'">wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -182,6 +186,7 @@
     <ClInclude Include="ChatResponse.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="CompletionResponse.h" />
+    <ClInclude Include="ConnectionUtils.h" />
     <ClInclude Include="EditsRequest.h" />
     <ClInclude Include="EditsResponse.h" />
     <ClInclude Include="EnumUtils.h" />
@@ -208,6 +213,7 @@
     <ClCompile Include="ChatRequest.cpp" />
     <ClCompile Include="ChatResponse.cpp" />
     <ClCompile Include="CompletionResponse.cpp" />
+    <ClCompile Include="ConnectionUtils.cpp" />
     <ClCompile Include="EditsRequest.cpp" />
     <ClCompile Include="EditsResponse.cpp" />
     <ClCompile Include="EnumUtils.cpp" />

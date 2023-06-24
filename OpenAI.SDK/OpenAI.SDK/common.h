@@ -28,6 +28,10 @@ namespace winrt
 		namespace Data {
 			namespace Json {}
 		}
+
+		namespace Networking {
+			namespace Connectivity {}
+		}
 	}
 }
 
@@ -38,3 +42,4 @@ namespace WSS = winrt::Windows::Storage::Streams;
 namespace WGI = winrt::Windows::Graphics::Imaging;
 namespace WWH = winrt::Windows::Web::Http;
 namespace WDJ = winrt::Windows::Data::Json;
+namespace WNC = winrt::Windows::Networking::Connectivity;

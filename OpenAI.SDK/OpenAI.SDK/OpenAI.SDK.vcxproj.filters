@@ -72,6 +72,9 @@
     <ClCompile Include="ChatResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="ConnectionUtils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="ChatResponse.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionUtils.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
