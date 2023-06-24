@@ -19,9 +19,21 @@ m_openAiService = new OpenAI.OpenAiService(options);
 
 ## GPT3 APIs
 
+### Chat
+
+Using chat you can go back and forth with the AI models about almost any subject
+
+```cs
+var chatRequest = new OpenAI.Chat.ChatRequest();
+var chatMessage = new OpenAI.Chat.ChatMessage("user", "What is the most used math formula in the world?");
+chatRequest.Messages.Add(chatMessage);
+
+var response = await m_openAiService.RunRequestAsync(chatRequest);
+```
+
 ### Text Completion
 
-With text compoetion you can input some text as a prompt, and the model will generate a text completion that attempts to match whatever context or pattern you gave it.
+With text completion you can send some text as a prompt, and the model will generate a text completion that attempts to match whatever context or pattern you gave it.
 
 ```cpp
 winrt::hstring prompt = L"tell me a very nice joke";
