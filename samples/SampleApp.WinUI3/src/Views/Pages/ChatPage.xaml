@@ -1,0 +1,60 @@
+<Page
+    x:Class="SampleApp.WinUI3.Views.ChatPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SampleApp.WinUI3.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    d:DataContext="{d:DesignInstance Type=local:ChatPageViewModel}"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <RelativePanel Margin="1">
+        <RelativePanel.Resources>
+            <DataTemplate x:Key="ChatMessageDataTemplate"
+                          x:DataType="local:UiChatMessage">
+                <Grid Margin="0 2 0 0">
+                    <TextBlock TextWrapping="Wrap">
+                        <Run x:Name="userName"
+                             Text="{x:Bind Username}"/>
+                        <Run x:Name="space"
+                             Text=": "/>
+                        <Run x:Name="message"
+                             Text="{x:Bind Message}"/>
+                    </TextBlock>
+                </Grid>
+            </DataTemplate>
+        </RelativePanel.Resources>
+
+        <TextBox x:Name="tbName"
+                     RelativePanel.AlignRightWithPanel="True" 
+                     RelativePanel.AlignLeftWithPanel="True" 
+                     RelativePanel.AlignTopWithPanel="True"/>
+
+        <ListView x:Name="lvChat"
+                      RelativePanel.Above="rpBottom"
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True"
+                      RelativePanel.Below="tbName"
+                      ItemsSource="{Binding Messages}"
+                      ItemTemplate="{StaticResource ChatMessageDataTemplate}">
+        </ListView>
+
+        <RelativePanel x:Name="rpBottom" 
+                       RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True">
+            
+            <TextBox x:Name="tbMessageToBeSent"
+                     Text="{Binding MessageToSend, Mode=TwoWay}"
+                     RelativePanel.AlignLeftWithPanel="True"
+                     RelativePanel.LeftOf="btnSendMsg" />
+            
+            <Button x:Name="btnSendMsg"
+                    Margin="2 0 1 0"
+                    RelativePanel.AlignRightWithPanel="True"
+                    Content="Send"
+                    Command="{Binding SendMessageCommand}"/>
+        </RelativePanel>
+    </RelativePanel>
+</Page>
