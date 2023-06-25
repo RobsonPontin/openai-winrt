@@ -13,11 +13,22 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <WebView2 x:Name="PreviewBrowser"/>
+        <WebView2 x:Name="PreviewBrowser"
+                  CoreWebView2Initialized="PreviewBrowser_CoreWebView2Initialized"
+                  WebMessageReceived="PreviewBrowser_WebMessageReceived"
+                  CoreProcessFailed="PreviewBrowser_CoreProcessFailed"
+                  NavigationCompleted="PreviewBrowser_NavigationCompleted"/>
 
-        <Button x:Name="btnOpenFile"
-                Grid.Row="1"
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button x:Name="btnOpenFile"
                 Content="Open File"
                 Click="btnOpenFile_Click"/>
+
+            <Button x:Name="btnTest"
+                    Margin="2 0 0 0 "
+                    Content="Test"
+                    Click="btnTest_Click"/>
+        </StackPanel>       
     </Grid>
 </Page>

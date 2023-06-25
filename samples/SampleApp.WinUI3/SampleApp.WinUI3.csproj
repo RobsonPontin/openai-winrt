@@ -12,6 +12,8 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Web\MainPage.html" />
+    <None Remove="Assets\Web\WebView2Events.js" />
     <None Remove="src\Views\MainPage.xaml" />
     <None Remove="src\Views\Pages\ChatPage.xaml" />
     <None Remove="src\Views\Pages\ImagesPage.xaml" />
