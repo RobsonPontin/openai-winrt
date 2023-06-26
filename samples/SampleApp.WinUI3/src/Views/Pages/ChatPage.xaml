@@ -26,18 +26,20 @@
             </DataTemplate>
         </RelativePanel.Resources>
 
+        <!-- Just a dummy UI element to align things right -->
         <TextBox x:Name="tbName"
-                     RelativePanel.AlignRightWithPanel="True" 
-                     RelativePanel.AlignLeftWithPanel="True" 
-                     RelativePanel.AlignTopWithPanel="True"/>
+                 Visibility="Collapsed"
+                 RelativePanel.AlignRightWithPanel="True" 
+                 RelativePanel.AlignLeftWithPanel="True" 
+                 RelativePanel.AlignTopWithPanel="True"/>
 
         <ListView x:Name="lvChat"
-                      RelativePanel.Above="rpBottom"
-                      RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True"
-                      RelativePanel.Below="tbName"
-                      ItemsSource="{Binding Messages}"
-                      ItemTemplate="{StaticResource ChatMessageDataTemplate}">
+                  RelativePanel.Above="rpBottom"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  RelativePanel.Below="tbName"
+                  ItemsSource="{Binding Messages}"
+                  ItemTemplate="{StaticResource ChatMessageDataTemplate}">
         </ListView>
 
         <RelativePanel x:Name="rpBottom" 
