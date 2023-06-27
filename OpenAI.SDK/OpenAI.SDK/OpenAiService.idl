@@ -392,3 +392,26 @@ namespace OpenAI.Chat
 		OpenAI.Chat.ChatMessage Message{ get; };
 	};
 }
+
+// Audio
+namespace OpenAI.Audio
+{
+	[default_interface]
+	runtimeclass AudioRequest : OpenAI.BaseRequest
+	{
+		AudioRequest();
+
+		String Model{ get; set; };
+		String Prompt{ get; set; };
+		Double Temperature{ get; set; };
+		String ResponseFormat{ get; set; };
+		String Language{ get; set; };
+	};
+
+	unsealed runtimeclass AudioResponse : OpenAI.BaseResponse
+	{
+		protected AudioResponse();
+
+		String Text{ get; };
+	};
+}

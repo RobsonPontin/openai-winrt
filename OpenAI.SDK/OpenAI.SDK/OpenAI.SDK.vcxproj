@@ -180,6 +180,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioRequest.h" />
+    <ClInclude Include="AudioResponse.h" />
     <ClInclude Include="BaseRequest.h" />
     <ClInclude Include="BaseResponse.h" />
     <ClInclude Include="ChatRequest.h" />
@@ -208,6 +210,8 @@
     <ClInclude Include="ResponseError.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioRequest.cpp" />
+    <ClCompile Include="AudioResponse.cpp" />
     <ClCompile Include="BaseRequest.cpp" />
     <ClCompile Include="BaseResponse.cpp" />
     <ClCompile Include="ChatRequest.cpp" />

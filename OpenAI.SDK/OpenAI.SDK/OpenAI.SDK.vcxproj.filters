@@ -75,6 +75,12 @@
     <ClCompile Include="ConnectionUtils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="AudioRequest.cpp">
+      <Filter>src\Requests</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioResponse.cpp">
+      <Filter>src\Response</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -152,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="ConnectionUtils.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioRequest.h">
+      <Filter>src\Requests</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioResponse.h">
+      <Filter>src\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
