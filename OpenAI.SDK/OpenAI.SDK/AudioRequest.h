@@ -3,6 +3,7 @@
 #include "Audio.AudioRequest.g.h"
 
 #include "winrt/Windows.Web.Http.h"
+#include "winrt/Windows.Storage.h"
 
 
 namespace winrt::OpenAI::Audio::implementation
@@ -13,20 +14,33 @@ namespace winrt::OpenAI::Audio::implementation
 
 		WWH::HttpRequestMessage BuildHttpRequest();
 
-		bool IsValid()
-		{
-			if (Prompt() != L"" && Model() != L"")
-			{
-				return true;
-			}
+		bool IsValid();
 
-			return false;
+		/// <summary>
+		/// The audio file object (not file name), in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+		/// </summary>
+		WS::StorageFile AudioFile()
+		{
+			return m_audioFile;
+		}
+
+		void AudioFile(WS::StorageFile const& val)
+		{
+			m_audioFile = val;
 		}
 
 		/// <summary>
-		/// The audio file object (not file name) to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+		/// The type of Audio request to be made.
 		/// </summary>
-		/*TODO: File prop*/
+		AudioRequestType ResquetType()
+		{
+			return m_audioReqType;
+		}
+
+		void RequestType(AudioRequestType val)
+		{
+			m_audioReqType = val;
+		}
 		
 		/// <summary>
 		/// ID of the model to use. Only whisper-1 is currently available.
@@ -81,6 +95,9 @@ namespace winrt::OpenAI::Audio::implementation
 		/// <summary>
 		/// The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency.
 		/// </summary>
+		/// <remarks>
+		/// Only used if the request type is "Translation".
+		/// </remarks>
 		winrt::hstring Language()
 		{
 			return m_language;
@@ -91,11 +108,16 @@ namespace winrt::OpenAI::Audio::implementation
 		}
 
 	private:
-		winrt::hstring m_model{ L"" };
+		AudioRequestType m_audioReqType{ AudioRequestType::Transcription };
+		winrt::hstring m_model{ L"whisper-1" };
 		winrt::hstring m_prompt{ L"" };
 		winrt::hstring m_responseFormat{ L"" };
 		winrt::hstring m_language{ L"" };
 		double m_temperature = 1.0;
+		WS::StorageFile m_audioFile{ nullptr };
+		WSS::IBuffer m_audioBuffer{ nullptr };
+
+		winrt::hstring TryGetHttpContentTypeForFile();
 	};
 }
 

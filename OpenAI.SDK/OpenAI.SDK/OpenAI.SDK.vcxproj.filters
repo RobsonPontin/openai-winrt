@@ -81,6 +81,9 @@
     <ClCompile Include="AudioResponse.cpp">
       <Filter>src\Response</Filter>
     </ClCompile>
+    <ClCompile Include="StringUtils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="AudioResponse.h">
       <Filter>src\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtils.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
