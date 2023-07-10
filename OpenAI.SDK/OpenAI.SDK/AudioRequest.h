@@ -17,19 +17,6 @@ namespace winrt::OpenAI::Audio::implementation
 		bool IsValid();
 
 		/// <summary>
-		/// The audio file object (not file name), in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
-		/// </summary>
-		WS::StorageFile AudioFile()
-		{
-			return m_audioFile;
-		}
-
-		void AudioFile(WS::StorageFile const& val)
-		{
-			m_audioFile = val;
-		}
-
-		/// <summary>
 		/// The type of Audio request to be made.
 		/// </summary>
 		AudioRequestType ResquetType()
@@ -106,6 +93,11 @@ namespace winrt::OpenAI::Audio::implementation
 		{
 			m_language = val;
 		}
+
+		/// <summary>
+		/// Set the audio file object (not file name), in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+		/// </summary>
+		WF::IAsyncAction SetAudioFileAsync(WS::StorageFile const file);
 
 	private:
 		AudioRequestType m_audioReqType{ AudioRequestType::Transcription };

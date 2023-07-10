@@ -407,12 +407,13 @@ namespace OpenAI.Audio
 	{
 		AudioRequest();
 
-		Windows.Storage.StorageFile AudioFile{ get; set; };
 		String Model{ get; set; };
 		String Prompt{ get; set; };
 		Double Temperature{ get; set; };
 		String ResponseFormat{ get; set; };
 		String Language{ get; set; };
+
+		Windows.Foundation.IAsyncAction SetAudioFileAsync(Windows.Storage.StorageFile file);
 	};
 
 	unsealed runtimeclass AudioResponse : OpenAI.BaseResponse

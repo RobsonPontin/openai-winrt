@@ -6,6 +6,7 @@
 #endif
 
 #include "winrt/Windows.Web.Http.Headers.h"
+#include "winrt/Windows.Storage.Streams.h"
 #include "StringUtils.h"
 
 
@@ -44,7 +45,6 @@ namespace winrt::OpenAI::Audio::implementation
 
 	WWH::HttpRequestMessage AudioRequest::BuildHttpRequest()
 	{
-		// TODO: WIP - need to parse audio file into buffer.
 		WWH::HttpBufferContent bContent{ m_audioBuffer };
 
 		auto contentType = TryGetHttpContentTypeForFile();
@@ -70,6 +70,29 @@ namespace winrt::OpenAI::Audio::implementation
 		return request;
 	}
 
+	WF::IAsyncAction AudioRequest::SetAudioFileAsync(WS::StorageFile const file)
+	{
+		if (file == nullptr)
+		{
+			throw winrt::hresult_invalid_argument(L"File cannot be null.");
+		}
+
+		// TODO: check supported formats, perhaps do conversion
+
+		try
+		{			
+			auto audioStream = co_await file.OpenReadAsync();
+			WS::Streams::Buffer buffer{ static_cast<uint32_t>(audioStream.Size()) };
+			audioStream.WriteAsync(buffer);
+
+			m_audioBuffer = buffer;
+		}
+		catch (winrt::hresult_error const&)
+		{
+			// TODO: Log error
+		}
+	}
+
 	winrt::hstring AudioRequest::TryGetHttpContentTypeForFile()
 	{
 		auto fileFormat = ::Utils::String::ConvertToLowerCase(m_audioFile.FileType());
@@ -84,5 +107,4 @@ namespace winrt::OpenAI::Audio::implementation
 
 		return L"";
 	}
-
 }

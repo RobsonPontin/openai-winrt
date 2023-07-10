@@ -19,6 +19,8 @@
 #include <FilesResponse.h>
 #include <ChatRequest.h>
 #include <ChatResponse.h>
+#include <AudioRequest.h>
+#include <AudioResponse.h>
 
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -48,6 +50,8 @@ namespace winrt::OpenAI::implementation
         WF::IAsyncOperation<OpenAI::FilesResponse> RunRequestAsync(winrt::OpenAI::FilesRequest const filesRequest);
 
         WF::IAsyncOperation<OpenAI::Chat::ChatResponse> RunRequestAsync(winrt::OpenAI::Chat::ChatRequest const chatRequest);
+
+        WF::IAsyncOperation<OpenAI::Audio::AudioResponse> RunRequestAsync(winrt::OpenAI::Audio::AudioRequest const audioRequest);
 
         void Options(OpenAI::OpenAiOptions val)
         {
