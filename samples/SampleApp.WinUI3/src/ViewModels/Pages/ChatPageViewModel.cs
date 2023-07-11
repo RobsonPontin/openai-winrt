@@ -15,10 +15,8 @@ namespace SampleApp.WinUI3.ViewModels
         public string Message { get; set; }
     }
 
-    internal partial class ChatPageViewModel : ObservableObject
+    internal partial class ChatPageViewModel : BaseViewModel
     {
-        private OpenAI.OpenAiService m_openAiService;
-
         public ChatPageViewModel() 
         {
             m_openAiService = ServiceProvider.Instance.OpenAiService;
