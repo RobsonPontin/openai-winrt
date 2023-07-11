@@ -6,6 +6,7 @@
 #endif
 
 #include "winrt/Windows.Web.Http.Headers.h"
+#include "winrt/Windows.Storage.Streams.h"
 #include "StringUtils.h"
 
 
@@ -29,8 +30,7 @@ namespace winrt::OpenAI::Audio::implementation
 
 	bool AudioRequest::IsValid()
 	{
-		if (m_audioFile != nullptr
-			&& Prompt() != L""
+		if (m_audioBuffer != nullptr
 			&& Model() != L"")
 		{
 			if (TryGetHttpContentTypeForFile() != L"")
@@ -44,7 +44,6 @@ namespace winrt::OpenAI::Audio::implementation
 
 	WWH::HttpRequestMessage AudioRequest::BuildHttpRequest()
 	{
-		// TODO: WIP - need to parse audio file into buffer.
 		WWH::HttpBufferContent bContent{ m_audioBuffer };
 
 		auto contentType = TryGetHttpContentTypeForFile();
@@ -52,7 +51,8 @@ namespace winrt::OpenAI::Audio::implementation
 
 		WWH::HttpMultipartFormDataContent multipartContent{};
 
-		multipartContent.Add(bContent, L"model", Model());
+		multipartContent.Add(bContent, L"file", m_audioFile.Name());
+		multipartContent.Add(WWH::HttpStringContent{ Model()}, L"model");
 
 		auto reqType = L"https://api.openai.com/v1/audio/transcriptions";
 		if (ResquetType() == AudioRequestType::Translation)
@@ -70,13 +70,44 @@ namespace winrt::OpenAI::Audio::implementation
 		return request;
 	}
 
+	WF::IAsyncAction AudioRequest::SetAudioFileAsync(WS::StorageFile const file)
+	{
+		if (file == nullptr)
+		{
+			throw winrt::hresult_invalid_argument(L"File cannot be null.");
+		}
+
+		m_audioFile = file;
+
+		// TODO: check supported formats, perhaps do conversion
+
+		try
+		{			
+			auto audioStream = co_await m_audioFile.OpenReadAsync();
+
+			auto length = audioStream.Size();
+			WS::Streams::Buffer buffer{ static_cast<uint32_t>(length) };
+			co_await audioStream.ReadAsync(buffer, length, WS::Streams::InputStreamOptions::None);
+
+			m_audioBuffer = buffer;
+		}
+		catch (winrt::hresult_error const&)
+		{
+			// TODO: Log error
+		}
+	}
+
 	winrt::hstring AudioRequest::TryGetHttpContentTypeForFile()
 	{
 		auto fileFormat = ::Utils::String::ConvertToLowerCase(m_audioFile.FileType());
+
 		if (fileFormat != L"")
 		{
-			auto it = _supportedFileFormats.find(fileFormat);
-			if (it == _supportedFileFormats.end())
+			auto strFileFormat = winrt::to_string(fileFormat);
+			strFileFormat.erase(0, 1); // remove '.' from extension
+
+			auto it = _supportedFileFormats.find(winrt::to_hstring(strFileFormat));
+			if (it != _supportedFileFormats.end())
 			{
 				return (it->second + L"/" + it->first);
 			}
@@ -84,5 +115,4 @@ namespace winrt::OpenAI::Audio::implementation
 
 		return L"";
 	}
-
 }

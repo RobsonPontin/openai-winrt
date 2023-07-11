@@ -8,6 +8,7 @@ namespace winrt::OpenAI::Audio::implementation
 	struct AudioResponse : AudioResponseT<AudioResponse, OpenAI::implementation::BaseResponse>
 	{
 		AudioResponse() = default;
+		AudioResponse(winrt::hstring const& text);
 		AudioResponse(OpenAI::ResponseError const& error);
 
 		/// <summary>
@@ -16,6 +17,16 @@ namespace winrt::OpenAI::Audio::implementation
 		winrt::hstring Text()
 		{
 			return m_text;
+		}
+
+		bool IsResponseSuccess()
+		{
+			if (m_text != L"")
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 	private:

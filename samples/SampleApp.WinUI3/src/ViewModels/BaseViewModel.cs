@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SampleApp.WinUI3.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,5 +12,11 @@ namespace SampleApp.WinUI3.ViewModels
 {
     internal class BaseViewModel : ObservableObject
     {
+        internal OpenAI.OpenAiService m_openAiService;
+
+        internal BaseViewModel()
+        {
+            m_openAiService = ServiceProvider.Instance.OpenAiService;
+        }
     }
 }

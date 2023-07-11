@@ -19,11 +19,9 @@ namespace SampleApp.WinUI3.ViewModels
 
         public async Task RequestModelsAsync()
         {
-            var openAiService = ServiceProvider.Instance.OpenAiService;
-
             try
             {
-                var result = await openAiService.RunRequestAsync(new OpenAI.ModelRequest());
+                var result = await m_openAiService.RunRequestAsync(new OpenAI.ModelRequest());
                 if (result.IsResponseSuccess)
                 {
                     var models = result.Data.ToList<OpenAI.ModelValue>();

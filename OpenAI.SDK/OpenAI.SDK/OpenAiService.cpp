@@ -445,6 +445,28 @@ namespace winrt::OpenAI::implementation
         }
     }
 
+    WF::IAsyncOperation<OpenAI::Audio::AudioResponse> OpenAiService::RunRequestAsync(winrt::OpenAI::Audio::AudioRequest const audioRequest)
+    {
+        // Send the request and retrieve the response  
+        WWH::HttpResponseMessage response = co_await OpenAiService::PerformHttpRequestAsync(audioRequest);
+        if (response != nullptr && response.IsSuccessStatusCode())
+        {
+            auto json = co_await ParseHttpMsgToJsonAsync(response);
+            if (json != nullptr)
+            {
+                // Extract the text for audio result from the JSON response
+                auto audioText = json.GetNamedString(L"text");
+
+                co_return winrt::make<OpenAI::Audio::implementation::AudioResponse>(audioText);
+            }
+        }
+        else
+        {
+            auto error = co_await GetErrorFromMessageAsync(response);
+            co_return winrt::make<OpenAI::Audio::implementation::AudioResponse>(error);
+        }
+    }
+
     WF::IAsyncOperation<WWH::HttpResponseMessage> OpenAiService::PerformHttpRequestAsync(OpenAI::BaseRequest const request)
     {
         if (!(m_isInternetAvailable = ::Utils::Connection::IsInternetConnected()))
