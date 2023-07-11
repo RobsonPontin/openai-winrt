@@ -7,6 +7,11 @@
 
 namespace winrt::OpenAI::Audio::implementation
 {
+	AudioResponse::AudioResponse(winrt::hstring const& text)
+	{
+		m_text = text;
+	}
+
 	AudioResponse::AudioResponse(OpenAI::ResponseError const& error)
 	{
 		m_error = error;

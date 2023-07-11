@@ -454,7 +454,10 @@ namespace winrt::OpenAI::implementation
             auto json = co_await ParseHttpMsgToJsonAsync(response);
             if (json != nullptr)
             {
-                // TODO:
+                // Extract the text for audio result from the JSON response
+                auto audioText = json.GetNamedString(L"text");
+
+                co_return winrt::make<OpenAI::Audio::implementation::AudioResponse>(audioText);
             }
         }
         else

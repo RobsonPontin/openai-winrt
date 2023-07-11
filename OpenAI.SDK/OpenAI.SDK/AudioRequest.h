@@ -106,7 +106,7 @@ namespace winrt::OpenAI::Audio::implementation
 		winrt::hstring m_responseFormat{ L"" };
 		winrt::hstring m_language{ L"" };
 		double m_temperature = 1.0;
-		WS::StorageFile m_audioFile{ nullptr };
+		WS::StorageFile m_audioFile{ nullptr }; // TODO: remove and create a new class to hold audio file and data
 		WSS::IBuffer m_audioBuffer{ nullptr };
 
 		winrt::hstring TryGetHttpContentTypeForFile();

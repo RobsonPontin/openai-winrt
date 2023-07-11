@@ -41,6 +41,7 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Edits.EditsResponse> RunRequestAsync(OpenAI.Edits.EditsRequest editsRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.ModelResponse> RunRequestAsync(OpenAI.ModelRequest modelRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Chat.ChatResponse> RunRequestAsync(OpenAI.Chat.ChatRequest chatRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Audio.AudioResponse> RunRequestAsync(OpenAI.Audio.AudioRequest audioRequest);
 	};
 
 	[default_interface]
