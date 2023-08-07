@@ -31,3 +31,8 @@
 /samples/SampleApp.WinUI3/obj
 /samples/SampleApp.UWP/Generated Files
 /samples/SampleApp.UWP/x64/Debug
+/OpenAI.SDK/x64/Debug/WvToWinRtAdapter
+/samples/WvToWinRtAdapter/Generated Files
+/samples/WvToWinRtAdapter/x64/Debug
+/samples/WvToWinRtAdapterCsProjection/bin/Debug/net7.0-windows10.0.19041.0
+/samples/WvToWinRtAdapterCsProjection/obj

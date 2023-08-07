@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenAiSdkCsProjection\OpenAiSdkCsProjection.csproj" />
+    <ProjectReference Include="..\WvToWinRtAdapterCsProjection\WvToWinRtAdapterCsProjection.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="src\Views\Pages\PdfPage.xaml">

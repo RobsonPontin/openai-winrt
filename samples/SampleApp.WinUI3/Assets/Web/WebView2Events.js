@@ -1,16 +1,18 @@
 ﻿
 function registerEvents()
 {
-    window.chrome.webview.addEventListener('message', (event) => {
+    window.chrome.webview.addEventListener('message', (event) => 
+    {
         const payload = event.data
-        if (payload.verb === 'getPdfPageText') {
-            /* TODO: handle PDF page text copy.*/
-            const pdfPageContent = 'copy pdf page content...'
+        if (payload.verb === 'testEventCall')
+        {
+            const testEventResponse = 'The test event was called succefully.';
 
             // Notify result
-            window.chrome.webview.postMessage(pdfPageContent);
+            window.chrome.webview.postMessage(testEventResponse);
         }
-        else {
+        else
+        {
             alert(event.data);
         }
     });
