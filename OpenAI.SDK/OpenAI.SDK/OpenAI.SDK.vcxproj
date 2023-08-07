@@ -180,6 +180,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioRequest.h" />
+    <ClInclude Include="AudioResponse.h" />
     <ClInclude Include="BaseRequest.h" />
     <ClInclude Include="BaseResponse.h" />
     <ClInclude Include="ChatRequest.h" />
@@ -206,8 +208,11 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="CompletionRequest.h" />
     <ClInclude Include="ResponseError.h" />
+    <ClInclude Include="StringUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioRequest.cpp" />
+    <ClCompile Include="AudioResponse.cpp" />
     <ClCompile Include="BaseRequest.cpp" />
     <ClCompile Include="BaseResponse.cpp" />
     <ClCompile Include="ChatRequest.cpp" />
@@ -236,6 +241,7 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="CompletionRequest.cpp" />
     <ClCompile Include="ResponseError.cpp" />
+    <ClCompile Include="StringUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenAI_SDK.def" />

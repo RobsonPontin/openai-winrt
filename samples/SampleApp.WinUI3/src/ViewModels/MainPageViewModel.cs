@@ -36,6 +36,14 @@ namespace SampleApp.WinUI3.ViewModels
                     Tag = typeof(ChatPage)
                 },
 
+                // Audio
+                new NavigationViewItem
+                {
+                    Icon = new SymbolIcon((Symbol)0xE189),
+                    Content = "Audio",
+                    Tag = typeof(AudioPage)
+                },
+
                 // PDF
                 new NavigationViewItem
                 {

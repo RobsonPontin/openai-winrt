@@ -41,6 +41,7 @@ namespace OpenAI
 		Windows.Foundation.IAsyncOperation<OpenAI.Edits.EditsResponse> RunRequestAsync(OpenAI.Edits.EditsRequest editsRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.ModelResponse> RunRequestAsync(OpenAI.ModelRequest modelRequest);
 		Windows.Foundation.IAsyncOperation<OpenAI.Chat.ChatResponse> RunRequestAsync(OpenAI.Chat.ChatRequest chatRequest);
+		Windows.Foundation.IAsyncOperation<OpenAI.Audio.AudioResponse> RunRequestAsync(OpenAI.Audio.AudioRequest audioRequest);
 	};
 
 	[default_interface]
@@ -390,5 +391,36 @@ namespace OpenAI.Chat
 		UInt32 Index{ get; };
 		String FinishReason{ get; };
 		OpenAI.Chat.ChatMessage Message{ get; };
+	};
+}
+
+// Audio
+namespace OpenAI.Audio
+{
+	enum AudioRequestType
+	{
+		Transcription,
+		Translation
+	};
+
+	[default_interface]
+	runtimeclass AudioRequest : OpenAI.BaseRequest
+	{
+		AudioRequest();
+
+		String Model{ get; set; };
+		String Prompt{ get; set; };
+		Double Temperature{ get; set; };
+		String ResponseFormat{ get; set; };
+		String Language{ get; set; };
+
+		Windows.Foundation.IAsyncAction SetAudioFileAsync(Windows.Storage.StorageFile file);
+	};
+
+	unsealed runtimeclass AudioResponse : OpenAI.BaseResponse
+	{
+		protected AudioResponse();
+
+		String Text{ get; };
 	};
 }
