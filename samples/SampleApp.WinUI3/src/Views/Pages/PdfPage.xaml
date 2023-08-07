@@ -1,0 +1,34 @@
+<Page
+    x:Class="SampleApp.WinUI3.Views.PdfPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <WebView2 x:Name="PreviewBrowser"
+                  CoreWebView2Initialized="PreviewBrowser_CoreWebView2Initialized"
+                  WebMessageReceived="PreviewBrowser_WebMessageReceived"
+                  NavigationCompleted="PreviewBrowser_NavigationCompleted"/>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button x:Name="btnOpenFile"
+                Content="Open File"
+                Click="btnOpenFile_Click"/>
+
+            <!-- NOTE: only for testing. -->
+            <!--<Button x:Name="btnTest"
+                    Margin="2 0 0 0 "
+                    Content="Test"
+                    Click="btnTest_Click"/>-->
+        </StackPanel>       
+    </Grid>
+</Page>

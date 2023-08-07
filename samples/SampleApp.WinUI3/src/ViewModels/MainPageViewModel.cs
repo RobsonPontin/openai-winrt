@@ -42,6 +42,14 @@ namespace SampleApp.WinUI3.ViewModels
                     Icon = new SymbolIcon((Symbol)0xE189),
                     Content = "Audio",
                     Tag = typeof(AudioPage)
+                },
+
+                // PDF
+                new NavigationViewItem
+                {
+                    Icon = new SymbolIcon((Symbol)0xE130),
+                    Content = "PDF",
+                    Tag = typeof(PdfPage)
                 }
             };
         }
