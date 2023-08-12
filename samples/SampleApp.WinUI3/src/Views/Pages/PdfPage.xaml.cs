@@ -34,12 +34,6 @@ namespace SampleApp.WinUI3.Views
                 this.DispatcherQueue.TryEnqueue(async () =>
                 {
                     await PreviewBrowser.EnsureCoreWebView2Async();
-
-                    // Setup the host objects to do the native-to-web projection and enable access
-                    var dispatchAdapter = new WvToWinRtAdapter.DispatchAdapter();
-                    PreviewBrowser.CoreWebView2.AddHostObjectToScript(
-                        "Windows", 
-                        dispatchAdapter.WrapNamedObject("Windows", dispatchAdapter));
                 });
             }
             catch(Exception) 
