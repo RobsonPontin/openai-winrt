@@ -1,28 +1,26 @@
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Text.Json.Nodes;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI;
-using Windows.UI.WebUI;
 using Microsoft.Web.WebView2.Core;
-using SampleApp.WinUI3.Services;
 using System.Linq;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace SampleApp.WinUI3.Views
 {
     public sealed partial class PdfPage : Page
     {
         private string _lastSelectedPdfText = string.Empty;
-        private OpenAI.OpenAiService m_openAiService;
+        private readonly OpenAI.OpenAiService _openAiService;
 
         public PdfPage()
         {
             this.InitializeComponent();
 
-            m_openAiService = m_openAiService = ServiceProvider.Instance.OpenAiService;
+            _openAiService = Ioc.Default.GetRequiredService<OpenAI.OpenAiService>();
+
             this.Loaded += PdfPage_Loaded;
         }
 
@@ -150,7 +148,7 @@ namespace SampleApp.WinUI3.Views
                 var chatReq = new OpenAI.Chat.ChatRequest();
                 chatReq.Messages.Add(new OpenAI.Chat.ChatMessage("user", _lastSelectedPdfText));
 
-                var result = await m_openAiService.RunRequestAsync(chatReq);
+                var result = await _openAiService.RunRequestAsync(chatReq);
                 if (result.IsResponseSuccess)
                 {
                     ContentDialog cntDialog = new();

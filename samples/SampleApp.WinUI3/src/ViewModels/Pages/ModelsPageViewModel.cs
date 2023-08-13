@@ -9,7 +9,8 @@ namespace SampleApp.WinUI3.ViewModels
 {
     internal partial class ModelsPageViewModel : BaseViewModel
     {
-        public ModelsPageViewModel() 
+        public ModelsPageViewModel(OpenAI.OpenAiService openAiService)
+            : base(openAiService)
         {
             ModelValues = new ObservableCollection<OpenAI.ModelValue>();
         }
@@ -21,7 +22,7 @@ namespace SampleApp.WinUI3.ViewModels
         {
             try
             {
-                var result = await m_openAiService.RunRequestAsync(new OpenAI.ModelRequest());
+                var result = await _openAiService.RunRequestAsync(new OpenAI.ModelRequest());
                 if (result.IsResponseSuccess)
                 {
                     var models = result.Data.ToList<OpenAI.ModelValue>();

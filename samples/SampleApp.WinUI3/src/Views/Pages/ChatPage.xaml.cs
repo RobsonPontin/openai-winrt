@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using SampleApp.WinUI3.ViewModels;
 
@@ -9,7 +10,7 @@ namespace SampleApp.WinUI3.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = new ChatPageViewModel();
+            this.DataContext = Ioc.Default.GetRequiredService<ChatPageViewModel>();
         }
     }
 }

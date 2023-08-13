@@ -12,11 +12,11 @@ namespace SampleApp.WinUI3.ViewModels
 {
     internal class BaseViewModel : ObservableObject
     {
-        internal OpenAI.OpenAiService m_openAiService;
+        public readonly OpenAI.OpenAiService _openAiService;
 
-        internal BaseViewModel()
+        internal BaseViewModel(OpenAI.OpenAiService openAiService)
         {
-            m_openAiService = ServiceProvider.Instance.OpenAiService;
+            _openAiService = openAiService;
         }
     }
 }

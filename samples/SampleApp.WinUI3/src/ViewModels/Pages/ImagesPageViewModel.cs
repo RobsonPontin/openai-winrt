@@ -6,5 +6,10 @@ namespace SampleApp.WinUI3.ViewModels
     {
         [ObservableProperty]
         private string? imageName;
+
+        public ImagesPageViewModel(OpenAI.OpenAiService openAiService)
+            : base(openAiService)
+        {
+        }
     }
 }

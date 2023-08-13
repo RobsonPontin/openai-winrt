@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using SampleApp.WinUI3.ViewModels;
 using System;
@@ -13,7 +14,7 @@ namespace SampleApp.WinUI3.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = new MainPageViewModel();
+            this.DataContext = Ioc.Default.GetRequiredService<MainPageViewModel>();
         }
 
         private void navigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

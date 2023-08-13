@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
-using SampleApp.WinUI3.Services;
 using System;
 using System.Linq;
 using Windows.Storage.Streams;
@@ -20,13 +20,13 @@ namespace SampleApp.WinUI3.Views
 
         private async void btnGenerateImage_Click(object sender, RoutedEventArgs e)
         {
-            var openAiService = ServiceProvider.Instance;
+            var openAiService = Ioc.Default.GetRequiredService<OpenAI.OpenAiService>();
 
             var imgRequest = new OpenAI.Image.ImageCreateRequest();
             // Change to something else (or move it to a text box in the XAML)
             imgRequest.Prompt = "A robot bird flying above a green lake";
 
-            var result = await openAiService.OpenAiService.RunRequestAsync(imgRequest);
+            var result = await openAiService.RunRequestAsync(imgRequest);
             if (result.IsResponseSuccess)
             {
                 // Handle image received

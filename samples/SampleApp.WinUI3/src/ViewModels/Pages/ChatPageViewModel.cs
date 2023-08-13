@@ -17,10 +17,9 @@ namespace SampleApp.WinUI3.ViewModels
 
     internal partial class ChatPageViewModel : BaseViewModel
     {
-        public ChatPageViewModel() 
+        public ChatPageViewModel(OpenAI.OpenAiService openAiService)
+            : base(openAiService)
         {
-            m_openAiService = ServiceProvider.Instance.OpenAiService;
-
             SendMessageCommand = new AsyncRelayCommand(SendMessageAsync);
         }
 
@@ -45,13 +44,13 @@ namespace SampleApp.WinUI3.ViewModels
                 Username = "Me" 
             });
 
-            if (!m_openAiService.IsRunning)
+            if (!_openAiService.IsRunning)
             {
                 ChatRequest chatRequest = new ChatRequest();
                 OpenAI.Chat.ChatMessage chatMessage = new("user", MessageToSend);
                 chatRequest.Messages.Add(chatMessage);
 
-                var result = await m_openAiService.RunRequestAsync(chatRequest);
+                var result = await _openAiService.RunRequestAsync(chatRequest);
                 if (result.IsResponseSuccess)
                 {
                     var response = result.Choices.First();

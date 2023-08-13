@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using SampleApp.WinUI3.Services;
 using SampleApp.WinUI3.Views;
 
 namespace SampleApp.WinUI3
@@ -21,6 +23,9 @@ namespace SampleApp.WinUI3
         public App()
         {
             this.InitializeComponent();
+
+            // Dependency Injection: Configure all registered services.
+            Ioc.Default.ConfigureServices(new MainServiceProvider());
         }
 
         public Window MainWindow { get { return m_window; } }
@@ -31,7 +36,7 @@ namespace SampleApp.WinUI3
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new Window();            
+            m_window = new Window();
          
             Frame rootFrame = new Frame();
             m_window.Content = rootFrame;

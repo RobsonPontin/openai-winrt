@@ -15,7 +15,8 @@ namespace SampleApp.WinUI3.ViewModels
 {
     internal partial class AudioPageViewModel : BaseViewModel
     {
-        internal AudioPageViewModel()
+        public AudioPageViewModel(OpenAI.OpenAiService openAiService)
+            : base(openAiService)
         {
             OpenAudioFileCommand = new AsyncRelayCommand(OpenAudioFileAsync);
         }
@@ -54,7 +55,7 @@ namespace SampleApp.WinUI3.ViewModels
                 AudioRequest audioRequest = new();
                 await audioRequest.SetAudioFileAsync(file);
 
-                var result = await m_openAiService.RunRequestAsync(audioRequest);
+                var result = await _openAiService.RunRequestAsync(audioRequest);
                 if (result.IsResponseSuccess)
                 {
                     AudioText = result.Text;

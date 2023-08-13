@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SampleApp.WinUI3.ViewModels;
@@ -13,7 +14,7 @@ namespace SampleApp.WinUI3.Views
         {
             this.InitializeComponent();
 
-            this.DataContext = ViewModel = new ModelsPageViewModel();
+            this.DataContext = ViewModel = Ioc.Default.GetRequiredService<ModelsPageViewModel>();
         }
 
         private ModelsPageViewModel ViewModel { get; set; }

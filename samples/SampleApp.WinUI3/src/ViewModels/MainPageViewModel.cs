@@ -7,7 +7,8 @@ namespace SampleApp.WinUI3.ViewModels
 {
     internal partial class MainPageViewModel : BaseViewModel
     {
-        public MainPageViewModel()
+        public MainPageViewModel(OpenAI.OpenAiService openAiService)
+            : base(openAiService)
         {
             Title = "OpenAI Samples";
             NavigationViewItems = new ObservableCollection<NavigationViewItem>
